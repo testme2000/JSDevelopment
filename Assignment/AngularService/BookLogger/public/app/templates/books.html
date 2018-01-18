@@ -1,0 +1,27 @@
+<h3>All Books</h3>
+    <h2>{{vm.appName}}</h2>
+    <h3>{{vm.appDesc}}</h3>
+<div>
+        <ul>
+            <li ng-repeat="kitab in vm.allCollection">
+                <h4>{{kitab.title}} - {{kitab.author}}</h4>
+                <a href="#/EditBook/{{kitab.book_id}}">Edit Book</a>
+                <a ng-click="vm.deleteBook(kitab.book_id)" href="">Delete Book</a>
+            </li>
+        </ul>
+</div>
+<a href="#/AddBook">Add New Book</a>
+<a href="#/EditBook/{{vm.lastEdited.book_id}}">Open Last Edited</a>
+<h3>All Readers</h3>
+<div>
+        <ul>
+            <li ng-repeat="reader in vm.allReaders">        
+                <h4>{{reader.name}} - {{vm.getBadge(reader.totalMinutesRead)}}</h4>
+            </li>
+        </ul>
+</div>
+<h3>Current Favorite Book</h3>
+<div>
+    <bold>{{vm.favoriteBook}}</bold>
+</div>
+<a href="#/Status">Get Status</a>
