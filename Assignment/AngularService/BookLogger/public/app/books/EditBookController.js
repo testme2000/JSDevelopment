@@ -1,9 +1,9 @@
 'use strict';
 
 (function() {
-    angular.module('app').controller('EditBookController', ['$routeParams','books', '$cookies', '$cookieStore','dataService','$log','$location', 'bookResource', EditBookController]);
+    angular.module('app').controller('EditBookController', ['$routeParams','books', '$cookies', '$cookieStore','dataService','$log','$location', 'bookResource','currentUser', EditBookController]);
     
-    function EditBookController($routeParams,books,$cookies, $cookieStore, dataService, $log, $location, bookResource) {
+    function EditBookController($routeParams,books,$cookies, $cookieStore, dataService, $log, $location, bookResource, currentUser) {
         var editBook = this;
        
         /*dataService.getBookByID($routeParams.bookID)
@@ -15,8 +15,8 @@
         
         function getBookSuccess(book) {
             editBook.currentBook = book;
-            // Store entire book detail in cookie
-            $cookieStore.put('finalUserSelection',editBook.currentBook);
+            // Store entire book detail in current user session
+            currentUser.lastBookEdited = editBook.currentBook;
         }
         
         function getBookFail(error) {

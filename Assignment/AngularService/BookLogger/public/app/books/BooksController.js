@@ -1,10 +1,10 @@
 (function() {
 
     angular.module('app')
-        .controller('BooksController',['books','dataService','logger','badgeService','$cookies','$cookieStore', '$log', '$route', 'bookResource', BooksController]);
+        .controller('BooksController',['books','dataService','logger','badgeService','$cookies','$cookieStore', '$log', '$route', 'bookResource','currentUser', BooksController]);
 
 
-    function BooksController(books,dataService, logger, badgeService, $cookies, $cookieStore, $log, $route, bookResource) {
+    function BooksController(books,dataService, logger, badgeService, $cookies, $cookieStore, $log, $route, bookResource, currentUser) {
 
         var vm = this;
         
@@ -17,6 +17,14 @@
             .then(getBookSuccess,getBookError,getBookNotification)
             .catch(errorCallBack)
             .finally(getallBookCompleted);*/
+        
+        dataService.getUserSummary()
+            .then(getUserSummarySuccessResult);
+        
+        function getUserSummarySuccessResult(summaryData) {
+            console.log(summaryData);
+            vm.summaryData = summaryData;
+        }
         
         vm.allCollection = bookResource.query();
         
@@ -66,8 +74,8 @@
         vm.favoriteBook = $cookies.favoriteBook;
         console.log("Favorite book received");
         //console.log(vm.favoriteBook);
-        vm.lastEdited = $cookieStore.get('finalUserSelection');
-
+        //vm.lastEdited = $cookieStore.get('finalUserSelection');
+        vm.currentUser = currentUser;
     }
 
 

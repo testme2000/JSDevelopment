@@ -1,3 +1,10 @@
+<div>
+    {{ vm.summaryData.bookCount }} Books -
+    {{ vm.summaryData.readerCount }} Readers - 
+    {{ vm.summaryData.grandTotalMinutes}} Total Minutes
+
+</div>
+
 <h3>All Books</h3>
     <h2>{{vm.appName}}</h2>
     <h3>{{vm.appDesc}}</h3>
@@ -11,7 +18,7 @@
         </ul>
 </div>
 <a href="#/AddBook">Add New Book</a>
-<a href="#/EditBook/{{vm.lastEdited.book_id}}">Open Last Edited</a>
+<a href="#/EditBook/{{vm.currentUser.lastBookEdited.book_id}}">Open Last Edited</a>
 <h3>All Readers</h3>
 <div>
         <ul>
