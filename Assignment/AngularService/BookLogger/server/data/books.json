@@ -46,5 +46,11 @@
         "title": "Fried Green Tomato",
         "author": "Dan Filler",
         "year_published": "2009"
+    },
+    {
+        "book_id": 64,
+        "title": "The Millionaire Next Door",
+        "author": "Thomas Stanley",
+        "year_published": "1999"
     }
 ]
