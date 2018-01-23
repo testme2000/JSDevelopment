@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+    <head lang="en">
+        <meta charset="utf-8">
+        <title>Robot Prototype</title>
+    </head>
+    <body>
+        <script>
+            // Setup Rebot prototype
+            function Robot(name,year,owner) {
+                this.name = name;
+                this.year = year;
+                this.owner = owner;
+            }
+            // Add some prototype function
+            Robot.prototype.maker = "IVile Product";
+            
+            Robot.prototype.speak = function() {
+                console.log("I am Robot, how are you!");
+            }
+            
+            Robot.prototype.makeCoffee = function() {
+                console.log("Adding sugar, adding milk, you coffee is ready Sir/Madam");
+            }
+            
+            Robot.prototype.blinkLights = function() {
+                console.log("Blinking lights, now its your turn!");
+            }
+            // Create instance of Robot
+            var robby = new Robot("Robby",1956,"Basic Corporation");
+            var rosie = new Robot("Rosie",1968,"Advance Corporation");
+            // Add some custom properties
+            robby.onOffSwitch = true;
+            robby.makeCoffee = function(flavor) {
+                console.log("Preparing flavor coffee " + flavor);
+                console.log("Adding sugar, adding milk, and your coffee is ready Sir/Madam");
+            }
+            rosie.clearTheHouse = function() {
+                console.log("Sweep the floor, vaccum the carpert, House is cleaned");
+            }
+            // Now test the all Robot
+            console.log(robby.name + " Year " + robby.year + " Owner " + robby.owner);
+            console.log("Is " + robby.name + " started  :" + (robby.onOffSwitch?"Yea":"Umm No"));
+            robby.speak();
+            robby.makeCoffee("Carmel");
+            console.log(rosie.name + " Year " + rosie.year + " Owner " + rosie.owner);
+            console.log("Is " + rosie.name + " started : " + (rosie.onOffSwitch?"Yea":"Umm No"));
+            rosie.clearTheHouse();
+            // Unlock Robot capability
+            function Game() {
+                this.level = 0;
+            }
+            
+            Game.prototype.play = function() {
+                this.level++;
+                console.log("Welcome to level " + this.level);
+                this.unlock();
+            }
+            
+            Game.prototype.unlock = function() {
+                if(this.level === 10) {
+                    Robot.prototype.startWalking = function() {
+                        console.log("Hurray " + this.name + " can walk now!");
+                    }
+                }
+                else if(this.level === 20) {
+                    Robot.prototype.startRunning = function() {
+                        console.log("Hurray " + this.name + " can run now!");
+                    }
+                }
+                else if(this.level === 30) {
+                    Robot.prototype.startUsingLaserBeam = function() {
+                        console.log("Hurray " + this.name + " can use laster now!");
+                        Robot.prototype.UseLaserBeam = true;
+                    }
+                }
+                
+            }
+            
+            Robot.prototype.startBeaming = function() {
+                if(this.UseLaserBeam) {
+                    console.log(this.name + " We are beaming");
+                }
+            }
+        
+            var funTime = new Game();
+            for(var count = 0;count < 35;count++) {
+                funTime.play();
+                funTime.unlock();
+            }
+            robby.startWalking();
+            robby.startRunning();
+            robby.startUsingLaserBeam();
+            robby.startBeaming();
+            rosie.startBeaming();
+            
+            Robot.prototype.errorMessage = "All Robot ready to roll";
+            
+            Robot.prototype.reportMalFunction = function() {
+                console.log(this.name + " is having issue : ",this.errorMessage);
+            }
+            
+            robby.reportMalFunction();
+            rosie.reportMalFunction();
+            
+            Robot.prototype.shortCircuit = function() {
+                this.errorMessage = "I am having trouble, something went wrong";
+            }
+            rosie.shortCircuit();
+            robby.reportMalFunction();
+            rosie.reportMalFunction();
+        
+            // Space Robot - Prototype Inheritance
+            
+            function SpaceRobot(name,year,owner,homeplanet) {
+                this.name = name;
+                this.year = year;
+                this.owner = owner;
+                this.homeplanet = homeplanet;
+            }
+            
+            SpaceRobot.prototype = new Robot();
+            
+            SpaceRobot.prototype.speak = function() {
+                console.log("I am space Robot, I will do spacewalk in space");
+            }
+            
+            SpaceRobot.prototype.pilot = function() {
+                console.log("My misson is to land in Mars : sign by " + this.name);
+            }
+            
+            SpaceRobot.prototype.constructor = SpaceRobot;
+            
+            var kaspo = new SpaceRobot("Kaspo",2009,"NASA","Earth");
+            
+            kaspo.speak();
+            kaspo.pilot()
+            kaspo.makeCoffee();
+        
+            console.log("Is Kaspo Robot");
+            console.log((kaspo instanceof Robot)?"Yes":"I don't think so");
+            console.log("Is Kaspo SpaceRobot");
+            console.log((kaspo instanceof SpaceRobot)?"Yes":"I don't think so");
+            console.log("Is Rosie SpaceRobot");
+            console.log((rosie instanceof SpaceRobot)?"Yes":"I don't think so");
+            console.log("Kaspo constructor is " + kaspo.constructor);
+            console.log("Rosie constructor is " + rosie.constructor);
+            
+        </script>
+    </body>
+</html>

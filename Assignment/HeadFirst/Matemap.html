@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Map Event Location</title>
+    <script>
+        window.onload = init;
+        
+        function init() {
+            var map = document.getElementById("map");
+            map.onmousemove = showcord;
+        }
+        
+        function showcord(eventTar) {
+            var map = document.getElementById("coord");
+            var xPos = eventTar.clientX;
+            var yPos = eventTar.clientY;
+            
+            map.innerHTML = "Map Position : " + xPos + "," + yPos;
+            
+        }
+    
+    
+    </script>
+</head>
+<body>
+    <img id="map" src="map.jpg">
+    <p id="coord">Move mouse to find coordinates...</p>
+    
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+    <title>This is function verify</title>
+</head>
+<body>
+    <script>
+        var taxi = {
+            make: "Webvile Motors",
+            model: "Taxi",
+            year: 1955,
+            color: "Yellow",
+            passengers: 4,
+            convertiables: false,
+            milage: 281341
+        };
+    
+        function prequal(vehicle) {
+            if(vehicle.milage > 10000) {
+                return false;
+            }
+            else if(vehicle.year > 1960) {
+                return false;
+            }
+            return true;
+        }
+    
+        var worthLook = prequal(taxi);
+        
+        if(worthLook) {
+            console.log("You got the perfect taxi " + taxi.make + " " + taxi.model);
+        }
+        else {
+            console.log("Pass this junk, it is not worth your time " + taxi.make);
+        }
+    
+    </script>
+</body>
+</html>

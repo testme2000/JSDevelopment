@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en" ng-app="battleApp">
+<head>
+    <title>Battleship Game (Using AngularJS)</title>
+    <style>
+        body {
+            background-color: black;
+        }
+        
+        
+        div#board {
+            position: relative;
+            width: 1024px;
+            height: 863px;
+            margin: auto;
+            background: url("board.jpg") no-repeat;
+        }
+        
+        div#messageArea {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            color: rgb(83, 175, 19);
+        }
+        
+        table {
+            position: absolute;
+            left: 173px;
+            top: 98px;
+            border-spacing: 0px;
+        }
+        
+        td {
+            width: 94px;
+            height: 94px;
+        }
+        
+        form {
+            position: absolute;
+            bottom: 0px;
+            right: 0px;
+            padding: 15px;
+            background-color: rgb(83,175,19);
+        }
+        
+        form input {
+            background-color: rgb(152,207,113);
+            border-color: rgb(83,175,19);
+            font-size: 1em;
+        }
+        
+        div#errorArea {
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+            color: rgb(83, 175, 19);
+        }
+        
+        .hit {
+            background: url('ship.png') no-repeat center center;
+        }
+        
+        .miss {
+            background: url('miss.png') no-repeat center center;
+        }
+    </style>
+</head>
+<body ng-controller="battleController">
+    <h1>{{battleTitle}}</h1>
+    <div id="board">
+    <div id="messageArea" ng-style="messageStyle">{{statusMsg}}</div>
+        <table>
+            <tr ng-repeat="row in rowcolumnsetup" id="{{$index}}">
+                                                 <td ng-repeat="column in rowcolumnsetup" id="{{$index}}" ng-style="getClass($parent.$index,$index)"></td>
+                                                                            
+            </tr>
+        </table>
+        <form name="guessForm" ng-submit="handleFireButton()" novalidate="">
+            <table>
+                <tr>
+                    <input name="guessadd" ng-model="guessForm.guessInput" ng-init="guessInput='A0'" ng-required="true" ng-maxlength="2" ng-minlength="2" ng-pattern="/^[a-gA-G]{1}\d{1}$/" /> 
+                </tr>
+                <tr>
+                    <input name="guessSubmit" type="submit" value="Fire!" />
+                </tr>
+            </table>
+        </form>
+        <div id="errorArea" ng-style="error_message" ng-messages="guessForm.guessadd.$error">
+            <div ng-message="(guessForm.guessadd.$dirty || guessForm.guessadd.$pristine) && guessForm.guessadd.$error.required 
+                      && guessForm.$submitted">
+                Guess input is mandatory
+            </div>
+        </div>
+        <!-- 
+        <div id="errorArea" ng-style="error_message" 
+             ng-show="(guessForm.guessadd.$dirty || guessForm.guessadd.$pristine) && guessForm.guessadd.$error.required 
+                      && guessForm.$submitted">Guess input is mandatory</div>
+        <div id="errorArea" ng-style="error_message" 
+             ng-show="(guessForm.guessadd.$dirty || guessForm.guessadd.$pristine) && guessForm.guessadd.$error.maxlength
+                         && guessForm.$submitted">Guess input require two character</div>
+        <div id="errorArea" ng-style="error_message" 
+             ng-show="(guessForm.guessadd.$dirty || guessForm.guessadd.$pristine) && guessForm.guessadd.$error.pattern
+                         && guessForm.$submitted">Guess input require first character column (A-G) and second number (0-9)</div>
+        -->
+    </div>
+</body>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-messages.min.js"></script>
+    <script src="app.js"></script>
+    <script src="js/battlecontroller.js"></script>
+    <script src="js/battleservice.js"></script>
+</html>
