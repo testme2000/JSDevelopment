@@ -1,0 +1,23 @@
+<!doctype html>
+<html ng-app="MainApp">
+<head>
+    <meta charset="utf-8">
+    <base href="/greet">
+    <title>This is routing testing</title>
+    <link rel="stylesheet" href="app.css">
+</head>
+<body ng-controller="MainController">
+    {{maintitle}}
+    <ul class="menu">
+        <li><a href='/greet'>Greeting</a></li>
+        <li><a href='/currentdate'>Current Date</a></li>
+    </ul>
+    <div ng-view></div>
+</body>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/maincontroller.js"></script>
+    <script src="js/greetcontroller.js"></script>
+    <script src="js/currentcontroller.js"></script>
+</html>

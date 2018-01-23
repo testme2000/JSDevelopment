@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en" ng-app="directChildApp">
+<head>
+    <meta charset="utf-8">
+    <title>Directive With Child Scope</title>
+</head>
+<body ng-controller="directChildController">
+    <h1>{{parentScopeStatus}}</h1>
+    <div>
+        <data-direct-child></data-direct-child>
+    </div>
+</body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
+    <script src="directChildApp.js"></script>
+    <script src="directChildController.js"></script>
+</html>

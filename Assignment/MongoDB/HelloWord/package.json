@@ -1,0 +1,24 @@
+{
+  "name": "helloword",
+  "version": "1.0.0",
+  "description": "",
+  "main": "hello.js",
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "consolidate": "^0.15.0",
+    "express": "^4.16.2",
+    "http": "0.0.0",
+    "http-server": "^0.11.1",
+    "module": "^1.2.5",
+    "mongodb": "^3.0.1",
+    "node_module": "^0.0.0",
+    "nunjucks": "^3.0.1",
+    "swig": "^1.4.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

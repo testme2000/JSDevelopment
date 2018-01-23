@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en" ng-app="weatherApp">
+<head>
+    <meta charset="utf-8">
+    <title>Weather with AngularJS Support</title>
+    <style>
+        table.form { margin: 25px 0 0 29px; border-collapse: collapse; }
+        table.form input.inp-text, table.form input.answer, table.form textarea
+        { border: 1px solid #909090; border-right: 1px solid #BBBBBB; border-bottom: 1px solid #BBBBBB; padding: 3px; }
+        table.form td.submit-button-right { text-align: right !important; }
+        table.form input.submit-text { font: 1.4em Georgia, "Times New Roman", Times, serif; letter-spacing: 1px; width: auto; }
+    </style>
+</head>
+<body ng-controller="weatherController">
+    <h1>{{weatherAppStatus}}</h1>
+    <form name="weatherForm" ng-submit="getWeather()" novalidate="">
+        <table class="form">
+            <div>
+				<label for="input-one"><strong>City : </strong></label>
+                <input size="30" class="inp-text" type="text" name="weatherCity" ng-model="weatherForm.city" placeholder="Enter City Name" ng-required="true">
+            </div>
+            <div>
+				<label for="input-one"><strong>Country : </strong></label>
+                <input size="30" type="text" name="weatherCountry" ng-model="weatherForm.country" placeholder="Enter Country Name" ng-required="true">
+            </div>
+            <div>
+                <input class="submit-text" type="submit" value="Get Weather Details" />
+            </div>
+            <div>
+                <div></div>
+                <div>
+                    <span ng-show="(weatherForm.weatherCity.$dirty || weatherForm.weatherCity.$pristine) && weatherForm.$submitted && weatherForm.weatherCity.$error.required">City Name is required</span>
+                </div>
+                <span ng-show="(weatherForm.weatherCountry.$dirty || weatherForm.weatherCountry.$pristine) && weatherForm.weatherCountry.$error.required  && weatherForm.$submitted">Country Name is required</span>
+            </div>
+        </table>
+    </form>
+    <br>
+    <br>
+    <br>
+    <b>Weather Details as follows.... </b>
+    <span>{{weatherDetail}}</span>
+</body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
+    <script src="weathApp.js"></script>
+    <script src="weathercontroller.js"></script>
+</html>

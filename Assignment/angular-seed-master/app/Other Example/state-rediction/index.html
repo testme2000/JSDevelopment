@@ -1,0 +1,25 @@
+<!doctype html>
+<html ng-app="PrimeApp">
+<head>
+    <meta charset="utf-8">
+    <base href="/Say">
+    <title>This is routing testing</title>
+    <link rel="stylesheet" href="./app.css">
+</head>
+<body ng-controller="PrimeController">
+    {{PrimeTitle}}
+    <ul class="menu">
+        <li><a ui-sref='Say'>Introduce</a></li>
+        <li><a ui-sref='Nice'>Little chat</a></li>
+    </ul>
+    <div ng-view></div>
+</body>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/angular-ui-router@0.4.3/release/angular-ui-router.min.js"></script>
+    <script src="./app.js"></script>
+    <script src="./js/PrimeController.js"></script>
+    <script src="js/SayController.js"></script>
+    <script src="js/nicecontroller.js"></script>
+
+</html>

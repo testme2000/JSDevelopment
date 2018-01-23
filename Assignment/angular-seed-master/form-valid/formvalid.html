@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en" ng-app="validApp">
+<head>
+    <meta charset="utf-8">
+    <title>Form Validation using AngularJS</title>
+    <style>
+        .error-message {
+            color : red;
+        }
+        
+        input.ng-dirty.ng-invalid {
+            color: red;
+        }
+    
+    </style>
+</head>
+<body ng-controller="formController" ng-submit="saveUser()">
+    <form name="validateForm" novalidate>
+        First Name : <input type="text" name="firstname" ng-model="user.firstname" ng-required="true" ng-minlength="2">
+        <span class="error-message" ng-show="validateForm.firstname.$dirty && validateForm.firstname.$error.required">The First Name is Mandatory</span>
+        <span class="error-message" ng-show="validateForm.firstname.$dirty && validateForm.firstname.$error.minlength"> The First Name require minimum two character</span>
+        <br>
+        Last Name : <input type="text" name="lastname" ng-model="user.lastname" ng-required="true" ng-minlength="2">
+            <span class="error-message" ng-show="validateForm.lastname.$dirty && validateForm.lastname.$error.required">The Last Name is Mandatory</span>
+            <span class="error-message" ng-show="validateForm.lastname.$dirty && validateForm.lastname.$error.minlength">The Last Name require minimum two character</span>
+        <br>
+        Phone No: <input type="text" name="phonenumber" ng-model="user.phonenumber" ng-maxlength="10" ng-minlength="10" ng-pattern="/^[a-zA-Z]{2}\d{1}$/">
+                <span class="error-message" ng-show="validateForm.phonenumber.$dirty && validateForm.phonenumber.$invalid">The Phone Number must contain 10 digit</span>
+        <br>
+        <br>
+        <input type="submit" value="Save"  />
+    </form>
+</body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
+    <script src="./app.js"></script>
+    <script src="./formcontroller.js"></script>
+</html>
+    

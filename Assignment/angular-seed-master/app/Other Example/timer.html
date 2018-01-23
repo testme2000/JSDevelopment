@@ -1,0 +1,14 @@
+<!doctype html>
+<html ng-app="TimeApp">
+<head >
+    <title>Timer Refresh ($apply and digest) cycle</title>
+</head>
+<body ng-controller="TimeController" >
+    <button ng-click="HitTheTask()">Schedule Task</button>
+    <br/>
+    <solid>So far it is running : </solid> {{timemessage}}
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="js/time.js"></script>
+    <script src="js/timecontroller.js"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Design Pattern with AngularJs</title>
+</head>
+<body ng-app="taskManager">
+    <h1>Task Manager (AngularJs Design Pattern)</h1>
+    <div ng-controller='taskctrl as ctrl'>
+        <div ng-repeat='task in ctrl.tasks'>
+            <input type='checkbox' ng-checked='task.completed' ng-click='task.complete()'>
+            {{task.name}}
+        </div>
+        </div>
+    </div>
+</body>
+    <script data-require="angular.js@1.4.8" data-semver="1.4.8" src="https://code.angularjs.org/1.4.8/angular.js"></script>
+    <script src="script.js"></script>
+    <script src="taskang.js"></script>
+    <script src="taskRepositoryAng.js"></script>
+</html>

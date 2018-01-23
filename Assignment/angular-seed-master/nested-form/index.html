@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en" ng-app="nestApp">
+<head>
+    <meta charset="utf-8">
+    <title>Nested Form with AngularJS</title>
+</head>
+<body ng-controller="nestController">
+    <h1>{{nestTitle}}</h1>
+    <form name="external">
+        <div ng-repeat="prodrange in products" ng-form="insider">
+            Name:
+            <input ng-model="prodrange.name" name="name" ng-required="true" ng-minlength="2" ng-model-options="{updateOn: 'blur', debounce:10000 }"/>
+            <span ng-show="insider.name.$dirty && insider.name.$invalid">Product name is required</span>
+            <span ng-show="insider.name.$dirty && insider.name.$error.minlength">The Name require minimum two character</span>
+            <br/>
+            Price:
+            <input ng-model="prodrange.price" name="price" ng-required="true" />
+            <span ng-show="insider.price.$dirty && insider.price.$invalid">Product price is required</span>
+            <hr/>
+        </div>
+    </form>
+</body>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
+    <script src="./nestapp.js"></script>
+    <script src="./nestController.js"></script>
+</html>
