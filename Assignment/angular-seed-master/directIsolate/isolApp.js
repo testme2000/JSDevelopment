@@ -3,12 +3,17 @@
 (function(){
     var isolApp = angular.module('isolApp',[]);
     
-    isolApp.directive('isolatedscope', function() {
+    isolApp.directive('isolateddir', function() {
         return {
-            scope : {},
+            scope : true, //{},
             restrict: 'AE',
             replace: true,
-            template: '<h3>Hello World from isolated scope</h3>'
+            template: '<div>Hello World from isolated scope</div>' 
+            //+
+              //          "We can't access parent value, lets add our own value" +
+                //        "<input type='text' ng-model='childValue' />"  +
+                  //      "this is your value {childValue}"
         };
+        
     });
 }());
