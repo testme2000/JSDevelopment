@@ -3,7 +3,13 @@
 <head>
     <meta charset="utf-8">
 </head>
-<body ng-controller="isoController">
+<body ng-controller="isolController">
     <h1>{{parentStatus}}</h1>
+    <div>
+        <data-isolated-scope></data-isolated-scope>
+    </div>
 </body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
+    <script src="isolApp.js"></script>
+    <script src='isolController.js'></script>
 </html>
