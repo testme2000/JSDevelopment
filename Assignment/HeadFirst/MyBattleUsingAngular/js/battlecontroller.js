@@ -54,6 +54,13 @@ battleApp.controller('battleController', function($scope,battleService,BOARD_SIZ
             processGuess(guess,$scope);
             // Initialize it for next value
             $scope.guessInput = "";
+            // Reset the form state and clear the validation
+            $scope.guessForm.$dirty = false;
+            $scope.guessForm.$pristine = true;
+            $scope.guessForm.$submitted = false;
+            $scope.guessForm.guessAdd.$dirty = false;
+            $scope.guessForm.guessAdd.$pristine = true;
+            $scope.guessForm.guessAdd.$error = false;
         }
     }
     
