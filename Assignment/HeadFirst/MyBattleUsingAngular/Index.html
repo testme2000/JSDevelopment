@@ -75,10 +75,10 @@
                                                                             
             </tr>
         </table>
-        <form name="guessForm" ng-submit="handleFireButton()" novalidate="">
+        <form name="guessForm" ng-submit="handleFireButton()" novalidate autocomplete="off">
             <table>
                 <tr>
-                    <input name="guessadd" ng-model="guessForm.guessInput" ng-init="guessInput='A0'" required="" ng-maxlength="2" ng-minlength="2" ng-pattern="/^[a-gA-G]{1}\d{1}$/" /> 
+                    <input name="guessadd" ng-model="guessForm.guessInput" ng-init="guessInput='A0'" required ng-maxlength="2" ng-minlength="2" ng-pattern="/^[a-gA-G]{1}\d{1}$/" /> 
                 </tr>
                 <tr>
                     <input name="guessSubmit" type="submit" value="Fire!" />
@@ -87,33 +87,19 @@
                 </tr>
             </table>
         </form>
-        <div id="errorArea" ng-style="error_message" ng-messages="guessForm.guessadd.$error" 
-         ng-show="guessForm.guessadd.$dirty && guessForm.guessadd.$error">
-                    <div id="reqErrorId" ng-message="required">
-                        Guess input is mandatory
-                    </div>
-                    <div id="patternId" ng-message="pattern">
-                        Guess input require first character column (A-G) and second number (0-9)
-                    </div>
-                    <div id="lengthId" ng-message="minlength">
-                        Guess input require two character
-                    </div>
+        <div id="errorArea" ng-style="error_message" 
+             ng-messages="guessForm.guessadd.$error">
+            <div ng-message="required">
+                Guess input is mandatory
+            </div>
+            <div ng-message="pattern">
+                Guess input require first character column (A-G) and second number (0-9)
+            </div>
         </div>
-        <!-- 
-        <div id="errorArea" ng-style="error_message" 
-             ng-show="(guessForm.guessadd.$dirty || guessForm.guessadd.$pristine) && guessForm.guessadd.$error.required 
-                      && guessForm.$submitted">Guess input is mandatory</div>
-        <div id="errorArea" ng-style="error_message" 
-             ng-show="(guessForm.guessadd.$dirty || guessForm.guessadd.$pristine) && guessForm.guessadd.$error.maxlength
-                         && guessForm.$submitted">Guess input require two character</div>
-        <div id="errorArea" ng-style="error_message" 
-             ng-show="(guessForm.guessadd.$dirty || guessForm.guessadd.$pristine) && guessForm.guessadd.$error.pattern
-                         && guessForm.$submitted">Guess input require first character column (A-G) and second number (0-9)</div>
-        -->
     </div>
 </body>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-messages.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-messages.min.js"></script>
     <script src="app.js"></script>
     <script src="js/battlecontroller.js"></script>
     <script src="js/battleservice.js"></script>

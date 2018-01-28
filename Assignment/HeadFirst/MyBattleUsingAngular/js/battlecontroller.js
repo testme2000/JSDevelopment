@@ -61,6 +61,7 @@ battleApp.controller('battleController', function($scope,battleService,BOARD_SIZ
             $scope.guessForm.guessAdd.$dirty = false;
             $scope.guessForm.guessAdd.$pristine = true;
             $scope.guessForm.guessAdd.$error = false;
+            $scope.$setPristine(true);
         }
     }
     
