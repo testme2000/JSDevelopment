@@ -1,6 +1,16 @@
 <!doctype html>
 <html>
 <head lang="en">
+    <style>
+        .headers {
+            font-family: 'Times New Roman',
+            maring: 0;
+        }
+        
+        .accent-color {
+            color: #FF6A00;
+        }
+    </style>
     <title>Vue.js bind directive test</title>
 </head>
 <body>
@@ -14,6 +24,11 @@
             v-text="secondName"
             v-bind:style="secondStyle">
         </h2>
+        <h2 
+            v-text="thirdName"
+            v-bind:class="{ 'headers' : true,
+                            'accent-color': IsStatusOn}">
+            </h2>
     </div>
     <script type="text/javascript" src="https://unpkg.com/vue/dist/vue.js"></script>
     <script type="text/javascript">
@@ -27,7 +42,9 @@
                    color: "FF6A00",
                    fontFamily: "Verdana",
                    margin: 2
-               }
+               },
+                thirdName : 'This is another one for you',
+                IsStatusOn : true
            } 
         });
     </script>
