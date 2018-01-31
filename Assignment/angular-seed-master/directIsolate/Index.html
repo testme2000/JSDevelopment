@@ -3,7 +3,15 @@
 <head>
     <meta charset="utf-8">
 </head>
-<body ng-controller="isoController">
+<body ng-controller="isolController">
     <h1>{{parentStatus}}</h1>
+    <h2>{{parentValue}}</h2>
+    <div>
+        <data-isolated-dir></data-isolated-dir>
+        {{childValue}}
+    </div>
 </body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
+    <script src="isolApp.js"></script>
+    <script src='isolController.js'></script>
 </html>
