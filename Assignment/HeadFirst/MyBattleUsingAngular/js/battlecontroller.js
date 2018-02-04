@@ -50,6 +50,7 @@ battleApp.controller('battleController', function($scope,battleService,BOARD_SIZ
         if($scope.guessForm.$valid) {
             // Convert valid input to upper case
         	var guess = $scope.guessForm.guessInput.toUpperCase();
+            console.log(guess);
             // Process the guess
             processGuess(guess,$scope);
             // Initialize it for next value
@@ -58,10 +59,6 @@ battleApp.controller('battleController', function($scope,battleService,BOARD_SIZ
             $scope.guessForm.$dirty = false;
             $scope.guessForm.$pristine = true;
             $scope.guessForm.$submitted = false;
-            $scope.guessForm.guessAdd.$dirty = false;
-            $scope.guessForm.guessAdd.$pristine = true;
-            $scope.guessForm.guessAdd.$error = false;
-            $scope.$setPristine(true);
         }
     }
     
@@ -92,7 +89,7 @@ battleApp.controller('battleController', function($scope,battleService,BOARD_SIZ
 		if (location) {
 			guesses++;
 			var hit = battleService.fire(location);
-			if (hit && battleService.totalShipSunk() === NUM_SHIPS) {
+			if (hit && battleService.totalShipSunk() === NUM_SHIPS) {            
 					$scope.statusMsg = "You sank all my battleships, in " + this.guesses + " guesses";
 			}
             else {
