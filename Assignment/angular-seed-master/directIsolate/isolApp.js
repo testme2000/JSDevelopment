@@ -5,14 +5,13 @@
     
     isolApp.directive('isolateddir', function() {
         return {
-            scope : true, //{},
+            scope : {},
             restrict: 'AE',
             replace: true,
-            template: '<div>Hello World from isolated scope</div>' 
-            //+
-              //          "We can't access parent value, lets add our own value" +
-                //        "<input type='text' ng-model='childValue' />"  +
-                  //      "this is your value {childValue}"
+            template: '<div>Hello World from isolated scope : <strong>{{childstatus}}<strong></div>',
+            link: function(scope,elem,attri) {
+                scope.childstatus = "From Child";
+            }
         };
         
     });

@@ -36,12 +36,13 @@
         
     }]);
 
-    app.config(['booksProvider','constants','$routeProvider','$httpProvider', '$logProvider', function(booksProvider,constants, $routeProvider, $httpProvider, $logProvider){
+    app.config(['booksProvider','constants','$routeProvider','$httpProvider', '$logProvider', '$provide', function(booksProvider,constants, $routeProvider, $httpProvider, $logProvider, $provide){
         booksProvider.setIncludeVersionInTitle(true);
         booksProvider.setIncludeAuthorInfo(true);
         $logProvider.debugEnabled(true);
         
         //$httpProvider.interceptors.push('bookLoggerInterceptor');
+        $provide.decorator('$log', ['$delegate','books', logDecorator] )
         
         
         $routeProvider
@@ -67,6 +68,44 @@
         })
         .otherwise('/');
     }]);
+    
+    function logDecorator($delegate, books) {
+        function log(message) {
+            message += '-' + new Date() + ' (Create by Hungry learner)';
+            $delegate.log(message);
+        }
+        
+        function info(message) {
+            $delegate.info(message);
+        }
+        
+        function warn(message) {
+            $delegate.warn(message);
+        }
+        
+        function error(message) {
+            $delegate.error(message);
+        }
+        
+        function debug(message) {
+            $delegate.debug(message);
+        }
+        
+        function someExtra(message) {
+            message = 'SOMETHING EXTRA ' + message; 
+            $delegate.log(message)
+        }
+        
+        return {
+            log: log,
+            info: info,
+            warn: warn,
+            error: error,
+            debug: debug,
+            someExtra: someExtra
+        };
+        
+    }
     
     // We are dealing with $rootScope event
     app.run(['$rootScope', function($rootScope){

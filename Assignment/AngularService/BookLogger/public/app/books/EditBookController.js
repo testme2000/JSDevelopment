@@ -6,10 +6,7 @@
     function EditBookController($routeParams,books,$cookies, $cookieStore, dataService, $log, $location, bookResource, currentUser) {
         var editBook = this;
        
-        /*dataService.getBookByID($routeParams.bookID)
-        .then(getBookSuccess)
-        .catch(getBookFail);*/
-        
+                
         editBook.currentBook = bookResource.get({ book_id : $routeParams.bookID});
         $log.debug(editBook.currentBook);
         
@@ -30,9 +27,6 @@
         }
         
         editBook.saveBook = function() {
-//            dataService.updateBook(editBook.currentBook)
-//                    .then(updateBookSuccess)
-//                    .catch(updateBookFail);
             editBook.currentBook.$update();
             $location.path('/');
         };

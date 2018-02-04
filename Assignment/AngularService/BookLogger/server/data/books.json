@@ -2,7 +2,7 @@
     {
         "book_id": 1,
         "title": "Anna Karenina",
-        "author": "Leo Tolstoy Part",
+        "author": "Leo Tolstoy Part999",
         "year_published": "1878"
     },
     {
@@ -13,7 +13,7 @@
     },
     {
         "book_id": 3,
-        "title": "Invisible Man",
+        "title": "Invisible Man1",
         "author": "Ralph Ellison",
         "year_published": "1952"
     },

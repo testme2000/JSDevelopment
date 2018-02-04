@@ -11,12 +11,9 @@
         vm.appName = books.appName;
         vm.appDesc = books.appDesc;
         console.log("Debug now " +  vm.appName);
-      
+        $log.log('Lets run it now');  
+        $log.someExtra("How to do you feel to learn the framework");
         
-       /* dataService.getAllBooks()
-            .then(getBookSuccess,getBookError,getBookNotification)
-            .catch(errorCallBack)
-            .finally(getallBookCompleted);*/
         
         dataService.getUserSummary()
             .then(getUserSummarySuccessResult);
@@ -31,6 +28,7 @@
         function getBookSuccess(books) {
            // throw 'something bad happen';
             vm.allCollection = books;
+            $log.log('All Books retrieved');
         }
         
         function getBookError(reason) {
@@ -72,10 +70,10 @@
         vm.getBadge = badgeService.retriveBadge;
         
         vm.favoriteBook = $cookies.favoriteBook;
-        console.log("Favorite book received");
-        //console.log(vm.favoriteBook);
-        //vm.lastEdited = $cookieStore.get('finalUserSelection');
         vm.currentUser = currentUser;
+        console.log("Current book assigned to cache object");
+        console.log("**********************");
+        console.log(currentUser);
     }
 
 
