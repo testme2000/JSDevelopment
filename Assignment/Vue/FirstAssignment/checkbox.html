@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Checkbox Selection using Vue.js</title>
+</head>
+<body>
+    <div id="checkSelect">
+        <label>
+            <input type="checkbox" value="beer" v-model="searchIndex">Beer
+        </label>
+        <br>
+        <lable>
+            <input type="checkbox" value="rum" v-model="searchIndex">Rum
+        </lable>
+        <br>
+        <br>
+        <strong>
+            User Selection : {{ searchIndex }}
+        </strong>
+    </div>
+    <script type="text/javascript" src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script type="text/javascript">
+        var checkSelect = new Vue({
+            el : "#checkSelect",
+            data : {
+                isPowerSyntaxEnable : false,
+                searchIndex : []
+            }
+        });
+    
+    </script>
+</body>
+</html>

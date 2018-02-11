@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Input Event using Vue.js</title>
+</head>
+<body>
+    <div id="clickEvent">
+        <form>
+            <input v-model="query" type="search" placeholder="Look for it...." >
+                <button type="button" v-on:click="implementSearch('token', $event)">Find It</button>
+        </form>
+    </div>
+    <script type="text/javascript" src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script>
+        var clickEvent = new Vue({
+            el : '#clickEvent',
+            data: {
+                query : 'test'
+            },
+            methods: {
+                implementSearch : function(t, e) {
+                    alert('Token' + t + " User click on button and selected " + this.query + "Button " + event.target.innerText);
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Radio Button Selection using Vue.js</title>
+</head>
+<body>
+    <div id="radioText">
+        <label class="form-check-label">
+            <input type="radio" value="Coca Cola" v-model="searchBever">Coca Cola
+        </label>
+        <label class="form-check-label">
+            <input type="radio" value="Pepsi" v-model="searchBever">Pepsi
+        </label>
+        <br>
+        <br>
+        User Selection : {{ searchBever }}
+    </div>
+    <script type="text/javascript" src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script>
+        var radioText = new Vue({
+            el : '#radioText',
+            data: {
+                searchBever : 'Pepsi'
+            }
+        });
+    
+    </script>
+</body>
+</html>
