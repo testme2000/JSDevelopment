@@ -31,7 +31,7 @@ battleApp.service('battleService', function() {
             shipsSunk: 0,
             returnResult : [],
 
-            // original hard-coded values for ship locations
+            // Original hard-coded values for ship locations
             ships: [
                 { locations: ["06", "16", "26"], hits: ["", "", ""] },
                 { locations: ["24", "34", "44"], hits: ["", "", ""] },

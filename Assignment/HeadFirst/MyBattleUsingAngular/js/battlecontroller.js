@@ -120,7 +120,7 @@ battleApp.controller('battleController', function($scope,battleService,BOARD_SIZ
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 // Board Layout testing
-describe('battleApp Layout Testing', function() {
+describe('battleApp Application Testing', function() {
     var $battleShipController;
     var $battlescope;
     var $battleService;
@@ -146,7 +146,10 @@ describe('battleApp Layout Testing', function() {
     // Validate basic layout setup
     describe('Validate board layout', function() {
         console.log("Now validate the basic layout")
-        it('Call for setup of board', function() {
+        it('1. Verify setup of board', function() {
+            // Validate controller has to be defined
+            expect($battleShipController).toBeDefined();
+            expect($battlescope).toBeDefined();
             // Validate title and status message
             expect($battlescope.battleTitle).toBe('BattleShip');
             expect($battlescope.statusMsg).toBe("");
@@ -173,8 +176,42 @@ describe('battleApp Layout Testing', function() {
     // Validate battleship functionality
     describe('Validate board class', function() {
         console.log("Now validate battleship class function");
-        it('Call for board functionality', function() {
-            expect($battlescope.setClass("0","A","HIT").toBe($battlescope.rowcolumnsetup[0][0].Status=="HIT"));
+        it('2. Verify board basic functionality', function() {
+            console.log($battlescope);
+            // Validate : Board will set HIT property for row & column
+            $battlescope.setClass("0","0","HIT");
+            expect($battlescope.rowcolumnsetup[0][0].Status).toBe("HIT");
+            // Reset it back
+            $battlescope.setClass("0","0","");
+            expect($battlescope.rowcolumnsetup[0][0].Status).toBe("");
+            // Validate : Board will set MISS property for row & column
+            $battlescope.setClass("5","5","MISS");
+            expect($battlescope.rowcolumnsetup[5][5].Status).toBe("MISS");
+            $battlescope.setClass("5","5","");
+            expect($battlescope.rowcolumnsetup[0][0].Status).toBe("");
+        });
+    });
+    // Validate battleship user interaction
+    describe('Validate User intacton with board', function() {
+        console.log("Now validate user interaction");
+        it('3. Verify board response with user selection functionality', function() {
+            console.log($battlescope);
+            $battlescope.guessForm = {  guessInput : "",
+                                        $dirty: true,
+                                        $pristine: true,
+                                        $submitted: true
+                                     };
+            $battlescope.guessForm.guessInput = "A0";
+            $battlescope.$digest();
+            expect($battlescope.guessForm).toBeDefined();
+            // Set the selection to HIT Target
+            $battlescope.guessForm.guessInput = "A0";
+            // Call fire event
+            $battlescope.handleFireButton();
+            // Validate service response
+            expect($battlescope.guessForm.$dirty).toEqual(false);
+            expect($battlescope.guessForm.$pristine).toBe(true);
+            expect($battlescope.guessForm.$submitted).toBe(false);
         });
     });
 });
