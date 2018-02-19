@@ -16,14 +16,15 @@ em {
     font-family:serif;
 }
 
-.greentea {
+
+p.blueberrytea {
+    color: blue;
+}
+
+p.greentea {
     color: green;
 }
 
 p.rasberrytea  {
     color: purple;
-}
-
-p.blueberrytea {
-    color: blue;
 }

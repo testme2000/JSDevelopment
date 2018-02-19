@@ -120,40 +120,98 @@ battleApp.controller('battleController', function($scope,battleService,BOARD_SIZ
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 // Board Layout testing
-describe('battleApp Layout Testing', function() {
+describe('battleApp Application Testing', function() {
     var $battleShipController;
     var $battlescope;
+    var $battleService;
+    var boardSize;
+    var numShip;
     
     console.log("battleApp Layout Testing");
     // Create battleApp Module
     beforeEach(module('battleApp'));
     // Inject battleShip Controller
-    beforeEach(angular.mock.inject(function(_$controller_, $rootScope,_$battleService_) { //,_$rootScope_) { //,_battleService_,_BOARD_SIZE_,_NUM_SHPS_) {
+    beforeEach(angular.mock.inject(function(_$controller_, $rootScope,_battleService_,_BOARD_SIZE_,_NUM_SHIPS_) {
         console.log("battleApp Controller injected");                   
-        var $scope = $rootScope.$new();
-       // battleService = _battleService_;
-        
+        $battlescope = $rootScope.$new();
+        var mockService = _battleService_;
+        boardSize = _BOARD_SIZE_;
         // Hold the controller value
-        //$battleShipController = _$controller_('battleController',{ $battlescope: $scope });//,
-          //                                                         $service: battleService,
-            //                                                       boardSize: BOARD_SIZE,
-              //                                                     numShip: NUM_SHIPS
-                //                                                 });
+        $battleShipController = _$controller_('battleController',{ $scope: $battlescope,
+                                                                   $battleService: mockService,
+                                                                   boardSize: _BOARD_SIZE_,
+                                                                   numShip: _NUM_SHIPS_
+                                                                 });
     }));
     // Validate basic layout setup
     describe('Validate board layout', function() {
         console.log("Now validate the basic layout")
-
-        it('Call for setup of board', function() {
-            var $scope = {};
-            var $service;
-            var boardSize;
-            var numShip;
-            
-          
+        it('1. Verify setup of board', function() {
+            // Validate controller has to be defined
+            expect($battleShipController).toBeDefined();
+            expect($battlescope).toBeDefined();
             // Validate title and status message
-          //  expect($scope.battleTitle).toBe('BattleShip');
-            //expect($scope.statusMsg).toBe("");
+            expect($battlescope.battleTitle).toBe('BattleShip');
+            expect($battlescope.statusMsg).toBe("");
+            // Validate Hit/Miss Status
+            expect($battlescope.toggleHitMiss).toBe("");
+            // Validate Error message color
+            expect($battlescope.error_message.color).toBe("red");
+            // Validate Message style layout
+            expect($battlescope.messageStyle.position).toBe("absolute");
+            expect($battlescope.messageStyle.top).toBe("0px");
+            expect($battlescope.messageStyle.left).toBe("0px");
+            expect($battlescope.messageStyle.color).toBe("rgb(83, 175, 19)");
+            // Validate Board Layout area
+            expect($battlescope.rowcolumnsetup.length).toBe(boardSize);
+            // Now validate inside board area
+            for(var row; row < boardSize;row++) {
+                for(var column; column < boardSize;column++) {
+                    expect($battlescope.rowcolumnsetup[row][column].column).toBe("");
+                    expect($battlescope.rowcolumnsetup[row][column].status).toBe("");
+                }
+            }
+        });
+    });
+    // Validate battleship functionality
+    describe('Validate board class', function() {
+        console.log("Now validate battleship class function");
+        it('2. Verify board basic functionality', function() {
+            console.log($battlescope);
+            // Validate : Board will set HIT property for row & column
+            $battlescope.setClass("0","0","HIT");
+            expect($battlescope.rowcolumnsetup[0][0].Status).toBe("HIT");
+            // Reset it back
+            $battlescope.setClass("0","0","");
+            expect($battlescope.rowcolumnsetup[0][0].Status).toBe("");
+            // Validate : Board will set MISS property for row & column
+            $battlescope.setClass("5","5","MISS");
+            expect($battlescope.rowcolumnsetup[5][5].Status).toBe("MISS");
+            $battlescope.setClass("5","5","");
+            expect($battlescope.rowcolumnsetup[0][0].Status).toBe("");
+        });
+    });
+    // Validate battleship user interaction
+    describe('Validate User intacton with board', function() {
+        console.log("Now validate user interaction");
+        it('3. Verify board response with user selection functionality', function() {
+            console.log($battlescope);
+            $battlescope.guessForm = {  guessInput : "",
+                                        $dirty: true,
+                                        $pristine: true,
+                                        $submitted: true
+                                     };
+            $battlescope.guessForm.guessInput = "A0";
+            $battlescope.$digest();
+            expect($battlescope.guessForm).toBeDefined();
+            // Set the selection to HIT Target
+            $battlescope.guessForm.guessInput = "A0";
+            // Call fire event
+            $battlescope.handleFireButton();
+            // Validate service response
+            expect($battlescope.guessForm.$dirty).toEqual(false);
+            expect($battlescope.guessForm.$pristine).toBe(true);
+            expect($battlescope.guessForm.$submitted).toBe(false);
         });
     });
 });
