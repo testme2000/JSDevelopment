@@ -48,6 +48,7 @@ battleApp.controller('battleController', function($scope,battleService,BOARD_SIZ
 
     $scope.handleFireButton = function() {
         if($scope.guessForm.$valid) {
+            console.log("Inside handleFireButton");
             // Convert valid input to upper case
         	var guess = $scope.guessForm.guessInput.toUpperCase();
             console.log(guess);
@@ -126,6 +127,7 @@ describe('battleApp Application Testing', function() {
     var $battleService;
     var boardSize;
     var numShip;
+    var boardStyle,serviceResult;
     
     console.log("battleApp Layout Testing");
     // Create battleApp Module
@@ -142,6 +144,8 @@ describe('battleApp Application Testing', function() {
                                                                    boardSize: _BOARD_SIZE_,
                                                                    numShip: _NUM_SHIPS_
                                                                  });
+        // Preserve the service for further testing
+        $battleService = mockService;
     }));
     // Validate basic layout setup
     describe('Validate board layout', function() {
@@ -177,7 +181,6 @@ describe('battleApp Application Testing', function() {
     describe('Validate board class', function() {
         console.log("Now validate battleship class function");
         it('2. Verify board basic functionality', function() {
-            console.log($battlescope);
             // Validate : Board will set HIT property for row & column
             $battlescope.setClass("0","0","HIT");
             expect($battlescope.rowcolumnsetup[0][0].Status).toBe("HIT");
@@ -191,11 +194,38 @@ describe('battleApp Application Testing', function() {
             expect($battlescope.rowcolumnsetup[0][0].Status).toBe("");
         });
     });
-    // Validate battleship user interaction
+    // Validate battleship user interaction for HIT
     describe('Validate User intacton with board', function() {
         console.log("Now validate user interaction");
-        it('3. Verify board response with user selection functionality', function() {
-            console.log($battlescope);
+        it('3. Verify board response with user selection functionality For HIT', function() {
+            $battlescope.guessForm = {  guessInput : "",
+                                        $dirty: true,
+                                        $pristine: true,
+                                        $submitted: true
+                                     };
+            $battlescope.guessForm.guessInput = "A6";
+            $battlescope.$digest();
+            expect($battlescope.guessForm).toBeDefined();
+            // Set the selection to HIT Target
+            $battlescope.guessForm.guessInput = "A6";
+            $battlescope.guessForm.$valid = true;
+            // Call fire event
+            $battlescope.handleFireButton();
+            // Validate Controller response
+            expect($battlescope.guessForm.$dirty).toEqual(false);
+            expect($battlescope.guessForm.$pristine).toEqual(true);
+            expect($battlescope.guessForm.$submitted).toEqual(false);
+            expect($battlescope.statusMsg).toBe("HIT!");
+            expect($battlescope.rowcolumnsetup[0][6].Status).toBe("HIT");
+            // Validate result should be reflected on UI
+            boardStyle = $battlescope.getClass(0,6);
+            expect(boardStyle.background).toBe("url('ship.png') no-repeat center center");
+        });
+    });
+    // Validate battleship user interaction for MISS
+    describe('Validate User intacton with board', function() {
+        console.log("Now validate user interaction");
+        it('3. Verify board response with user selection functionality For MISS', function() {
             $battlescope.guessForm = {  guessInput : "",
                                         $dirty: true,
                                         $pristine: true,
@@ -206,12 +236,58 @@ describe('battleApp Application Testing', function() {
             expect($battlescope.guessForm).toBeDefined();
             // Set the selection to HIT Target
             $battlescope.guessForm.guessInput = "A0";
+            $battlescope.guessForm.$valid = true;
             // Call fire event
             $battlescope.handleFireButton();
-            // Validate service response
+            // Validate Controller response
             expect($battlescope.guessForm.$dirty).toEqual(false);
-            expect($battlescope.guessForm.$pristine).toBe(true);
-            expect($battlescope.guessForm.$submitted).toBe(false);
+            expect($battlescope.guessForm.$pristine).toEqual(true);
+            expect($battlescope.guessForm.$submitted).toEqual(false);
+            expect($battlescope.statusMsg).toBe("You miss the target");
+            expect($battlescope.rowcolumnsetup[0][0].Status).toBe("MISS");
+            // Validate result should be reflected on UI
+            boardStyle = $battlescope.getClass(0,0);
+            expect(boardStyle.background).toBe("url('miss.png') no-repeat center center");
+        });
+    });
+    // Validate battle Service
+    describe("Validate battle Service", function() {
+        console.log("Now validate battle Service ");
+        it('4. Verify battle Service - HIT', function() {
+            // Validate for HIT
+            expect($battleService).toBeDefined();
+            // Get total ship sunked so far
+            var totalsunk = $battleService.totalShipSunk();
+            // Now hit the ship
+            serviceResult = $battleService.fire("06");
+            expect(serviceResult).toBeDefined();
+            expect(serviceResult.length > 0).toBeTruthy();
+            expect(serviceResult.length).toBeGreaterThan(0);
+            expect(serviceResult).toContain("HIT!");
+            // Validate the total hit count
+            var countMsg;
+            serviceResult.forEach( function(match) { if(match.indexOf("Hit Count:") > -1) countMsg = match; })
+            // Validate count msg
+            expect(countMsg).toBeDefined();
+            // Get its hit count
+            var hitCount = parseInt(countMsg.substring("Hit Count:".length));
+            expect(hitCount > 0).toBeTruthy();
+            // Double hit the ship to avoid being consider
+            serviceResult = $battleService.fire("06");
+            expect(serviceResult).toBeDefined();
+            expect(serviceResult.length > 0).toBeTruthy();
+            expect(serviceResult.length).toBeGreaterThan(0);
+            expect(serviceResult).toContain("Message: Oops, you already hit that location!");
+            // Now sunk the battle ship entirely
+            $battleService.fire("16");
+            serviceResult = $battleService.fire("26");
+            expect(serviceResult).toBeDefined();
+            expect(serviceResult.length > 0).toBeTruthy();
+            expect(serviceResult.length).toBeGreaterThan(0);
+            expect(serviceResult).toContain("Message: You sank my battleship!");
+            // Validate total ship sunk now
+            var updatedSunk = $battleService.totalShipSunk();
+            expect(totalsunk < updatedSunk).toBeTruthy();
         });
     });
 });
