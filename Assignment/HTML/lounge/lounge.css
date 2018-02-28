@@ -1,4 +1,4 @@
-body {
+    body {
     font-size: small;
     font-family: Verdana, Helvetica, Arial, sans-serif;
     line-height: 1.6em;
@@ -32,4 +32,11 @@ h2 {
     background-image: url(images/background.gif);
     background-repeat: no-repeat;
     background-position: top left;
+}
+
+#elixirs {
+    border-width: thin;
+    border-style: solid;
+    border-color: #007e7e;
+    width: 200px;
 }
