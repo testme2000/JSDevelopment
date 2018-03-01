@@ -12,47 +12,12 @@ var port = process.env.PORT || 8000;
 app.use(bodyPar.urlencoded({extended:true}));
 app.use(bodyPar.json());
 
-var bookRouter = express.Router();
-
-bookRouter.route('/Books')
-    .post(function(request,response){
-        var newBook = new Book(request.body);
-        console.log(newBook);
-        response.send(newBook);
-    })
-    .get(function(request,response){
-        var query = {};
-
-        if(request.query.genre) {
-            query.genre = request.query.genre;
-        }
-    
-        Book.find(query,function(error,books) {
-            if(error) {
-                response.status(500).send(error);
-            }
-            else {
-                response.json(books);
-            }
-        });
-});
-
-bookRouter.route('/Books/:bookId')
-    .get(function(request,response){
-        
-        Book.findById(request.params.bookId,function(error,book) {
-            if(error) {
-                response.status(500).send(error);
-            }
-            else {
-                response.json(book);
-            }
-        });
-});
+var bookRouter = require('./Routes/bookRoutes')(Book);
 
 
 
-app.use('/api', bookRouter);
+
+app.use('/api/books', bookRouter);
 
 // Generate welcome message for contact
 app.get('/', function(request,response) {
