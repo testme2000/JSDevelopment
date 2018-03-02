@@ -303,31 +303,16 @@ describe('battleApp Application Testing', function() {
             expect(serviceResult).toBeDefined();
             expect(serviceResult.length > 0).toBeTruthy();
             expect(serviceResult.length).toBeGreaterThan(0);
-            expect(serviceResult).toContain("miss");
+            expect(serviceResult).toContain("You missed.");
             // Validate the total hit count
             var countMsg;
             serviceResult.forEach( function(match) { if(match.indexOf("Miss Count:") > -1) countMsg = match; })
             // Validate count msg
             expect(countMsg).toBeDefined();
             // Get its Miss count
-            var hitCount = parseInt(countMsg.substring("Hit Count:".length));
-            expect(hitCount > 0).toBeTruthy();
-            // Double hit the ship to avoid being consider
-            serviceResult = $battleService.fire("06");
-            expect(serviceResult).toBeDefined();
-            expect(serviceResult.length > 0).toBeTruthy();
-            expect(serviceResult.length).toBeGreaterThan(0);
-            expect(serviceResult).toContain("Message: Oops, you already hit that location!");
-            // Now sunk the battle ship entirely
-            $battleService.fire("16");
-            serviceResult = $battleService.fire("26");
-            expect(serviceResult).toBeDefined();
-            expect(serviceResult.length > 0).toBeTruthy();
-            expect(serviceResult.length).toBeGreaterThan(0);
-            expect(serviceResult).toContain("Message: You sank my battleship!");
-            // Validate total ship sunk now
-            var updatedSunk = $battleService.totalShipSunk();
-            expect(totalsunk < updatedSunk).toBeTruthy();
+            var missCount = parseInt(countMsg.substring("Miss Count:".length));
+            console.log(countMsg);
+            expect(missCount >= 0).toBeTruthy();
         });
     });
 });
