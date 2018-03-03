@@ -8,8 +8,19 @@
     <input type="radio" ng-model="selection" value="header">Show Header<br/>
     <input type="radio" ng-model="selection" value="paragraph">Show Paragraph<br/>
     <input type="radio" ng-model="selection" value="button">Show Button<br/>
-    
-    
-    
+    <div ng-switch="selection" style="border: solid 1px black;">
+        <div ng-switch-when="header">
+            <h2>Header</h2>
+        </div>
+        <div ng-switch-when="paragraph">
+            <h2>Paragraph</h2>
+        </div>
+        <div ng-switch-when="button">
+            <h2>Button</h2>
+        </div>
+    </div>
 </body>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
+    <script src="app.js"></script>
+    <script src="switController.js"></script>
 </html>
