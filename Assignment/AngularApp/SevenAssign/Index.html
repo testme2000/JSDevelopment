@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en" ng-app="showApp">
+<head>
+    <meta charset="utf-8">
+    <title>NG-Show n Hide App</title>
+</head>
+<body ng-controller="showController">
+    <input type="checkbox" ng-model="showStatus" />Show/Hide Button
+    <button ng-show="showStatus">Display Button</button>
+</body>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
+    <script src="app.js"></script>
+    <script src="showController.js"></script>
+</html>
