@@ -5,6 +5,7 @@
     
     app.controller('showController', function($scope) {
         $scope.showStatus = true;
+        $scope.hideStatus = true;
     });
     
 }());
