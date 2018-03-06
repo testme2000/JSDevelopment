@@ -1,6 +1,6 @@
 'use strict';
 
-battleApp.controller('battleController', function($scope,battleService,BOARD_SIZE,NUM_SHIPS) {
+battleApp.controller('battleController', function($scope,battleService,$log, BOARD_SIZE,NUM_SHIPS) {
     var guesses = 0;
     $scope.battleTitle = "BattleShip";   
     $scope.statusMsg = "";
@@ -48,10 +48,10 @@ battleApp.controller('battleController', function($scope,battleService,BOARD_SIZ
 
     $scope.handleFireButton = function() {
         if($scope.guessForm.$valid) {
-            console.log("Inside handleFireButton");
+            $log.log("Inside handleFireButton");
             // Convert valid input to upper case
         	var guess = $scope.guessForm.guessInput.toUpperCase();
-            console.log(guess);
+            $log.log(guess)
             // Process the guess
             processGuess(guess,$scope);
             // Initialize it for next value
@@ -91,8 +91,9 @@ battleApp.controller('battleController', function($scope,battleService,BOARD_SIZ
 			guesses++;
 			var hit = battleService.fire(location);
 			if (hit && battleService.totalShipSunk() === NUM_SHIPS) {            
-					$scope.statusMsg = "You sank all my battleships, in " + this.guesses + " guesses";
-			}
+					$scope.statusMsg = "You sank all my battleships, in " + battleService.totalShipSunk() + " guesses";
+                    $log.log("All battleships sank");
+            }
             else {
                 var allMessage = battleService.getAllMessage();
                 for(var msg = 0; msg < allMessage.length;msg++) {
@@ -105,12 +106,15 @@ battleApp.controller('battleController', function($scope,battleService,BOARD_SIZ
                         var column = Number(location.charAt(1));
                         $scope.statusMsg = "HIT!"
                         $scope.setClass(row,column,"HIT");
+                        $log.log("Taget HIT");
+                        $log.log("Ship sunk so far " + battleService.totalShipSunk());
                     }
                     else if(allMessage[msg].indexOf("Miss") !== -1) {
                         var row = Number(location.charAt(0));
                         var column = Number(location.charAt(1));
                         $scope.statusMsg = "You miss the target";
                         $scope.setClass(row,column,"MISS");
+                        $log.log("Taget missed");
                     }
                 }
             }

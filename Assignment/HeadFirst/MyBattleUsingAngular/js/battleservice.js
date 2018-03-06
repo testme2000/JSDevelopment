@@ -1,6 +1,6 @@
 'use strict';
 
-battleApp.service('battleService', function(BOARD_SIZE,NUM_SHIPS) {
+battleApp.service('battleService', function(BOARD_SIZE,NUM_SHIPS,SHIP_LENGTH) {
    
         this.generateShipLocations = function() {
             //model.generateShipLocations();
@@ -27,7 +27,7 @@ battleApp.service('battleService', function(BOARD_SIZE,NUM_SHIPS) {
         var model = {
             boardSize: BOARD_SIZE,
             numShips: NUM_SHIPS,
-            shipLength: 3,
+            shipLength: SHIP_LENGTH,
             shipsSunk: 0,
             returnResult : [],
 

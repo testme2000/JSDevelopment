@@ -63,6 +63,28 @@
         .miss {
             background: url('miss.png') no-repeat center center;
         }
+        
+        .some-input-error {
+            line-height: 20px;
+            opacity: 1;
+            padding: 10px;
+            border: 1px solid black;
+            background: white;
+            position: absolute;
+            color: red;
+        }
+        
+        .some-input-error.ng-hide-add.ng-hide-add-active,
+        .some-input-error.ng-hide-remove.ng-hide-remove-active {
+          -webkit-transition: all linear 5.00s;
+          transition: all linear 5.00s;
+        }
+        
+        .some-input-error.ng-hide {
+          line-height: 0;
+          opacity: 0;
+          padding: 0 10px;
+        }
     </style>
 </head>
 <body ng-controller="battleController">
@@ -87,7 +109,7 @@
                 </tr>
             </table>
         </form>
-        <div id="errorArea" ng-style="error_message" 
+        <div class="some-input-error"  id="errorArea" ng-style="error_message" 
              ng-messages="guessForm.guessadd.$error">
             <div ng-message="required">
                 Guess input is mandatory
@@ -100,6 +122,7 @@
 </body>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-messages.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-animate.min.js"></script>
     <script src="app.js"></script>
     <script src="js/battlecontroller.js"></script>
     <script src="js/battleservice.js"></script>
