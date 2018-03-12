@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>JS Example</title>
+    <script src="../angular.min.js"></script>
+    <script type="text/javascript">
+        var firstBool = true;
+        var secondBool = false;
+        var firstString = "This is first string";
+        var secondString = 'This is second string';
+        var pi = 3.14;
+        
+        console.log(angular.isString(firstString) + "  " + angular.isArray(firstBool));
+        console.log(angular.uppercase(firstString));
+        console.log(angular.lowercase(secondString));
+        console.log(angular.isNumber(pi));
+        console.log(angular.isNumber(secondString));
+        
+        var myData = new Object();
+        
+        myData.name = "Weather";
+        myData.value = "Sunny";
+        
+        console.log("Hi here is the detail " +  myData.name);
+        console.log("Here is the value " + myData.value);
+        
+        var secondData = {
+            name : "Black Panther",
+            status : "Super Blockbuster"
+        };
+        
+        console.log("Movie Release : " +  secondData.name);
+        console.log("Status : " + secondData.status);
+    </script>
+</head>
+<body>
+    This is simple example
+</body>
+</html>
