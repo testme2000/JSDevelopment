@@ -55,6 +55,19 @@
         console.log("Is this object : " + angular.isObject(fourthData));
         console.log("Is this object : " + angular.isObject(fourthData.anotherStatus));
         
+        console.log("This will produce something : " + fourthData.mekuStatus);
+        
+        fourthData.mekuStatus = null;
+        console.log("This will produce something : " + fourthData.mekuStatus);
+
+        fourthData.mekuStatus = "available";
+        console.log("This will produce something : " + fourthData.mekuStatus);
+
+        console.log("Using angularJs : " + angular.isDefined(fourthData.mekuStatus));
+        fourthData.tekuStatus = null;
+        console.log("Using angularJs : " + angular.isDefined(fourthData.tekuStatus));
+        console.log("Using angularJs : " + angular.isDefined(fourthData.ikuStatus));
+
     </script>
 </head>
 <body>
