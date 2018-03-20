@@ -78,3 +78,22 @@ a:visited {
     left: 365px;
     z-index: 99;
 }
+
+
+#coupon {
+    position: fixed;
+    top: 300px;
+    left: -100px;
+}
+
+#coupon img {
+    border: none;
+}
+
+#coupon a:link {
+    border: none;
+}
+
+#coupon a:visited {
+    border: none;
+}
