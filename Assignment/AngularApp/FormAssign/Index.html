@@ -8,8 +8,8 @@
     <form name="myForm" novalidate>
         <p>Username:<br/>
             <input type="text" name="user" ng-model="user" required>
-            <span style="color:red" ng-show="myForm.user.$dirty && myForm.user.$invalid">
-                <span ng-show="myForm.user.$error.required">Username is required</span>
+            <span style="color:red" class="check-element animate-show-hide" ng-show="myForm.user.$dirty && myForm.user.$invalid">
+                <span class="check-element animate-show-hide"  ng-show="myForm.user.$error.required">Username is required</span>
             </span>
         </p>
         <p>Email:<br>
