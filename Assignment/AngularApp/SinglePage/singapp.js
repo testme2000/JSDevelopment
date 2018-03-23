@@ -1,5 +1,5 @@
 'use strict';
 
 (function(){
-    var singApp = angular.module('singApp',[]);
+    var singApp = angular.module('singApp',['ngRoute']);
 })();
