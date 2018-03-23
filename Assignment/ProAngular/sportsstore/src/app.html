@@ -1,4 +1,4 @@
-<!doctype html>
+ <!doctype html>
 <html lang="en" ng-app="sportsStore">
 <head>
     <meta charset="utf-8">
@@ -11,7 +11,12 @@
     </div>
     <div class="panel panel-default row">
         <div class="col-xs-3">
-            Categories go here
+            <a ng-click="selectCategory()"
+               class="btn btn-block btn-default btn-lg">Home</a>
+            <a ng-repeat="item in data.products | orderBy:'category' | unique:'category'"
+               ng-click="selectCategory(item)" class=" btn btn-block btn-default btn-lg">
+                {{item}}
+            </a>
         </div>
         <div class="col-xs-8">
             <div class="well" ng-repeat="item in data.products">
@@ -29,4 +34,5 @@
     <script src="../../angular.min.js"></script>
     <script src="sportsApp.js"></script>
     <script src="sportsController.js"></script>
+    <script src="customFilters.js"></script>
 </html>

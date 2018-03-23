@@ -1,5 +1,5 @@
 'use strict';
 
 (function(){
-    var sportsApp = angular.module('sportsStore',[]);
+    var sportsApp = angular.module('sportsStore',["customFilters"]);
 })();
