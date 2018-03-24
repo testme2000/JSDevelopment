@@ -1,0 +1,38 @@
+ <!doctype html>
+<html lang="en" ng-app="sportsStore">
+<head>
+    <meta charset="utf-8">
+    <title>SportsStore</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body ng-controller='sportsController'>
+    <div class="navbar navbar-inverse">
+        <a class="navbar-brand" href="#">SPORTS STORE</a>
+    </div>
+    <div class="panel panel-default row">
+        <div class="col-xs-3">
+            <a ng-click="selectCategory()"
+               class="btn btn-block btn-default btn-lg">Home</a>
+            <a ng-repeat="item in data.products | orderBy:'category' | unique:'category'"
+               ng-click="selectCategory(item)" class=" btn btn-block btn-default btn-lg">
+                {{item}}
+            </a>
+        </div>
+        <div class="col-xs-8">
+            <div class="well" ng-repeat="item in data.products">
+                <h3>
+                    <strong>{{item.name}}</strong>
+                    <span class="pull-right label label-primary">
+                        {{item.price | currency}}
+                    </span>
+                </h3>
+                <span class="lead">{{item.description}}</span>
+            </div>
+        </div>
+    </div>
+</body>
+    <script src="../../angular.min.js"></script>
+    <script src="sportsApp.js"></script>
+    <script src="sportsController.js"></script>
+    <script src="customFilters.js"></script>
+</html>
