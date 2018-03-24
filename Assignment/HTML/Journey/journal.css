@@ -51,3 +51,11 @@ caption {
 .cellcolor {
     background-color: #fcba7a;
 }
+
+table table th {
+    background-color: white;
+}
+
+li {
+    list-style-type: none;
+}
