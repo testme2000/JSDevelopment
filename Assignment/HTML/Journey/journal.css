@@ -57,5 +57,7 @@ table table th {
 }
 
 li {
-    list-style-type: none;
+    list-style-image : url(images/backpack.gif);
+    padding-top: 5px;
+    margin-left: 20px;
 }
