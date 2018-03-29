@@ -33,11 +33,14 @@ class App extends Component {
                 <Header />
                 <table>
                     <tbody>
-                    </tbody>
+            this.state.data.map((person, i) => <TableRow key = {i}
+                               data = { person} />)}<
                 </table>    
+            </tbody>
             </div>
         );
-
+            }
+        }
         class Header extends React.Component {
             render() {
                 return (
@@ -50,16 +53,13 @@ class App extends Component {
             render() {
                 return ( 
                     <tr>
-                        <td>Test1</td>
-                    </tr>
-                    <tr>
-                        <td>Test2</td>
+                        <td>{this.props.data.id }</td>
+                        <td>{this.props.data.name}</td>
+                        <td>{this.props.data.age}</td>
                     </tr>
                 );
             }
         }
-    
-    
     }
 }
 

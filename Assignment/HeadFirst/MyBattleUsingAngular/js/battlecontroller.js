@@ -27,6 +27,9 @@ battleApp.controller('battleController', function($scope,battleService,$log, BOA
         }
     }
     
+    // Setup the board
+    battleService.generateShipLocations();
+    
     $scope.rowcolumnsetup = targetByRow;
     
     $scope.getClass = function(row,column) {

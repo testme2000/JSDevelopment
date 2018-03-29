@@ -1,26 +1,30 @@
 'use strict';
 
-battleApp.service('battleService', function(BOARD_SIZE,NUM_SHIPS,SHIP_LENGTH) {
+battleApp.service('battleService', function(BOARD_SIZE,NUM_SHIPS,SHIP_LENGTH,$log) {
    
         this.generateShipLocations = function() {
-            //model.generateShipLocations();
-            alert("Generating ship locations");
+            model.generateShipLocations();
+            //alert("Generating ship locations");
         }
     
         this.fire = function(guess) {
+            $log.info("battleService: User selected Guess " +  guess);
             model.fire(guess);
             return model.returnResult;
         }
         
         this.totalShipSunk = function() {
+            $log.info("battleService: total ship sunk so far " + model.shipsSunk);
             return model.shipsSunk;
         }
         
         this.getAllMessage = function() {
+            $log.info("battleService: user requested all message of operation so far ");
             return model.returnResult;
         }
         
         this.clearAllMessage = function() {
+            $log.info("battleService: Performing cleanup of user generated message ");
             model.returnResult.clear();
         }
         
@@ -47,16 +51,18 @@ battleApp.service('battleService', function(BOARD_SIZE,NUM_SHIPS,SHIP_LENGTH) {
                     // has already been hit, message the user, and return true.
                     if (ship.hits[index] === "hit") {
                         this.returnResult.push("Message: Oops, you already hit that location!");
+                        $log.info("BattleService : This guess already used");
                         return true;
                     } else if (index >= 0) {
                         ship.hits[index] = "hit";
                         var returnMsg = "Hit Count: " + guess;
                         this.returnResult.push(returnMsg);
                         this.returnResult.push("HIT!");
-
+                        $log.info("BattleService : User selected the HIT!");
                         if (this.isSunk(ship)) {
                             this.returnResult.push("Message: You sank my battleship!");
                             this.shipsSunk++;
+                            $log.info("BattleService : User sunk the ship");
                         }
                         return true;
                     }
@@ -64,6 +70,7 @@ battleApp.service('battleService', function(BOARD_SIZE,NUM_SHIPS,SHIP_LENGTH) {
                 returnMsg = "Miss Count: " + guess;
                 this.returnResult.push(returnMsg);
                 this.returnResult.push("You missed.");
+                $log.info("BattleService : User miss the guess");
                 return false;
             },
 
@@ -84,18 +91,21 @@ battleApp.service('battleService', function(BOARD_SIZE,NUM_SHIPS,SHIP_LENGTH) {
                     } while (this.collision(locations));
                     this.ships[i].locations = locations;
                 }
-                console.log("Ships array: ");
-                console.log(this.ships);
+                $log.info("Ships array: ");
+                $log.info(this.ships);
             },
 
             generateShip: function() {
                 var direction = Math.floor(Math.random() * 2);
                 var row, col;
 
-                if (direction === 1) { // horizontal
+                if (direction === 1) { 
+                    // horizontal
                     row = Math.floor(Math.random() * this.boardSize);
                     col = Math.floor(Math.random() * (this.boardSize - this.shipLength + 1));
-                } else { // vertical
+                } 
+                else { 
+                    // vertical
                     row = Math.floor(Math.random() * (this.boardSize - this.shipLength + 1));
                     col = Math.floor(Math.random() * this.boardSize);
                 }
