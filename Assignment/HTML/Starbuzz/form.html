@@ -20,7 +20,11 @@
         </p>
         <p>Type: <br>
             <input type="radio" name="beantype" value="whole" />Whole bean <br>
-            <input type="radio" name="beantype" value="ground" />Ground
+            <input type="radio" name="beantype" value="ground" checked="true" />Ground
+        </p>
+        <p>Extras: <br/>
+            <input type="checkbox" name="extras[]" value="giftwrap" />Gift Wrap <br/>
+            <input type="checkbox" name="extras[]" value="catalog" checked="checked"/>Catalog with order
         </p>
         <p>Ship to: <br/>  
             Name: <input type="text" name="name" /><br>
@@ -28,6 +32,9 @@
             City: <input type="text" name="city" /><br>
             State: <input type="text" name="state" /><br>
             Zip: <input type="text" name="zip" /><br>
+        </p>
+        <p>Customer Comments: <br/>
+            <textarea name="comments" rows="10" cols="48"></textarea>
         </p>
         <p>
             <input type="submit" value="Order Now" />      
