@@ -114,12 +114,12 @@
                 </tr>
             </table>
         </form>
-        <div ng-style="error_message" class="form-input-error"
+        <div id="errorId" ng-style="error_message" class="form-input-error"
              ng-messages="guessForm.guessadd.$error">
-            <div ng-message="required" class="message">
+            <div id="reqId" ng-message="required" class="message">
                 Guess input is mandatory
             </div>
-            <div ng-message="pattern" class="message">
+            <div id="patternId" ng-message="pattern" class="message">
                 Guess input require first character column (A-G) and second number (0-9)
             </div>
         </div>
