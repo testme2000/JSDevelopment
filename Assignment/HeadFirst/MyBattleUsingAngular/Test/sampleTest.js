@@ -1,137 +1,42 @@
-'use strict';
-
-battleApp.controller('battleController', function($scope,battleService,$log, BOARD_SIZE,NUM_SHIPS) {
-    var guesses = 0;
-    $scope.battleTitle = "BattleShip";   
-    $scope.statusMsg = "";
-    var targetByRow = [[]];
-    $scope.toggleHitMiss = "";
-    
-    $scope.messageStyle = { "position": "absolute",
-                            "top": "0px",
-                            "left": "0px",	
-                            "color": "rgb(83, 175, 19)" } ;
-    
-    $scope.error_message =  {
-            color : "red"
-        };
-    
-    // Setup target Row
-    for(var row = 0;row < 7;row++) {
-        targetByRow[row] = [7];
-        for(var column = 0;column < 7;column++) {
-            targetByRow[row][column] = {
-                class : "",
-                Status : ""
-            };
-        }
-    }
-    
-    // Setup the board
-    battleService.generateShipLocations();
-    
-    $scope.rowcolumnsetup = targetByRow;
-    
-    $scope.getClass = function(row,column) {
-        var backgroundStyle = "";
+////////////////////////////////////////////////////////////////////////////////////////
+// Board Size and Number of ship testing
+describe('battleApp Board Size/Number Of Ship Testing....', function() { 
+    var $log;
+    var boardSize;
+    // Create battleApp Module
+    beforeEach(module('battleApp'));
+    // Validate all battleship constant
+    it("Validate all constant", inject(function($injector) {
+        var boardSize,numofShips,shiplength;
         
-        if($scope.rowcolumnsetup[row][column].Status === "HIT") {
-            backgroundStyle = "url('ship.png') no-repeat center center";
-        }
-        else if($scope.rowcolumnsetup[row][column].Status === "MISS") {
-            backgroundStyle = "url('miss.png') no-repeat center center";
-        }
-        
-        return { "background" : backgroundStyle }
-    };
-    
-    $scope.setClass = function(row,column,status) {
-        $scope.rowcolumnsetup[row][column].Status = status;
-    }
-
-    $scope.handleFireButton = function() {
-        if($scope.guessForm.$valid) {
-            $log.log("Inside handleFireButton");
-            // Convert valid input to upper case
-        	var guess = $scope.guessForm.guessInput.toUpperCase();
-            $log.log(guess)
-            // Process the guess
-            processGuess(guess,$scope);
-            // Initialize it for next value
-            $scope.guessInput = "";
-            // Reset the form state and clear the validation
-            $scope.guessForm.$dirty = false;
-            $scope.guessForm.$pristine = true;
-            $scope.guessForm.$submitted = false;
-        }
-    }
-    
-    function parseGuess(guess) {
-        var alphabet = ["A", "B", "C", "D", "E", "F", "G"];
-
-        if (guess === null || guess.length !== 2) {
-            alert("Oops, please enter a letter and a number on the board.");
-        } else {
-            var firstChar = guess.charAt(0);
-            var row = alphabet.indexOf(firstChar);
-            var column = guess.charAt(1);
-
-            if (isNaN(row) || isNaN(column)) {
-                alert("Oops, that isn't on the board.");
-            } else if (row < 0 || row >= BOARD_SIZE ||
-                       column < 0 || column >= BOARD_SIZE) {
-                alert("Oops, that's off the board!");
-            } else {
-                return row + column;
-            }
-        }
-        return null;
-    }
-    
-    function processGuess(guess,$scope) {
-		var location = parseGuess(guess);
-		if (location) {
-			guesses++;
-			var hit = battleService.fire(location);
-			if (hit && battleService.totalShipSunk() === NUM_SHIPS) {            
-					$scope.statusMsg = "You sank all my battleships, in " + battleService.totalShipSunk() + " guesses";
-                    $log.log("All battleships sank");
-            }
-            else {
-                var allMessage = battleService.getAllMessage();
-                for(var msg = 0; msg < allMessage.length;msg++) {
-                    if(allMessage[msg].indexOf("Message") !== -1) {
-                        $scope.statusMsg = allMessage[msg];
-                        alert(allMessage[msg]);
-                    }
-                    else if(allMessage[msg].indexOf("HIT!") !== -1) {
-                        var row = Number(location.charAt(0));
-                        var column = Number(location.charAt(1));
-                        $scope.statusMsg = "HIT!"
-                        $scope.setClass(row,column,"HIT");
-                        $log.log("Taget HIT");
-                        $log.log("Ship sunk so far " + battleService.totalShipSunk());
-                    }
-                    else if(allMessage[msg].indexOf("Miss") !== -1) {
-                        var row = Number(location.charAt(0));
-                        var column = Number(location.charAt(1));
-                        $scope.statusMsg = "You miss the target";
-                        $scope.setClass(row,column,"MISS");
-                        $log.log("Taget missed");
-                    }
-                }
-            }
-		}
-	}
+        ////////////////////////////////////////////////////////////////////////////////////////
+        // Validate all constant including its type
+        // 1. Board Size
+        boardSize = $injector.get('BOARD_SIZE');
+        expect(boardSize).toBe(7);
+        expect(typeof boardSize).toBe("number");
+        // 2. Number of Ships
+        numofShips = $injector.get('NUM_SHIPS');
+        expect(numofShips).toBe(3);
+        expect(typeof numofShips).toBe("number");
+        // 3. Ship Length
+        shiplength = $injector.get('SHIP_LENGTH');
+        expect(shiplength).toBe(3);
+        expect(typeof shiplength).toBe("number");
+        //////////////////////////////////////////////////////////////////////////////////////
+        console.log(boardSize);
+        console.log(numofShips);
+    }));
 });
+////////////////////////////////////////////////////////////////////////////////////////////
 
-/*
 ////////////////////////////////////////////////////////////////////////////////////////////
 // Board Layout testing
 describe('battleApp Application Testing', function() {
     var $battleShipController;
     var $battlescope;
     var $battleService;
+    var $battleLog;
     var boardSize;
     var numShip;
     var boardStyle,serviceResult;
@@ -140,14 +45,16 @@ describe('battleApp Application Testing', function() {
     // Create battleApp Module
     beforeEach(module('battleApp'));
     // Inject battleShip Controller
-    beforeEach(angular.mock.inject(function(_$controller_, $rootScope,_battleService_,_BOARD_SIZE_,_NUM_SHIPS_) {
+    beforeEach(angular.mock.inject(function(_$controller_, $rootScope,_battleService_,$log,_BOARD_SIZE_,_NUM_SHIPS_) {
         console.log("battleApp Controller injected");                   
         $battlescope = $rootScope.$new();
         var mockService = _battleService_;
+        $battleLog = $log;
         boardSize = _BOARD_SIZE_;
         // Hold the controller value
         $battleShipController = _$controller_('battleController',{ $scope: $battlescope,
                                                                    $battleService: mockService,
+                                                                   $log: $battleLog,
                                                                    boardSize: _BOARD_SIZE_,
                                                                    numShip: _NUM_SHIPS_
                                                                  });
@@ -184,6 +91,7 @@ describe('battleApp Application Testing', function() {
             }
         });
     });
+
     // Validate battleship functionality
     describe('Validate board class', function() {
         console.log("Now validate battleship class function");
@@ -201,20 +109,29 @@ describe('battleApp Application Testing', function() {
             expect($battlescope.rowcolumnsetup[0][0].Status).toBe("");
         });
     });
+    
     // Validate battleship user interaction for HIT
     describe('Validate User intacton with board', function() {
         console.log("Now validate user interaction");
         it('3. Verify board response with user selection functionality For HIT', function() {
+            // Get sample HIT location from service
+            var hitLocation = $battleService.getSampleHitLocationForTest();
+            console.log("This is hit location: " + hitLocation);
             $battlescope.guessForm = {  guessInput : "",
                                         $dirty: true,
                                         $pristine: true,
                                         $submitted: true
                                      };
-            $battlescope.guessForm.guessInput = "A6";
+            var colPosition = ['A','B','C','D','E','F','G'];
+            var selectedPos = colPosition[hitLocation.charAt(0)];
+            selectedPos = selectedPos +  hitLocation.charAt(1);
+            console.log(selectedPos);
+            
+            $battlescope.guessForm.guessInput = selectedPos;
             $battlescope.$digest();
             expect($battlescope.guessForm).toBeDefined();
             // Set the selection to HIT Target
-            $battlescope.guessForm.guessInput = "A6";
+            $battlescope.guessForm.guessInput = selectedPos;
             $battlescope.guessForm.$valid = true;
             // Call fire event
             $battlescope.handleFireButton();
@@ -223,16 +140,19 @@ describe('battleApp Application Testing', function() {
             expect($battlescope.guessForm.$pristine).toEqual(true);
             expect($battlescope.guessForm.$submitted).toEqual(false);
             expect($battlescope.statusMsg).toBe("HIT!");
-            expect($battlescope.rowcolumnsetup[0][6].Status).toBe("HIT");
+            expect($battlescope.rowcolumnsetup[hitLocation.charAt(0)][hitLocation.charAt(1)].Status).toBe("HIT");
             // Validate result should be reflected on UI
-            boardStyle = $battlescope.getClass(0,6);
+            boardStyle = $battlescope.getClass(hitLocation.charAt(0),hitLocation.charAt(1));
             expect(boardStyle.background).toBe("url('ship.png') no-repeat center center");
         });
     });
+
+    
     // Validate battleship user interaction for MISS
     describe('Validate User intacton with board', function() {
         console.log("Now validate user interaction");
         it('3. Verify board response with user selection functionality For MISS', function() {
+            /*
             $battlescope.guessForm = {  guessInput : "",
                                         $dirty: true,
                                         $pristine: true,
@@ -255,24 +175,33 @@ describe('battleApp Application Testing', function() {
             // Validate result should be reflected on UI
             boardStyle = $battlescope.getClass(0,0);
             expect(boardStyle.background).toBe("url('miss.png') no-repeat center center");
+            */
         });
     });
+    
     // Validate battle Service for HIT
     describe("Validate battle Service 1", function() {
         console.log("Now validate battle Service ");
         it('4. Verify battle Service - HIT', function() {
+            // Get sample HIT location from service
+            var hitLocation = $battleService.getSampleHitLocationForTest();
+            var colPosition = ['A','B','C','D','E','F','G'];
+            var selectedPos = colPosition[hitLocation.charAt(0)];
+            selectedPos = selectedPos +  hitLocation.charAt(1);
             // Validate for HIT
             expect($battleService).toBeDefined();
             // Get total ship sunked so far
             var totalsunk = $battleService.totalShipSunk();
             // Now hit the ship
-            serviceResult = $battleService.fire("06");
+            serviceResult = $battleService.fire(hitLocation);
+            console.log(serviceResult);
             expect(serviceResult).toBeDefined();
             expect(serviceResult.length > 0).toBeTruthy();
             expect(serviceResult.length).toBeGreaterThan(0);
             expect(serviceResult).toContain("HIT!");
             // Validate the total hit count
             var countMsg;
+            
             serviceResult.forEach( function(match) { if(match.indexOf("Hit Count:") > -1) countMsg = match; })
             // Validate count msg
             expect(countMsg).toBeDefined();
@@ -280,14 +209,16 @@ describe('battleApp Application Testing', function() {
             var hitCount = parseInt(countMsg.substring("Hit Count:".length));
             expect(hitCount > 0).toBeTruthy();
             // Double hit the ship to avoid being consider
-            serviceResult = $battleService.fire("06");
+            serviceResult = $battleService.fire(hitLocation);
             expect(serviceResult).toBeDefined();
             expect(serviceResult.length > 0).toBeTruthy();
             expect(serviceResult.length).toBeGreaterThan(0);
             expect(serviceResult).toContain("Message: Oops, you already hit that location!");
             // Now sunk the battle ship entirely
-            $battleService.fire("16");
-            serviceResult = $battleService.fire("26");
+            var sunkShip = $battleService.getSampleSunkShipForTest();
+            console.log(sunkShip);
+            $battleService.fire(sunkShip.locations[1]);
+            serviceResult = $battleService.fire(sunkShip.locations[2]);
             expect(serviceResult).toBeDefined();
             expect(serviceResult.length > 0).toBeTruthy();
             expect(serviceResult.length).toBeGreaterThan(0);
@@ -324,4 +255,3 @@ describe('battleApp Application Testing', function() {
     });
 });
 ////////////////////////////////////////////////////////////////////////////////////////////
-*/

@@ -6,9 +6,10 @@ battleApp.constant('BOARD_SIZE',7);
 battleApp.constant('NUM_SHIPS',3);
 battleApp.constant('SHIP_LENGTH',3);
 
+/*
 ////////////////////////////////////////////////////////////////////////////////////////
 // Board Size and Number of ship testing
-describe('battleApp Board Size/Number Of Ship Testing', function() { 
+describe('battleApp Board Size/Number Of Ship Testing....', function() { 
     var $log;
     var boardSize;
     // Create battleApp Module
@@ -37,5 +38,6 @@ describe('battleApp Board Size/Number Of Ship Testing', function() {
     }));
 });
 ////////////////////////////////////////////////////////////////////////////////////////////
+*/
 
 

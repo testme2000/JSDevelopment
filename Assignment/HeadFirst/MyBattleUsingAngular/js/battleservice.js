@@ -4,7 +4,6 @@ battleApp.service('battleService', function(BOARD_SIZE,NUM_SHIPS,SHIP_LENGTH,$lo
    
         this.generateShipLocations = function() {
             model.generateShipLocations();
-            //alert("Generating ship locations");
         }
     
         this.fire = function(guess) {
@@ -26,6 +25,14 @@ battleApp.service('battleService', function(BOARD_SIZE,NUM_SHIPS,SHIP_LENGTH,$lo
         this.clearAllMessage = function() {
             $log.info("battleService: Performing cleanup of user generated message ");
             model.returnResult.clear();
+        }
+        
+        this.getSampleHitLocationForTest = function() {
+            return model.ships[0].locations[0];
+        }    
+        
+        this.getSampleSunkShipForTest = function() {
+            return model.ships[0];
         }
         
         var model = {
