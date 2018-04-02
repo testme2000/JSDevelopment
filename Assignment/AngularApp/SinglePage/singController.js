@@ -34,6 +34,7 @@
             enabled: true,
             requireBase: false
         });
+        //$locationProvider.html5Mode(true);
         
         $routeProvider
         .when('/home', {
@@ -46,7 +47,7 @@
             template : '<h1>About Page</h1><p>{{message}}</p>',
             controller: 'aboutController'
         })
-        .when('/contract', {
+        .when('/contact', {
             // route for the contact page
             template: '<h1>Contact Page</h1><p>{{message}}</p>',
             controller: 'contactController'
