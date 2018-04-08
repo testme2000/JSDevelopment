@@ -147,38 +147,6 @@ describe('battleApp Application Testing', function() {
         });
     });
 
-    
-    // Validate battleship user interaction for MISS
-    describe('Validate User intacton with board', function() {
-        console.log("Now validate user interaction");
-        it('3. Verify board response with user selection functionality For MISS', function() {
-            /*
-            $battlescope.guessForm = {  guessInput : "",
-                                        $dirty: true,
-                                        $pristine: true,
-                                        $submitted: true
-                                     };
-            $battlescope.guessForm.guessInput = "A0";
-            $battlescope.$digest();
-            expect($battlescope.guessForm).toBeDefined();
-            // Set the selection to HIT Target
-            $battlescope.guessForm.guessInput = "A0";
-            $battlescope.guessForm.$valid = true;
-            // Call fire event
-            $battlescope.handleFireButton();
-            // Validate Controller response
-            expect($battlescope.guessForm.$dirty).toEqual(false);
-            expect($battlescope.guessForm.$pristine).toEqual(true);
-            expect($battlescope.guessForm.$submitted).toEqual(false);
-            expect($battlescope.statusMsg).toBe("You miss the target");
-            expect($battlescope.rowcolumnsetup[0][0].Status).toBe("MISS");
-            // Validate result should be reflected on UI
-            boardStyle = $battlescope.getClass(0,0);
-            expect(boardStyle.background).toBe("url('miss.png') no-repeat center center");
-            */
-        });
-    });
-    
     // Validate battle Service for HIT
     describe("Validate battle Service 1", function() {
         console.log("Now validate battle Service ");
