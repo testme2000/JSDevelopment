@@ -1,6 +1,6 @@
 describe('Battle Test using Protractor', function() {
     beforeEach(function() {
-        browser.get('http://127.0.0.1:63184/Index.html');
+        browser.get('http://127.0.0.1:56164/Index.html');
     });
 
     it('Load the board', function() {
