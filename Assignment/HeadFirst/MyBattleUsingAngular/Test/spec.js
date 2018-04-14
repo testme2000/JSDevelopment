@@ -1,8 +1,18 @@
 describe('Battle Test using Protractor', function() {
     beforeEach(function() {
-        browser.get('http://127.0.0.1:56164/Index.html');
+        browser.ignoreSynchronization = true;
+        browser.get('http://127.0.0.1:49312/Index.html').catch( function() {
+            return browser.switchTo().alert().then(function(alert) {
+                alert.accept();
+                return browser.get('http://127.0.0.1:49312/Index.html');
+            }, function(err) {
+                if(err.code == webdriver.error.ErrorCode.UNEXPECTED_ALERT_OPEN) {
+                    return browser.get('http://127.0.0.1:49312/Index.html');
+                }
+            });
+        });
     });
-
+    
     it('Load the board', function() {
         // Board should load successfully
         console.log("Basic Layout testing");
@@ -33,13 +43,21 @@ describe('Battle Test using Protractor', function() {
             expect(text).toEqual('Guess input require first character column (A-G) and second number (0-6)');
         });    
         // 5. Verify that RowColumn Setup don't have Hit/Miss 
-        element.all(by.repeater('row in rowcolumnsetup')).then(function(rows) {
-            rows.forEach(function(row) {
-        //        row.findElements(by.tagName('td')).then(function(rowElems) {
-          //         console.log("TEST"); 
-            //    });
-            });
+        var tableData = element.all(by.repeater('row in rowcolumnsetup')).map(function(row) {
+            var tds = row.all(by.css('td'));
+            
+            return {
+                class: tds.get(0).getAttribute('ng-style'),
+                status: tds.get(0).getText()
+            };
         });
+        tableData.then(function(datas) {
+            for(var count = 0;count < datas.length;count++) {
+                expect(datas[count].class).toEqual('getClass($parent.$index,$index)');
+                expect(datas[count].status.length).toEqual(0);
+            }
+        });
+        
         console.log("Basic Layout testing completed");
     });
     it('User Interaction Functionality', function() {
@@ -56,9 +74,9 @@ describe('Battle Test using Protractor', function() {
                 element(by.model('guessForm.guessInput')).sendKeys(colPos[count]);
                 element(by.id('fireId')).click();
                 element(by.model('guessForm.guessInput')).clear();
-                console.log(rowPos[rowcount] + colPos[count]);
                 element(by.id('messageArea')).getText().then(function(text) {
-                    console.log(text);
+                    //console.log(text);
+                    expect(["HIT!","You miss the target","Message: You sank my battleship!","You sank all my battleships, in 3 guesses"]).toContain(text);
                 });    
             }
         }

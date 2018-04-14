@@ -102,7 +102,7 @@ battleApp.controller('battleController', function($scope,battleService,$log, BOA
                 for(var msg = 0; msg < allMessage.length;msg++) {
                     if(allMessage[msg].indexOf("Message") !== -1) {
                         $scope.statusMsg = allMessage[msg];
-                        alert(allMessage[msg]);
+                        $log.log(allMessage[msg]);
                     }
                     else if(allMessage[msg].indexOf("HIT!") !== -1) {
                         var row = Number(location.charAt(0));
