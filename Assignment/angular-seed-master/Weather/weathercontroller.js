@@ -8,7 +8,6 @@
         $scope.weatherAppStatus = "WeatherApp (Supported by AngularJS)"; 
         // Now fetch the wether detail for user specified city and country
         $scope.getWeather = function() {
-            alert("This is testing");
             if($scope.weatherForm.$valid) {
                 $scope.weatherStatus = WEATHER_DETAIL.progressMsg;
                 weatherService.getWeatherDetail($scope.weatherForm.city,$scope.weatherForm.country)
