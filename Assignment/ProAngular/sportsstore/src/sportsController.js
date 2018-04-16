@@ -2,14 +2,23 @@
 
 (function(){
     var sportsApp = angular.module('sportsStore');
+    //products
+    sportsApp.constant("dataUrl"," http://localhost:5500/products");
     
-    sportsApp.controller('sportsController', function($scope) {
-        $scope.data = {
-            products: [{ name: "Product #1", description: "A Product", category: "Category 1", price: 100},
-                       { name: "Product #2", description: "A Product", category: "Category 2", price: 200},
-                       { name: "Product #3", description: "A Product", category: "Category 3", price: 300},
-                       { name: "Product #4", description: "A Product", category: "Category 4", price: 400},
-                       { name: "Product #5", description: "A Product", category: "Category 5", price: 500}]
-        };
+    sportsApp.controller('sportsController', function($scope,$http, dataUrl) {
+        $scope.data = {};
+        
+        $http({
+            method: 'GET',
+            url: dataUrl
+        })
+        .then(function(data) {
+            console.log(data);
+            $scope.data.products = data.data; 
+            console.log("data received");
+        }
+        ,function(error) {
+            $scope.data.error = error; 
+        });
     });
 })();
