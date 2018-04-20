@@ -1,7 +1,7 @@
 'use strict';
 
 (function(){
-    var weatherApp = angular.module('weatherApp',[]);
+    var weatherApp = angular.module('weatherApp',['ngMessages']);
 
     
     weatherApp.factory('weatherService',['$http','WEATHER_DETAIL', function($http,WEATHER_DETAIL) {
