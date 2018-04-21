@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en" ng-app="dateApp">
+<head>
+    <meta charset="utf-8">
+    <title>Date Directive</title>
+</head>
+<body ng-controller="dateController">
+    <form name="dateForm">
+        <table>
+            <tr>
+                <td>
+                    <label for="exampleInput">Enter the date in 2018:</label>
+                </td>
+                <td>
+                    <input type="date" id="exampleInput" name="input" ng-model="example.value" placeholder="yyyy-MM-dd" min="2018-01-01" max="2018-12-31" required>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div role="alert">
+                        <span class="error" ng-show="dateForm.input.$error.required">Date Required!</span>
+                        <span class="error" ng-sjpw="dateForm.input.$error.date">Not a valid date!</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                
+            
+            
+            </tr>
+        </table>
+    
+    
+    </form>
+    
+</body>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular.min.js"></script>
+    <script src="dateapp.js"></script>
+    <script src="dateController.js"></script>
+</html>
