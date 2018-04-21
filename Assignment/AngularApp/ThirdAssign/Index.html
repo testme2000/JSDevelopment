@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Angular Directives</title>
+</head>
+<body ng-app="dirApp">
+    <div ng-controller="dirController">
+        <button ng-click="turnonoffVisible();">Toggle Element</button> 
+        <div ng-show="showpannel">
+            <solid>Display On/Off</solid>        
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>    
+    <script src="app.js"></script>
+    <script src="dircontroller.js"></script>
+</body>    
+</html>

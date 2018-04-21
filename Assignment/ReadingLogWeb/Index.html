@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Reading Log.......</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="js/myReadingLogApp.js"></script>
+    <script src="js/controller/readingcontroller.js"></script>
+</head>
+<body  ng-app="myReadingLogApp">
+    <div ng-controller="ReadLogController">
+        
+        <h1>Reading is fun.... always read</h1>
+        <h2>{{slogan1}}</h2>
+        <h3>{{slogan2}}</h3>
+        <div>
+            <form>
+                <button ng-click="onNewLog()">Add new log</button>
+                <button>View Existing Log</button>            
+            </form>
+
+        </div>
+    </div>
+</body>
+</html>
