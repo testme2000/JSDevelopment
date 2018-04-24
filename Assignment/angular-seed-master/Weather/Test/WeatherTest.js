@@ -17,7 +17,7 @@ describe('weatherController', function() {
             // Get Controller
             weatherScope = $rootScope.$new();
             weatherController = $controller('weatherController',{$scope: weatherScope});
-            
+            console.log(weatherScope.weatherAppStatus);
             // Get App constant
             weatherConstant = _WEATHER_DETAIL_;
         });
@@ -63,7 +63,9 @@ describe('weatherController', function() {
     describe('Controller Basic Setup', function() {
        it('Controller Scope', function() {
            // Weather scope is Set
-           assert(weatherScope.weatherAppStatus).strictEqual('WeatherApp (Supported by AngularJS)');
+           console.log(weatherScope.weatherAppStatus);
+           assert.typeOf(weatherScope.weatherAppStatus,'string');
+           assert.strictEqual(weatherScope.weatherAppStatus,'WeatherApp (Supported by AngularJS)');
        });
     });
 });
