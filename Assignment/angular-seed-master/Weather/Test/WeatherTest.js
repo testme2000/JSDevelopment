@@ -19,7 +19,7 @@ describe('weatherController', function() {
             // Get Controller
             weatherScope = $rootScope.$new();
             weatherController = $controller('weatherController',{$scope: weatherScope});
-            
+            console.log(weatherScope.weatherAppStatus);
             // Get App constant
             weatherConstant = _WEATHER_DETAIL_;
         });
@@ -74,8 +74,8 @@ describe('weatherController', function() {
            //weatherScope.country = "USA";
            //console.log(weatherController);
            //weatherController.getWeather();
-                             
-                             
+           assert.typeOf(weatherScope.weatherAppStatus,'string');
+           assert.strictEqual(weatherScope.weatherAppStatus,'WeatherApp (Supported by AngularJS)');
        });
     });
 });
