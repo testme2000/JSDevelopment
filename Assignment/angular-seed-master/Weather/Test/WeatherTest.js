@@ -1,9 +1,11 @@
 var assert = chai.assert;
+var expect = chai.expect;
 
 describe('weatherController', function() {
     // Define variables for controller and service
     var weatherController,weatherService;
     var weatherConstant,weatherScope;
+    var browser = this.browser;
     
     
     beforeEach(function() {
@@ -63,7 +65,17 @@ describe('weatherController', function() {
     describe('Controller Basic Setup', function() {
        it('Controller Scope', function() {
            // Weather scope is Set
-           assert(weatherScope.weatherAppStatus).strictEqual('WeatherApp (Supported by AngularJS)');
+           assert.strictEqual(weatherScope.weatherAppStatus,'WeatherApp (Supported by AngularJS)');
+           expect(weatherScope.getWeather).to.be.a('function');
+           // Call Weather we particular city and country
+           weatherScope.weatherForm.$valid = true;
+           weatherScope.getWeather();
+           //weatherScope.city = "Coppell";
+           //weatherScope.country = "USA";
+           //console.log(weatherController);
+           //weatherController.getWeather();
+                             
+                             
        });
     });
 });
