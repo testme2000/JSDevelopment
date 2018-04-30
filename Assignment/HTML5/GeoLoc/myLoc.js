@@ -80,6 +80,9 @@ function showMap(coords) {
     
     var mapDiv = document.getElementById("map");
     map = new google.maps.Map(mapDiv,mapOptions);
+    var title = "Location";
+    var content = "You are here: " + coords.latitude + ", " + coords.longitude;
+    addMarker(map,googleLatAndLong, title, content);
 }
 
 function addMarker(map, latlong, title, content) {
@@ -91,4 +94,15 @@ function addMarker(map, latlong, title, content) {
     };
     
     var marker = new google.maps.Marker(markerOptions);
+    
+    var infoWindowOptions = {
+        content: content,
+        position: latlong
+    };
+    
+    var inforWindow = new google.maps.InfoWindow(infoWindowOptions);
+    
+    google.maps.event.addListener(marker, "click", function() {
+        inforWindow.open(map);
+    });
 }
