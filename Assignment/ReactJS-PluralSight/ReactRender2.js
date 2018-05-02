@@ -1,8 +1,7 @@
 class Button extends React.Component {
-
-	render() {
+  render() {
   	return (
-    	<button onClick={this.props.onClickFunction}>
+    	<button onClick={this.props.OnClickFunction}>
       	+1
       </button>
     );
@@ -12,16 +11,16 @@ class Button extends React.Component {
 
 const Result = (props) => {
 	return (
-  	<div>{props.counter}</div>
+  	<div>{props.finalResult}</div>
   );
 }
 
 class App extends React.Component {
-	state = { counter: 0};	
+	state = { counter: 999};	
   
   incrementCounter = () => {
   	this.setState((prevState) => ({
-    	counter: prevState.counter + 1
+    	counter: prevState.counter + 5
     }));
   };
   
@@ -29,7 +28,7 @@ class App extends React.Component {
 		return (
     	<div>
       	<Button OnClickFunction={this.incrementCounter}/>
-        <Result counter={this.state.counter}/>
+        <Result finalResult={this.state.counter}/>
       </div>
     );
   }
@@ -37,4 +36,3 @@ class App extends React.Component {
 
 
 ReactDOM.render(<App />, mountNode);
-
