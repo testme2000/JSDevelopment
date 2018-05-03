@@ -8,6 +8,7 @@ describe('weatherController', function() {
     var browser = this.browser;
     
     
+    
     beforeEach(function() {
         // Load the module, so we can start testing
         module('weatherApp');
@@ -68,14 +69,18 @@ describe('weatherController', function() {
            assert.strictEqual(weatherScope.weatherAppStatus,'WeatherApp (Supported by AngularJS)');
            expect(weatherScope.getWeather).to.be.a('function');
            // Call Weather we particular city and country
+           // Setup weather form for BDD
+           weatherScope.weatherForm = { city: "Coppell",
+                                         country: "USA"};
            weatherScope.weatherForm.$valid = true;
            weatherScope.getWeather();
-           //weatherScope.city = "Coppell";
-           //weatherScope.country = "USA";
-           //console.log(weatherController);
-           //weatherController.getWeather();
+           // Verify Scope constant
            assert.typeOf(weatherScope.weatherAppStatus,'string');
            assert.strictEqual(weatherScope.weatherAppStatus,'WeatherApp (Supported by AngularJS)');
+           // Verify Scope result contant updated by service
+           console.log(weatherScope);
+           assert.typeOf(weatherScope.weatherStatus,'string');
+           assert.strictEqual(weatherScope.weatherStatus,weatherConstant.progressMsg,"Controller Weather Invoke Passed");
        });
     });
 });
