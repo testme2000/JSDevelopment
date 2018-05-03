@@ -14,7 +14,7 @@ describe('weatherController', function() {
         module('weatherApp');
         
         // Get the weather Service                          
-        inject(function($rootScope, $controller,_weatherService_,_WEATHER_DETAIL_) {
+        inject(function($rootScope, $controller,_weatherService_,_$http_,_WEATHER_DETAIL_) {
             weatherService = _weatherService_;
             
             // Get Controller
@@ -81,6 +81,23 @@ describe('weatherController', function() {
            console.log(weatherScope);
            assert.typeOf(weatherScope.weatherStatus,'string');
            assert.strictEqual(weatherScope.weatherStatus,weatherConstant.progressMsg,"Controller Weather Invoke Passed");
+       });
+    });
+    
+    describe('Service Basic Setup', function() {
+       it('Service Scope', function() {
+           console.log("Service testing 1");
+           // Invoke Weather service with Valid City and Country
+           Promise.resolve(weatherService.getWeatherDetail("Coppell","USA"))
+                         .then(function(data) {
+                            expect(data).to.be.a('string');
+                            console.log("Service testing 2");
+                         })
+                        .catch(function(data) {
+                            console.log("Error is given");
+                            throw new Error('Not supported');
+                        });
+           console.log("test 3");
        });
     });
 });
