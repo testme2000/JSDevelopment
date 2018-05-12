@@ -32,7 +32,12 @@ function displayLocation(position) {
     var distance = document.getElementById("distance");
     distance.innerHTML = "you are " +  km + " from wickedly smart office";
     
-    showMap(position.coords);
+    if(map == null) {
+        showMap(position.coords);
+    }
+    else {
+        scrollMapToPosition(position.coords);
+    }
 }
 
 function displayError(error) {
@@ -62,6 +67,15 @@ function computeDistance(startCoords, destCoords) {
     Math.cos(startLongRads - destLongRads)) * Radius;
 
     return distance;
+}
+
+function scrollMapToPosition(coords) {
+    var latitude = coords.latitude;
+    var longitude = coords.longitude;
+    var latlong = new google.maps.LatLng(latitude, longitude);
+    map.panTo(latlong);
+    addMarker(map, latlong, "Your new location", "You moved to: " +
+                latitude + ", " + longitude);
 }
 
 function degreesToRadians(degrees) {
