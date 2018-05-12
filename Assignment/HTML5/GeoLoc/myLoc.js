@@ -26,6 +26,7 @@ function displayLocation(position) {
     var div = document.getElementById("location");
     
     div.innerHTML = "You are latitude: " + latitude + ", Longtitude: " + longitude;
+    div.innerHTML += " (with " + position.coords.accuracy + " meters accurancy)";
     
     var km = computeDistance(position.coords,ourCoords);
     
@@ -119,4 +120,14 @@ function addMarker(map, latlong, title, content) {
     google.maps.event.addListener(marker, "click", function() {
         inforWindow.open(map);
     });
+}
+
+function scrollMapToPosition(coords) {
+    var latitude = coords.latitude;
+    var longitude = coords.longitude;
+    var latlong = new google.maps.LatLng(latitude, longitude);
+    
+    map.panTo(latlong);
+    
+    addMarker(map, latlong, "Your new location", "You moved to: "+ latitude + ", " + longitude);
 }
