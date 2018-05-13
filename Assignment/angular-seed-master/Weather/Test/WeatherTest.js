@@ -1,6 +1,7 @@
 var assert = chai.assert;
 var expect = chai.expect;
 
+
 describe('weatherController', function() {
     // Define variables for controller and service
     var weatherController,weatherService;
@@ -85,18 +86,19 @@ describe('weatherController', function() {
     });
     
     describe('Service Basic Setup', function() {
-       it('Service Scope', function() {
+       it('Service Scope', async () => {
            console.log("Service testing 1");
+            const data = await weatherService.getWeatherDetail("Coppell","USA");
+            expect(data).to.be.a('string');
+           
+           
            // Invoke Weather service with Valid City and Country
-           Promise.resolve(weatherService.getWeatherDetail("Coppell","USA"))
-                         .then(function(data) {
-                            expect(data).to.be.a('string');
-                            console.log("Service testing 2");
-                         })
-                        .catch(function(data) {
-                            console.log("Error is given");
-                            throw new Error('Not supported');
-                        });
+          // return Promise.resolve(weatherService.getWeatherDetail("Coppell","USA"))
+            //             .then(function(data) {
+              //              expect(data).to.be.a('string');
+                //            console.log("Service testing 2");
+                  //       })
+            //            .finally(done);
            console.log("test 3");
        });
     });
