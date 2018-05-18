@@ -1,3 +1,5 @@
+chai.use(chaiPromise);
+
 var assert = chai.assert;
 var expect = chai.expect;
 
