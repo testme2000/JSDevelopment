@@ -1,11 +1,13 @@
 const Stars = (props) => {
+	const numberOfStar =1 + Math.floor((Math.random() * 9));
+  var stars = [];
+  for(let count = 0;count < numberOfStar; count++) {
+  	stars.push(<i key={count} className="fa fa-star"></i>);
+  }
+
 	return (
   	<div className="col-5">
-    	<i className="fa fa-star"></i>
-    	<i className="fa fa-star"></i>
-    	<i className="fa fa-star"></i>
-    	<i className="fa fa-star"></i>
-    	<i className="fa fa-star"></i>
+    	{stars}
     </div>
   );
 }
@@ -26,6 +28,21 @@ const Answer = (props) => {
   );
 }
 
+const Numbers = (props) => {
+	return (
+  	<div className="class text-center">
+    	<div>
+				<span>1</span>      
+				<span class="selected">2</span>      
+				<span class="used">3</span>      
+      </div>
+    </div>
+  
+  );
+}
+
+
+
 class Game extends React.Component {
 	render() {
   	return (
@@ -35,7 +52,9 @@ class Game extends React.Component {
           <Stars />
           <Button />
           <Answer />
-        </div>  
+        </div>
+      <br/>  
+      <Numbers />  
       </div>
     );
   }
