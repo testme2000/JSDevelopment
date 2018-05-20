@@ -1,4 +1,4 @@
-chai.use(chaiPromise);
+
 
 var assert = chai.assert;
 var expect = chai.expect;
@@ -88,12 +88,11 @@ describe('weatherController', function() {
     });
     
     describe('Service Basic Setup', function() {
-       it('Service Scope', async () => {
+       chai.use(chaiPromise);
+        var chaiExp = chai.expect;
+       it('Service Scope', function() {
            console.log("Service testing 1");
-            const data = await weatherService.getWeatherDetail("Coppell","USA");
-            expect(data).to.be.a('string');
-           
-           
+           return chaiExp(Promise.resolve(weatherService.getWeatherDetail("Coppell","USA"))).to.eventually.equal()
            // Invoke Weather service with Valid City and Country
           // return Promise.resolve(weatherService.getWeatherDetail("Coppell","USA"))
             //             .then(function(data) {
