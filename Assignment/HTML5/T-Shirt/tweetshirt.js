@@ -9,6 +9,7 @@ window.onload = function() {
 function previewHandler() {
     var canvas = document.getElementById("tshirtCanvas");
     var context = canvas.getContext("2d");
+    fillBackgroundColor(canvas, context);
     var selectObj = document.getElementById("shape");
     var index = selectObj.selectedIndex;
     var shape = selectObj[index].value;
@@ -20,7 +21,7 @@ function previewHandler() {
     }
 }
 
-function drawSquare(convas,context) {
+function drawSquare(canvas,context) {
     var width = Math.floor(Math.random() * 40);
     
     var xPos = Math.floor(Math.random() *  canvas.width);
@@ -31,4 +32,15 @@ function drawSquare(convas,context) {
     
     context.fillRect(xPos,yPos, width, width);
         
+}
+
+function fillBackgroundColor(canvas, context) {
+    var selectObj = document.getElementById("backgroundColor");
+    
+    var index = selectObj.selectedIndex;
+    var bgColor = selectObj.options[index].value;
+    
+    context.fillStyle = bgColor;
+    
+    context.fillRect(0,0,canvas.width,canvas.height);
 }
