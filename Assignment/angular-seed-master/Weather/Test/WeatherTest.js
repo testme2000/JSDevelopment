@@ -23,7 +23,6 @@ describe('weatherController', function() {
             // Get Controller
             weatherScope = $rootScope.$new();
             weatherController = $controller('weatherController',{$scope: weatherScope});
-            console.log(weatherScope.weatherAppStatus);
             // Get App constant
             weatherConstant = _WEATHER_DETAIL_;
         });
@@ -81,18 +80,18 @@ describe('weatherController', function() {
            assert.typeOf(weatherScope.weatherAppStatus,'string');
            assert.strictEqual(weatherScope.weatherAppStatus,'WeatherApp (Supported by AngularJS)');
            // Verify Scope result contant updated by service
-           console.log(weatherScope);
            assert.typeOf(weatherScope.weatherStatus,'string');
            assert.strictEqual(weatherScope.weatherStatus,weatherConstant.progressMsg,"Controller Weather Invoke Passed");
        });
     });
     
     describe('Service Basic Setup', function() {
-       chai.use(chaiPromise);
-        var chaiExp = chai.expect;
+       //chai.use(chaiPromise);
+       var chaiExp = chai.expect;
        it('Service Scope', function() {
            console.log("Service testing 1");
-           return chaiExp(Promise.resolve(weatherService.getWeatherDetail("Coppell","USA"))).to.eventually.equal()
+           return chaiExp(Promise.resolve(weatherService.getWeatherDetail("Coppell","USA"))).eventually.equal("Today weather's condition is");
+            });
            // Invoke Weather service with Valid City and Country
           // return Promise.resolve(weatherService.getWeatherDetail("Coppell","USA"))
             //             .then(function(data) {
@@ -100,8 +99,6 @@ describe('weatherController', function() {
                 //            console.log("Service testing 2");
                   //       })
             //            .finally(done);
-           console.log("test 3");
-       });
     });
 });
 
