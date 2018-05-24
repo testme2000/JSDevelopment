@@ -2,6 +2,7 @@
 
 var assert = chai.assert;
 var expect = chai.expect;
+var should = chai.should;
 
 
 describe('weatherController', function() {
@@ -83,22 +84,6 @@ describe('weatherController', function() {
            assert.typeOf(weatherScope.weatherStatus,'string');
            assert.strictEqual(weatherScope.weatherStatus,weatherConstant.progressMsg,"Controller Weather Invoke Passed");
        });
-    });
-    
-    describe('Service Basic Setup', function() {
-       //chai.use(chaiPromise);
-       var chaiExp = chai.expect;
-       it('Service Scope', function() {
-           console.log("Service testing 1");
-           return chaiExp(Promise.resolve(weatherService.getWeatherDetail("Coppell","USA"))).eventually.equal("Today weather's condition is");
-            });
-           // Invoke Weather service with Valid City and Country
-          // return Promise.resolve(weatherService.getWeatherDetail("Coppell","USA"))
-            //             .then(function(data) {
-              //              expect(data).to.be.a('string');
-                //            console.log("Service testing 2");
-                  //       })
-            //            .finally(done);
     });
 });
 
