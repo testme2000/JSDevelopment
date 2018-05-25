@@ -4,9 +4,10 @@
     var weatherApp = angular.module('weatherApp',['ngMessages']);
 
     
-    weatherApp.factory('weatherService',['$http','WEATHER_DETAIL', function($http,WEATHER_DETAIL) {
+    weatherApp.factory('weatherService',['$http','WEATHER_DETAIL','$log', function($http,WEATHER_DETAIL,$log) {
         return {
             getWeatherDetail : function(city, nation) {
+                $log.log("Performing query for " + city);
                 var queryDetail = city + ',' + nation;
                 return $http.get(WEATHER_DETAIL.url, {
                     params : {
@@ -18,7 +19,7 @@
                 }).then(function(response) {
                     // We got the result
                     var temp = response.data.main.temp;
-                    console.log(temp);
+                    $log.log("Got the result , temperture is " +  temp);
                     var description = response.data.weather[0].description;
                     console.log(response);
                     var result = WEATHER_DETAIL.resultMsg + description;
@@ -27,10 +28,10 @@
                 },function(response)  {
                     return response.statusText;
                 }).catch(function(response) {
-                    console.log(response);
+                    $log.error(response);
                     return response.statusText;
                 }).finally(function() {
-                    console.log("This is finally block"); 
+                    $log.log("This is finally block"); 
                 });
             }
         }

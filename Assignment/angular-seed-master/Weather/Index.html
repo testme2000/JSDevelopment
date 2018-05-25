@@ -22,14 +22,14 @@
     <form class="form-horizontal" name="weatherForm" ng-submit="getWeather()" novalidate="">
         <div class="form-group">
             <label class="control-label col-sm-2" for="input-one"><strong>City : </strong></label>
-            <div class="col-sm-10">
-                <input size="30" class="form-control" type="text" name="weatherCity" ng-model="weatherForm.city" placeholder="Enter City Name" required>
+            <div class="col-xs-5">
+                <input  class="form-control" type="text" name="weatherCity" ng-model="weatherForm.city" ng-click="clearResult()" placeholder="Enter City Name" required>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for="input-one"><strong>Country : </strong></label>
-            <div class="col-sm-10">
-                <input size="30" type="text" class="form-control" name="weatherCountry" ng-model="weatherForm.country" placeholder="Enter Country Name" required>
+            <div class="col-xs-5">
+                <input type="text" class="form-control" name="weatherCountry" ng-model="weatherForm.country" placeholder="Enter Country Name" ng-click="clearResult()" required>
 
             </div>
         </div>
