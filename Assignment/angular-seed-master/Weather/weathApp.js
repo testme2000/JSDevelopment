@@ -36,6 +36,9 @@
             }
         }
     }]);
+    
+    
+    
 
     weatherApp.constant('WEATHER_DETAIL',{
         url     : 'http://api.openweathermap.org/data/2.5/weather',
@@ -46,5 +49,14 @@
         progressMsg : " Fetching the details.................",
         errorMsg : "Unable to obtain details"
     });
+    
+    var weathermocktest = angular.module('weatherCheckMock',[]);
+    
+    weathermocktest.service('mockweather',['$q',function($q) {
+        this.returnVal = '';
+        this.verifyWeather = function(city,country) {
+            return $q.when(this.returnVal);
+        };
+    }]);
     
 }());

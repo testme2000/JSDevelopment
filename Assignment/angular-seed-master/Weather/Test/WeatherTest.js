@@ -3,6 +3,8 @@
 var assert = chai.assert;
 var expect = chai.expect;
 var should = chai.should;
+//var sinon = sinon.spy();
+
 
 
 describe('weatherController', function() {
@@ -16,6 +18,7 @@ describe('weatherController', function() {
     beforeEach(function() {
         // Load the module, so we can start testing
         module('weatherApp');
+        module('weatherCheckMock');
         
         // Get the weather Service                          
         inject(function($rootScope, $controller,_weatherService_,_$http_,_WEATHER_DETAIL_) {
@@ -71,6 +74,7 @@ describe('weatherController', function() {
            // Weather scope is Set
            assert.strictEqual(weatherScope.weatherAppStatus,'WeatherApp (Supported by AngularJS)');
            expect(weatherScope.getWeather).to.be.a('function');
+           var spyOnControl = sinon.spy(weatherScope,'getWeather');
            // Call Weather we particular city and country
            // Setup weather form for BDD
            weatherScope.weatherForm = { city: "Coppell",
@@ -83,7 +87,31 @@ describe('weatherController', function() {
            // Verify Scope result contant updated by service
            assert.typeOf(weatherScope.weatherStatus,'string');
            assert.strictEqual(weatherScope.weatherStatus,weatherConstant.progressMsg,"Controller Weather Invoke Passed");
+           //expect(spyOnControl.callCount).to.equal(1);
+           assert(weatherScope.getWeather.calledOnce);
+           expect(spyOnControl.callCount).equal(1);
        });
+    });
+    
+    
+    
+    describe('Service Basic Testing', function() {
+       it('Service should up and running', function() {
+           expect(weatherService).to.exist;
+       });
+    });
+    
+    describe('verify Wheather', function() {
+       it('final validation',inject(function(weatherService,mockweather) {
+           mockweather.returnVal = "Today's weather condition is";
+           console.log('Test0');
+           weatherService.getWeatherDetail('Coppell','USA')
+            .then(function(data) {
+              expect(data).equal("Today's weather condition is"); 
+               console.log(data);
+           });
+           console.log('TEst');
+       })); 
     });
 });
 
