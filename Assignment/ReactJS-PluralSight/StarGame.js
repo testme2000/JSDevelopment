@@ -1,9 +1,6 @@
 const Stars = (props) => {
 	const numberOfStar =1 + Math.floor((Math.random() * 9));
-  //var stars = [];
-  //for(let count = 0;count < numberOfStar; count++) {
-  //	stars.push(<i key={count} className="fa fa-star"></i>);
-  //}
+  
 
 	return (
   	<div className="col-5">
