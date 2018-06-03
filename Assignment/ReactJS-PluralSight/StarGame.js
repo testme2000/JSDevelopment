@@ -1,10 +1,10 @@
 const Stars = (props) => {
-	const numberOfStar =1 + Math.floor((Math.random() * 9));
+	//const numberOfStar =1 + Math.floor((Math.random() * 9));
   
 
 	return (
   	<div className="col-5">
-    	{_.range(numberOfStar).map(i => 
+    	{_.range(props.numberOfStar).map(i => 
       	<i key={i} className="fa fa-star"></i>
       )}
     </div>
@@ -40,7 +40,9 @@ const Numbers = (props) => {
   	<div className="class text-center">
     	<div>
 				{Numbers.list.map((number, i) =>
-        	<span key={i} className={numberClassName(number)}>{number}</span>
+        	<span key={i} className={numberClassName(number)}
+								onClick={() => props.selectNumber(number)}>
+          {number}</span>
         )}
 			</div>
     </div>
@@ -54,18 +56,27 @@ Numbers.list = _.range(1,10);
 class Game extends React.Component {
 	state = {
   	selectedNumbers: [],
+    randomNumberOfStars: 1 + Math.floor(Math.random() * 9),
   }
+  selectNumber = (clickedNumber) => {
+  	if( this.state.selectedNumbers.indexOf(clickedNumber) >= 0) { return; }
+    this.setState(prevState => ({
+        selectedNumbers : prevState.selectedNumbers.concat(clickedNumber)
+    }));
+	}
 	render() {
   	return (
     	<div className="container">
       	<h3>Play nice and Play Cool</h3>
         <div className="row">
-          <Stars />
+          <Stars numberOfStar={this.state.randomNumberOfStars} />
           <Button />
           <Answer selectedNumbers={this.state.selectedNumbers} />
         </div>
       <br/>  
-      <Numbers  selectedNumbers={this.state.selectedNumbers} />  
+      <Numbers  selectedNumbers={this.state.selectedNumbers}
+      					selectNumber={this.selectNumber}
+      />  
       </div>
     );
   }
