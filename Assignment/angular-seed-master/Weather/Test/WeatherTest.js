@@ -12,6 +12,7 @@ describe('weatherController', function() {
     var weatherController,weatherService;
     var weatherConstant,weatherScope;
     var browser = this.browser;
+    var weatherLog;
     
     
     
@@ -21,7 +22,7 @@ describe('weatherController', function() {
         module('weatherCheckMock');
         
         // Get the weather Service                          
-        inject(function($rootScope, $controller,_weatherService_,_$http_,_WEATHER_DETAIL_) {
+        inject(function($rootScope, $controller,_weatherService_,_$http_,_WEATHER_DETAIL_, $log) {
             weatherService = _weatherService_;
             
             // Get Controller
@@ -29,6 +30,8 @@ describe('weatherController', function() {
             weatherController = $controller('weatherController',{$scope: weatherScope});
             // Get App constant
             weatherConstant = _WEATHER_DETAIL_;
+            // Get Log
+            weatherLog = $log;
         });
     });
     
@@ -75,6 +78,8 @@ describe('weatherController', function() {
            assert.strictEqual(weatherScope.weatherAppStatus,'WeatherApp (Supported by AngularJS)');
            expect(weatherScope.getWeather).to.be.a('function');
            var spyOnControl = sinon.spy(weatherScope,'getWeather');
+           var spyOnLog = sinon.spy(weatherLog,'log');
+           var spyOnErrorLog = sinon.spy(weatherLog,'error');
            // Call Weather we particular city and country
            // Setup weather form for BDD
            weatherScope.weatherForm = { city: "Coppell",
@@ -90,6 +95,10 @@ describe('weatherController', function() {
            //expect(spyOnControl.callCount).to.equal(1);
            assert(weatherScope.getWeather.calledOnce);
            expect(spyOnControl.callCount).equal(1);
+           assert(weatherLog.log.calledTwice);
+           expect(spyOnLog.callCount).equal(2);
+           expect(weatherLog.error.notcalled);
+           expect(spyOnErrorLog.callCount).equal(0);
        });
     });
     
@@ -105,12 +114,16 @@ describe('weatherController', function() {
        it('final validation',inject(function(weatherService,mockweather) {
            mockweather.returnVal = "Today's weather condition is";
            console.log('Test0');
+           var spyOnService = sinon.spy(weatherService,'getWeatherDetail');
            weatherService.getWeatherDetail('Coppell','USA')
             .then(function(data) {
               expect(data).equal("Today's weather condition is"); 
                console.log(data);
            });
            console.log('TEst');
+           assert(weatherService.getWeatherDetail.calledOnce);
+           expect(spyOnService.callCount).equal(1);
+           console.log("Tested Spy on weatherService as well");
        })); 
     });
 });
