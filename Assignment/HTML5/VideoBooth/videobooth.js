@@ -30,23 +30,31 @@ window.onload = function() {
 
 function handleControl(e) {
     var id = e.target.getAttribute("id");
+    var video = document.getElementById("video");
     
     if (id == "play") {
         pushUnpushButtons("play", ["pause"]);
+        if(video.ended) {
+            video.load();
+        }
+        video.play();
     } else if (id == "pause") {
         pushUnpushButtons("pause", ["play"]);
+        video.pause();
     } else if (id == "loop") {
         if (isButtonPushed("loop")) {
             pushUnpushButtons("", ["loop"]);
         } else {
             pushUnpushButtons("loop", []);
         }
+        video.loop = !video.loop;
     } else if (id == "mute") {
         if (isButtonPushed("mute")) {
             pushUnpushButtons("", ["mute"]);
         } else {
             pushUnpushButtons("mute", []);
         }
+        video.muted = !video.muted;
     }
 }
 
