@@ -40,6 +40,4 @@ function getFormatExtension() {
     } else if(video.canPlayType("video/ogg") != "") {
         return ".ogv";
     }
-    
-    
 }

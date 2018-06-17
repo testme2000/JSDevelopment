@@ -2,10 +2,12 @@
 
 var videos = { video1: "video/demovideo1", video2: "video/demovideo2" };
 
+var effectFunction = null;
+
 window.onload = function() {
     
     var video = document.getElementById("video");
-    video.src = videos.video1 + getFormatExtension();
+    video.src = videos["video1"] + getFormatExtension();
     video.load();
     
     
@@ -79,6 +81,11 @@ function setVideo(e) {
     } else if (id == "video2") {
         pushUnpushButtons("video2", ["video1"]);
     }
+    video.src = videos[id] + getFormatExtension();
+    video.load();
+    video.play();
+    
+    pushUnpushButtons("play",["pause"]);
 }
 
 function pushUnpushButtons(idToPush, idArrayToUnpush) {
@@ -119,5 +126,9 @@ function getFormatExtension() {
     } else if(video.canPlayType("video/ogg") != "") {
         return ".ogv";
     }
+}
+
+function endedHandler(e) {
+	pushUnpushButtons("", ["play"]);
 }
 
