@@ -3,15 +3,15 @@
 window.onload = init;
 
 function init() {
-            localStorage.setItem("sticky_0","Fry Egg and Break for breakfast");
-        localStorage.setItem("sticky_1","Cancel Cable Subscription, Who need it when we have ROKU");
+    var button = document.getElementById("add_button");
+    button.onclick = createSticky;
 
-    for(let count = 0;count < localStorage.length;count++) {
-        let key = localStorage.key(count);
-        if(key.substr(0,6) == "sticky") {
-            let value = localStorage.getItem(key);
-            addStickyToDOM(value);
-        }
+    var stickiesArray = getStickiesArray();
+
+    for(var count = 0;count < stickiesArray.length;count++) {
+        var key = stickiesArray[count];
+        var value = localStorage[key];
+        addStickyToDOM(value);
     }
 }
 
@@ -24,4 +24,42 @@ function addStickyToDOM(value) {
     span.innerHTML = value;
     sticky.appendChild(span);
     stickies.appendChild(sticky);
+}
+
+function createSticky() {
+    var stickiesArray = getStickiesArray();
+    var currentDate = new Date();
+    var key = "sticky_" + currentDate.getTime();
+    var value = document.getElementById("note_text").value;
+    localStorage.setItem(key, value);
+    stickiesArray.push(key);
+    localStorage.setItem("stickiesArray",JSON.stringify(stickiesArray));
+    addStickyToDOM(value);
+}
+
+function getStickiesArray() {
+    var stickiesArray = localStorage.getItem("stickiesArray");
+    if(!stickiesArray) {
+        stickiesArray = [];
+        localStorage.setItem("stickiesArray", JSON.stringify(stickiesArray));
+    }
+    else {
+        stickiesArray = JSON.parse(stickiesArray);
+    }
+    
+    return stickiesArray;
+}
+
+
+function deleteSticky(key) {
+    localStorage.removeItem(key);
+    var stickiesArray = getStickiesArray();
+    if(stickiesArray) {
+        for(var count = 0;count < stickiesArray.length;count++) {
+            if(key == stickiesArray[count]) {
+                stickiesArray.splice(count,1);
+            }
+        }
+        localStorage.setItem("stickiesArray",stickiesArray);
+    }
 }
