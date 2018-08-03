@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Template based directive</title>
+</head>
+<body>
+    <div id="tempdir">
+        <template v-if="!message">
+            <h1>You must send a message for help!</h1>
+            <p>Dispatch a messanger immediatley!</p>
+            <p>To nearby kingdom</p>
+        </template>
+        <textarea v-model="message"></textarea>
+        <button v-show="message">Send a word to allies</button>
+    </div>
+</body>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.js"></script>
+    <script>
+        new Vue({
+            el: "#tempdir",
+            data: {
+                message: "Long live the king"
+            }
+        })
+    </script>
+</html>
