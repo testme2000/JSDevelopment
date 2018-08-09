@@ -5,10 +5,11 @@ var app = express();
 app.use(express.static(__dirname + "/"));
 
 app.get('/', function(req,res,next) {
-    console.log("TEst");
-    res.redirect('/');
+    res.redirect('/Index.html');
 });
 
-app.listen(8080,function() {
+app.listen(process.env.PORT || 8080,function() {
     console.log("Battleship Server started on Port 8080");
 });
+
+
