@@ -16,31 +16,31 @@
             </h2>
         </div>
         <!-- Navigation -->
-        <ul class="nav nav-tabs nav-bg-dark" id="mainTab" role="tablist" style="padding-top: 35px">
-                <li class="nav-item" style="margin-right:24px; font-size: 22px">
-                    <a class="nav-link active"  data-toggle="tab" href="index.html" role="tab" aria-controls="home" aria-selected="true">Home</a>
-                </li>
-                <li class="nav-item"  style="margin-right:24px; font-size: 22px">
-                    <a class="nav-link " data-toggle="tab" href="profile.html" role="tab" aria-controls="profile" aria-selected="false">About Me</a>
-                </li>
-            
-                <li class="nav-item"  style="margin-right:24px; font-size: 22px">
-                    <a class="nav-link" data-toggle="tab" href="Log-in.html" role="tab" aria-controls="profile" aria-selected="false">Add New Book</a>
-                </li>
-            
-                <li class="nav-item"  style="margin-right:24px; font-size: 22px">
-                    <a class="nav-link" data-toggle="tab" href="log-out.html" role="tab" aria-controls="profile" aria-selected="false">Browse through Log</a>
-                </li>
-            
-            
-                <li class="nav-item"  style="margin-right:24px; font-size: 22px">
-                    <a class="nav-link" data-toggle="tab" href="search.html" role="tab" aria-controls="profile" aria-selected="false">Search Something</a>
-                </li>
-            
-                <li class="nav-item"  style="margin-right:24px; font-size: 22px">
-                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="admin.html" role="tab" aria-controls="contact" aria-selected="false">Admin Panel</a>
-                </li>
-        </ul>
+        <div id="Main">
+            <nav v-bind:class="active" v-on:click.prevent>
+                <a href="#" class="home" v-on:click="DoProcessing('home')">Home</a>
+                <a href="#" class="Profile" v-on:click="DoProcessing('AboutMe')">About Me</a>
+                <a href="#" class="NewEntry" v-on:click="DoProcessing('NewEntry')">Add New Entry</a>
+                <a href="#" class="BrowseLog" v-on:click="DoProcessing('BrowseLog')">Browse the Log</a>
+                <a href="#" class="Search" v-on:click="DoProcessing('Search')">Search</a>
+            </nav>
+            <p>User Selection so far {{active}}</p>
+        </div>
     </div>
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.js"></script>
+<script type="text/javascript">
+    var BookLogger = new Vue({
+                        el: "#Main",
+                        data: {
+                            active: 'Home'
+                        },
+                        methods: {
+                            DoProcessing : function(item) {
+                                this.active = item;
+                            }
+                        }
+    })
+</script>
+
 </html>
