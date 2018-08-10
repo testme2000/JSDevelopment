@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en" ng-app="promApp">
+<head>
+    <meta charset="utf-8">
+    <title>Using Promises</title>
+</head>
+<body ng-controller='promController'>
+    <div class="panel">
+        <h1>Todo List</h1>
+        <table class="table">
+            <tr><td>Action</td><td>Done</td></tr>
+            <tr ng-repeat="item in todos">
+                <td>{{item.action}}</td>
+                <td>{{item.done}}</td>
+            </tr>
+        </table>
+    </div>
+</body>
+    <script src="../angular.min.js"></script>
+    <script src="jsProm.js"></script>
+    <script src="jsController.js"></script>
+</html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>JS Example</title>
+    <script src="../angular.min.js"></script>
+    <script type="text/javascript">
+        var firstBool = true;
+        var secondBool = false;
+        var firstString = "This is first string";
+        var secondString = 'This is second string';
+        var pi = 3.14;
+        
+        console.log(angular.isString(firstString) + "  " + angular.isArray(firstBool));
+        console.log(angular.uppercase(firstString));
+        console.log(angular.lowercase(secondString));
+        console.log(angular.isNumber(pi));
+        console.log(angular.isNumber(secondString));
+        
+        var myData = new Object();
+        
+        myData.name = "Weather";
+        myData.value = "Sunny";
+        
+        console.log("Hi here is the detail " +  myData.name);
+        console.log("Here is the value " + myData.value);
+        
+        var secondData = {
+            name : "Black Panther",
+            status : "Super Blockbuster"
+        };
+        
+        console.log("Movie Release : " +  secondData.name);
+        console.log("Status : " + secondData.status);
+        
+        var thirdData = {
+            name : "JB",
+            grade : "Fail",
+            result : "Hopeless Manager",
+            printStatus : function() {
+                console.log(this.name + " " + this.grade);
+                console.log("Result so far "+ this.result);
+            }
+        };
+        
+        thirdData.printStatus();
+        
+        var fourthData = {
+            anotherStatus : "another sign of nepotism"
+        };
+        
+        angular.extend(fourthData,thirdData);
+        console.log(fourthData.name);
+        console.log(fourthData.anotherStatus);
+        
+        console.log("Is this object : " + angular.isObject(fourthData));
+        console.log("Is this object : " + angular.isObject(fourthData.anotherStatus));
+        
+        console.log("This will produce something : " + fourthData.mekuStatus);
+        
+        fourthData.mekuStatus = null;
+        console.log("This will produce something : " + fourthData.mekuStatus);
+
+        fourthData.mekuStatus = "available";
+        console.log("This will produce something : " + fourthData.mekuStatus);
+
+        console.log("Using angularJs : " + angular.isDefined(fourthData.mekuStatus));
+        fourthData.tekuStatus = null;
+        console.log("Using angularJs : " + angular.isDefined(fourthData.tekuStatus));
+        console.log("Using angularJs : " + angular.isDefined(fourthData.ikuStatus));
+
+    </script>
+</head>
+<body>
+    This is simple example
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Fibonacho series</title>
+</head>
+    <script>
+        function fibo(number) {
+            if(number === 0 || number === 1) {
+                return 1;
+            }
+            else {
+                return (fibo(number - 1) + fibo(number - 2)); 
+            }
+        }
+    
+        console.log(fibo(5));
+        
+        var ringo = {
+            "name"  : "Ringo",
+            "breed" : "Golden Retriever",
+            
+            "weight" : 45
+        }
+        
+        var ringoStr = JSON.stringify(ringo);
+        console.log(ringoStr);
+         
+    </script>
+
+
+</html>

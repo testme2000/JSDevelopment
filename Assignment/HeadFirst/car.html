@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Car Constructor</title>
+</head>
+<body>
+    <script>
+        function dog(name,breed, weight) {
+            this.name = name;
+            this.breed = breed;
+            this.weight = weight;
+            
+            this.bark = function() {
+                if(this.weight >45) {
+                    alert(this.name + " whoof...whoof");
+                }
+                else {
+                    alert(this.name + " yip....yip")
+                }
+            }
+        }
+        
+        function Car(carParams) { //make,model,year,color,passenger,convertible,milage,started) {
+            console.log(carParams.make );
+            this.make = carParams.make;
+            this.model = carParams.model;
+            this.year = carParams.year;
+            this.color = carParams.color;
+            this.passenger = carParams.passenger;
+            this.convertible = carParams.convertible;
+            this.milage = carParams.milage;
+            this.started = carParams.started;
+            
+            
+            this.start = function() {
+                this.started = true;
+            }
+            
+            this.stop = function() {
+                this.started = false;
+            }
+            
+            this.drive = function() {
+                if(this.started) {
+                    console.log(this.make + " " + this.model + " goes zoom");
+                }
+                else {
+                    console.log("Start the enigne first");
+                }
+            }
+            
+        }
+        
+        var carParams = {
+            make: "Toyota",
+            model: "Camrey",
+            color: "White",
+            year: 1998,
+            passenger: 4,
+            convertiable: false,
+            milage: 12000,
+            started: false
+        };
+        var toyota = new Car(carParams);
+        var carParams = {
+            make: "Honda",
+            model: "Civic",
+            color: "Dark Green",
+            year: 2002,
+            passenger: 4,
+            convertiable: false,
+            milage: 12000,
+            started: false
+        };
+        var honda = new Car(carParams);
+        var carParams = {
+            make: "Cheavy",
+            model: "Bell-Air",
+            color: "White",
+            year: 1994,
+            passenger: 4,
+            convertiable: false,
+            milage: 12000,
+            started: false
+        };
+        var cheavy = new Car(carParams);
+        var carParams = {
+            make: "GM",
+            model: "Cadilac",
+            color: "Gold",
+            year: 1998,
+            passenger: 4,
+            convertiable: false,
+            milage: 12000,
+            started: false
+        };
+        var GM = new Car(carParams);
+        
+               
+        var allcars = [toyota,honda,cheavy,GM];
+        
+        for(var count = 0;count < allcars.length; count++) {
+            allcars[count].start();
+            allcars[count].drive();
+            allcars[count].stop();
+        }
+        
+        var limoParams = {
+            make: "Webville Limo",
+            model: "Grand Limo",
+            year: 1987,
+            color: 'White',
+            convertiable: true,
+            milage: 123456
+        }
+        
+        var limo = new Car(limoParams);
+        var limoDog = new dog("Rhaphosdy in Blue","Poodle",40);
+        
+        console.log(limo.make + " " + limo.model + " is a " +  typeof limo);
+        console.log(limoDog.name + " is a " + typeof limoDog);
+        
+        if(limo instanceof Car) {
+            console.log("Yup " + limo.make + " is of  car type");
+        }
+    
+    </script>
+</body>
+</html>

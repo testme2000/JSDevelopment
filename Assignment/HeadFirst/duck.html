@@ -1,0 +1,22 @@
+<!doctype html>
+<html language="en">
+<head>
+    <title>Quack Quack</title>
+</head>
+<body>
+    <script>
+        function Animal(sound) {
+            this.sound = sound,
+            this.quack = function() { console.log('quack quack');}
+        }
+        
+        var duck = new Animal('quack quack');
+        
+        console.log(typeof duck);
+        console.log(duck instanceof Animal);
+        console.log(typeof(duck));
+    
+    
+    </script>
+</body>
+</html>

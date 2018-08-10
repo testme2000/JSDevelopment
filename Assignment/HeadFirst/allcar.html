@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+<head>
+    <title>All car testing</title>
+</head>
+<body>
+    <script>
+        var cadi = {
+            make: "GM",
+            model: "Cadilac",
+            year: 1955,
+            convertiables: false,
+            color: "Red",
+            passgengers: 5,
+            milage: 14567,
+            started: false,
+            start: function() {
+                this.started = true;  
+            },
+            stop: function() {
+                this.started = false;  
+            },
+            drive: function() {
+                if( this.started) {
+                    if(this.fuel > 0) {
+                        alert(this.make + " " + this.model + " going going gone");
+                        this.fuel -= 1;
+                    }
+                    else {
+                        alert("Put up some gas before ride");
+                    }
+                }
+                else {
+                    alert("Need to start before ride");
+                }
+            },
+            fuel: 0,
+            addFuel : function(amount) {
+                this.fuel += amount;
+            }
+        };
+        
+        var chevy = {
+            make : "Chevy",
+            model: "Impala",
+            year: 1960,
+            convertiables: true,
+            color: "Green",
+            passgengers: 4,
+            milage: 12456,
+            started: false,
+            start: function() {
+                if(this.fuel > 0) {
+                    this.started = true;
+                }
+                else {
+                    alert("Add some fuel before start");
+                }
+            },
+            stop: function() {
+                this.started = false;  
+            },
+            drive: function() {
+                if( this.started) {
+                    if(this.fuel > 0) {
+                        alert(this.make + " " + this.model + " going going gone");
+                        this.fuel -= 1;
+                    }
+                    else {
+                        alert("Put up some gas before ride");
+                    }
+                }
+                else {
+                    alert("Need to start before ride");
+                }
+            },
+            fuel: 0,
+            addFuel : function(amount) {
+                this.fuel += amount;
+            }
+        };
+        
+        var taxi = {
+            make: "Sometown Tax",
+            model: "Taxi",
+            year: 1967,
+            converitables: false,
+            color: "Yellow",
+            passgengers: 5,
+            milage: 17890,
+            started: false,
+            start: function() {
+                this.started = true;  
+            },
+            stop: function() {
+                this.started = false;  
+            },
+            drive: function() {
+                if( this.started) {
+                    if(this.fuel > 0) {
+                        alert(this.make + " " + this.model + " going going gone");
+                        this.fuel -= 1;
+                    }
+                    else {
+                        alert("Put up some gas before ride");
+                    }
+                }
+                else {
+                    alert("Need to start before ride");
+                }
+            },
+            fuel: 0,
+            addFuel : function(amount) {
+                this.fuel += amount;
+            }
+        };
+        // Cadi drive
+        cadi.start();
+        cadi.drive();
+        cadi.addFuel(3);
+        cadi.drive();
+        cadi.drive();
+        cadi.drive();
+        cadi.stop();
+        // Chevy Drive
+        chevy.start();
+        chevy.drive();
+        chevy.stop();
+        // Taxi Drive
+        taxi.start();
+        taxi.drive();
+        taxi.stop();
+        // Lets iterate through property
+        for(var tag in cadi) {
+            console.log("proerty found : " + tag + " Value : " + cadi[tag]);
+        }
+        
+    
+    </script>
+</body>    
+</html>

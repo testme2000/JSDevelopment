@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Binding in Vue.js</title>
+</head>
+<body>
+    <div id='freshInput'>
+        <input v-model="userinput"
+               placeholder="Type something...." >
+        <br>
+        <br>
+        <div>User typing : {{userinput}}</div>
+    </div>
+    <script type="text/javascript" src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script>
+        var freshInput = new Vue({
+            el: '#freshInput',
+            data: {
+                appName: 'typeSomething',
+                userinput: ''
+            }
+        });
+    </script>
+    
+</body>    
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "mybattleusingangular",
+  "version": "1.0.0",
+  "description": "Battleship game in angular environment",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "*"
+  },
+  "engine": "node >= 0.6.x",
+  "main": "server.js",
+  "author": "Nitin Dixit",
+  "license": "ISC",
+  "homepage": "/"
+}

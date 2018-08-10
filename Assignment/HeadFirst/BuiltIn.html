@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>BuiltIn Object Test</title>
+</head>
+<body>
+    <script>
+        var nowdt = new Date();
+        
+        console.log(nowdt.toDateString());
+        console.log(nowdt.toLocaleTimeString());
+        console.log(nowdt.getDay());
+        
+        var birthDay = new Date("August 31, 1968 07:55 PM");
+        console.log(birthDay);
+        
+        var emptyArray = new Array();
+        console.log(emptyArray);
+        emptyArray.push(45);
+        emptyArray.push('Test999');
+        console.log(emptyArray);
+        
+        // Three items array
+        
+        var threeArray = new Array(3);
+        
+        threeArray[0] = 999;
+        threeArray[1] = 998;
+        threeArray[2] = 997;
+        
+        console.log(threeArray);
+        
+        threeArray.reverse();
+        console.log(threeArray);
+        
+        var fullstring = threeArray.join('*@#');
+        console.log(fullstring);
+        var alleven = threeArray.every(function(x){
+           return ((x%2) === 0); 
+        });
+        console.log(alleven);
+    
+    </script>
+</body>
+</html>

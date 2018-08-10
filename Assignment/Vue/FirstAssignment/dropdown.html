@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Dropdown list using Vue.js</title>
+</head>
+<body>
+    <div id="dropdownEx">
+        <select multiple v-model="selectedDropVal">
+            <option value="dog">Dog</option>
+            <option value="cat">Cat</option>
+            <option value="parot">Parot</option>
+            <option value="rabit">Rabit</option>
+        </select>
+        <strong>
+            Selected Animal : {{selectedDropVal}}
+        </strong>
+        
+        <script type="text/javascript" src="https://unpkg.com/vue/dist/vue.js"></script>
+        <script>
+            var radioText = new Vue({
+                el : '#dropdownEx',
+                data: {
+                    selectedDropVal : ['cat','rabit']
+                }
+            });
+        </script>
+    </div>
+</body>
+</html>

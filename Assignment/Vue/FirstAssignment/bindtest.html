@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head lang="en">
+    <style>
+        .headers {
+            font-family: 'Times New Roman',
+            maring: 0;
+        }
+        
+        .accent-color {
+            color: #FF6A00;
+        }
+    </style>
+    <title>Vue.js bind directive test</title>
+</head>
+<body>
+    <div id="growler">
+        <h1>{{appName}}</h1>
+        <img alt="Growler" 
+             :src="appLogo"
+             style="height: 50px;"
+        />
+        <h2
+            v-text="secondName"
+            v-bind:style="secondStyle">
+        </h2>
+        <h2 
+            v-text="thirdName"
+            v-bind:class="{ 'headers' : true,
+                            'accent-color': IsStatusOn}">
+            </h2>
+    </div>
+    <script type="text/javascript" src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script type="text/javascript">
+        var growler = new Vue({
+            el : '#growler',
+            data: {
+               appName: 'Growler',
+               appLogo: 'https://www.grupoconsultorefe.com/assets/public/img/logos/PPi.jpg',
+               secondName: 'Standard beer for standard people',
+               secondStyle: {
+                   color: "FF6A00",
+                   fontFamily: "Verdana",
+                   margin: 2
+               },
+                thirdName : 'This is another one for you',
+                IsStatusOn : true
+           } 
+        });
+    </script>
+</body>
+</html>

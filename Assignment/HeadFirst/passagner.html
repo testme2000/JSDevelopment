@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Function details</title>
+</head>
+    <body>
+        <script>
+            var NoFlyList = [ "Dr.Evil"];
+            var passengers = [
+                { name: "Joe Buffelo", paid: true, ticket: "First Class"},
+                { name: "JB", paid: true, ticket: "Coach"},
+                { name: "Dadaji", paid: true, ticket: "Coach"},
+                { name: "Balak", paid: true, ticket: "First Class"},
+                { name: "BhaiSaab", paid:true, ticket: "Premium"}
+            ];
+        
+            function checkNoFlyList(passenger) {
+                if(NoFlyList[0] === passenger.name) {
+                    return true;
+                }
+                return false;
+            }
+            
+            function checkNotPaid(passenger) {
+                
+                if(!passenger.paid) {
+                    return false;
+                }
+                return true;
+            }
+            
+            function processAllPassengers(passengers, testFunction) {
+                for(var i = 0;i < passengers.length;i++) {
+                    if(testFunction(passengers[i])) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            
+            function printPassngerDetail(passenger) {
+                console.log(passenger.name);
+                console.log("Paid " + (passenger.paid?"Yes":"No"));
+            }
+            
+            // Check for paid/not paid
+            if(processAllPassengers(passengers,checkNotPaid)) {
+                console.log("We can't fly, some passengers not paid the due");
+            }
+            // Check for Fly/NoFly
+            if(processAllPassengers(passengers,checkNoFlyList)) {
+                console.log("Some passgengers from NoFlyList");
+            }
+            // Print the list
+            processAllPassengers(passengers,printPassngerDetail);
+            // Server customer since we took off
+            servePassangers(passengers);
+            
+            function servePassangers(passengers) {
+                for (var count = 0;count < passengers.length; count++) {
+                    servePassanger(passengers[count]);
+                }
+            }
+            
+            function servePassanger(passenger) {
+                        var getOrder = createDrinkOrder(passenger);
+                        var getDinner = createDinnerOrder(passenger);
+                        
+                        getOrder();
+                        getOrder();
+                        getDinner();
+            }
+                           
+           
+            
+                                    
+            // create Drink Order
+            function createDrinkOrder(passenger) {
+                var orderFunction;
+                
+                if(passenger.ticket == "First Class") {
+                    orderFunction = function() {
+                        alert("Do you like wine or bear?");
+                    }
+                }
+                else if(passenger.ticket == "Premium") {
+                    orderFunction = function() {
+                        alert("You will get wine, but do you like cola or water?");
+                    }
+                }
+                else {
+                    orderFunction = function() {
+                        alert("Do you like cola or water?");
+                    }
+                }
+                return orderFunction;
+            }
+            
+            function createDinnerOrder(passenger) {
+                var orderFunction;
+                
+                if(passenger.ticket == "First Class") {
+                    orderFunction = function() {
+                        alert("Do you like chicken or pasta?");
+                    }
+                }
+                else if(passenger.ticket == "Premium") {
+                    orderFunction = function() {
+                        alert("Do you like snack box or cheeseplate?");
+                    }
+                }
+                else {
+                    orderFunction = function() {
+                        alert("Do you like peanuts or pretzels?");
+                    }
+                }
+                return orderFunction;
+            }
+        
+        </script>
+    </body>
+</html>

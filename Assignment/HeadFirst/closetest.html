@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Closure Test</title>
+</head>
+<body>
+    <script>
+        function setTimer(msg,n) {
+            setTimeout(function() {
+                alert(msg);
+            },n);
+            
+            msg = "Its done";
+            setTimeout(function() {
+                alert(msg);
+            },1000);
+            
+        }
+    
+        setTimer("Its movie time",5000);
+    
+    </script>
+</body>
+</html>
