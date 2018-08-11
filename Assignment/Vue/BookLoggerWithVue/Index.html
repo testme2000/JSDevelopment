@@ -17,14 +17,30 @@
         </div>
         <!-- Navigation -->
         <div id="Main">
-            <nav v-bind:class="active" v-on:click.prevent>
-                <a href="#" class="home" v-on:click="DoProcessing('home')">Home</a>
-                <a href="#" class="Profile" v-on:click="DoProcessing('AboutMe')">About Me</a>
-                <a href="#" class="NewEntry" v-on:click="DoProcessing('NewEntry')">Add New Entry</a>
-                <a href="#" class="BrowseLog" v-on:click="DoProcessing('BrowseLog')">Browse the Log</a>
-                <a href="#" class="Search" v-on:click="DoProcessing('Search')">Search</a>
+            <nav v-bind:class="active"  v-on:click.prevent>
+                <a href="#" class="navbar-brand" v-on:click="DoProcessing('home')">Home</a>
+                <a href="#" class="navbar-brand" v-on:click="DoProcessing('AboutMe')">About Me</a>
+                <a href="#" class="navbar-brand" v-on:click="DoProcessing('NewEntry')">Add New Entry</a>
+                <a href="#" class="navbar-brand" v-on:click="DoProcessing('BrowseLog')">Browse the Log</a>
+                <a href="#" class="navbar-brand" v-on:click="DoProcessing('Search')">Search</a>
             </nav>
-            <p>User Selection so far {{active}}</p>
+            <br>
+            <div v-if="active === 'NewEntry'">
+                <form id="newentry" class="form-horizontal" name="logentry">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="input-one"><strong>Book Name : </strong></label>
+                        <div class="col-xs-5">
+                            <input  class="form-control" type="text" v-model="bookname" placeholder="Enter Book Name" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="input-one"><strong>Author : </strong></label>
+                        <div class="col-xs-5">
+                            <input  class="form-control" type="text" v-model="author" placeholder="Enter Author" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </body>
