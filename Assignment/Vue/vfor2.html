@@ -21,9 +21,12 @@
                {{count}}.  {{background.plot}} written by {{background.author}}
             </li>
         </ul>
-        <pre>
-            {{$data | json}}
-        </pre>
+        <h2>Perhaps the best these themes so far found {{famous.length}} </h2>
+        <ul class="list-group">
+            <li v-for="point in famous" class="list-group-item">
+                {{point.plot}} by {{point.author}} with upvotes {{point.upvotes}}
+            </li>
+        </ul>
     </div>
 </body>    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.js"></script>    
@@ -53,7 +56,15 @@
                         upvotes: -9
                     }
                 ],
+            },
+            computed : {
+                famous : function() {
+                    return this.theme.filter(function(item) {
+                        return item.upvotes > 99;
+                    });
+                }
             }
+
         })
     </script>
 </html>
