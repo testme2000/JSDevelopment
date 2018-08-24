@@ -5,13 +5,15 @@
 </head>
 <body>
     <script>
-        function delayTime() {
-            alert("do something, rather than staring at the screen");
+        for(var j=0,i=4;j < 5;j++) {
+            (function(i) {
+                setTimeout(function() {
+                    console.log(i);
+                },1000)                    
+            })(j);
         }
-    
-        //setTimeout(delayTime,30000);
-        setInterval(delayTime,5000);
-        
+        console.log("This is the result");
+        console.log("" == 0);
     </script>
     
 </body>
