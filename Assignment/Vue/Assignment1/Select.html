@@ -10,7 +10,7 @@
         <div class="container">
             <h1>Stories Session</h1>
             <ul class="list-group">
-                <story v-for="story in stories" :story="story"></story>
+                <story v-for="story in stories" :story="story" :favorite.sync="favorite"></story>
             </ul>    
             <pre>{{$data | json}}</pre>
         </div>
@@ -29,7 +29,7 @@
 <script type="text/javascript">
     Vue.component('story', {
         template: "#story-template",
-        props: ['story'],
+        props: ['story','favorite'],
         methods: {
             upvote: function() {
                 this.story.upvotes += 1;
@@ -39,13 +39,12 @@
             setFavorite: function() {
                 this.favorite = this.story;
             },
+        },
 
-            computed: {
-                isFavorite: function() {
-                    return this.story == this.favorite;
-                },
-            }
-
+        computed: {
+            isFavorite: function() {
+                return this.story == this.favorite;
+            },
         }
     });
 

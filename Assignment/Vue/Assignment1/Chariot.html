@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Chariot Race</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="chariotapp">
+        <div class="container">
+            <ul class="list-group">
+               <chariotshow v-for="test in totalchariot" :chariotshow="test"></chariotshow>
+            </ul>
+            <pre>{{$data | json}}</pre>
+        </div>
+    </div>
+    <template id="chariot-display">
+        <li class="list-group-item">
+            {{test.name}} with total horse {{test.NumberOfHorse}} 
+        </li>
+    </template>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.js"></script>
+<script type="text/javascript">
+    Vue.component('chariotshow',{
+        template: "#chariot-display",
+        props: ['test']
+    });
+
+    new Vue({
+        el : '#chariotapp',
+        data : {
+            totalchariot : [
+                {
+                    name : 'Meku Chariot',
+                    NumberOfHorse: 4
+                },
+                {
+                    name: 'Teku Chariot',
+                    NumberOfHorse: 3
+                },
+                {
+                    name: 'Iku Chariot',
+                    NumberOfHorse: 4
+                },
+                {
+                    name: 'Hemaku Chariot',
+                    NumberOfHorse: 2
+                }
+            ],
+        }
+    })
+</script>
+</html>
