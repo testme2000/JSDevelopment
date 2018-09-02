@@ -9,14 +9,19 @@
     <div id="chariotapp">
         <div class="container">
             <ul class="list-group">
-               <chariotshow v-for="test in totalchariot" :chariotshow="test"></chariotshow>
+               <chariotshow v-for="record in totalchariot" 
+                    :chariotshow="record"
+                    :selectedChariot:sync="selectedChariot"></chariotshow>
             </ul>
             <pre>{{$data | json}}</pre>
         </div>
     </div>
     <template id="chariot-display">
         <li class="list-group-item">
-            {{test.name}} with total horse {{test.NumberOfHorse}} 
+            {{chariotshow.name}} with total horse {{chariotshow.NumberOfHorse}}
+            <div>
+                <button v-show="true" :disabled="isSelected" @click="operationForChariot" class="btn btn-primary">{{chariotshow.currentstatus}}</button>
+            </div>
         </li>
     </template>
 </body>
@@ -24,7 +29,28 @@
 <script type="text/javascript">
     Vue.component('chariotshow',{
         template: "#chariot-display",
-        props: ['test']
+        props: ['chariotshow','selectedChariot'],
+        methods: {
+            operationForChariot: function() {
+                if(this.chariotshow.currentstatus === "Pick Chariot") {
+                    // User want to ride
+                    this.chariotshow.currentstatus = "Riding";
+                    this.selectedChariot = this.chariotshow;
+                }
+                else if(this.chariotshow.currentstatus == "Hire Horses") {
+                    this.chariotshow.NumberOfHorse--;
+                    if(this.chariotshow.NumberOfHorse == 2) {
+                        this.chariotshow.currentstatus = "Pick Chariot";
+                    }
+                }
+            }
+        },
+
+        computed: {
+            isSelected : function() {
+                return this.chariotshow == this.selectedChariot;
+            }
+        }
     });
 
     new Vue({
@@ -33,21 +59,26 @@
             totalchariot : [
                 {
                     name : 'Meku Chariot',
-                    NumberOfHorse: 4
+                    NumberOfHorse: 4,
+                    currentstatus : "Hire Horses"
                 },
                 {
                     name: 'Teku Chariot',
-                    NumberOfHorse: 3
+                    NumberOfHorse: 3,
+                    currentstatus: "Hire Horses"
                 },
                 {
                     name: 'Iku Chariot',
-                    NumberOfHorse: 4
+                    NumberOfHorse: 1,
+                    currentstatus: "Dismiss Horses"
                 },
                 {
                     name: 'Hemaku Chariot',
-                    NumberOfHorse: 2
+                    NumberOfHorse: 2,
+                    currentstatus: "Pick Chariot"
                 }
             ],
+            selectedChariot: {}
         }
     })
 </script>
