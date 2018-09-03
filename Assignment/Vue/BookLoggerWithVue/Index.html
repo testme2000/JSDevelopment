@@ -35,13 +35,13 @@
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="input-one"><strong>Book Name : </strong></label>
                         <div class="col-xs-5">
-                            <input  class="form-control" type="text" v-model="bookname" placeholder="Enter Book Name" required>
+                            <input  class="form-control" v-on:click="InitializeField" type="text" v-model="bookname" placeholder="Enter Book Name" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="input-one"><strong>Author : </strong></label>
                         <div class="col-xs-5">
-                            <input  class="form-control" type="text" v-model="author" placeholder="Enter Author" required>
+                            <input  class="form-control" v-on:click="InitializeField" type="text" v-model="author" placeholder="Enter Author" required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -49,7 +49,26 @@
                             <button type="submit" class="btn btn-warning" v-on:click="AddLogEntry">Add Entry</button>
                         </div>
                     </div>
+                    <div v-if="addentry">
+                        {{message}}
+                    </div>
                 </form>
+            </div>
+            <div v-if="active === 'BrowseLog'">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Book Name</th>
+                            <th>Author</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="record in booklist">
+                            <td>{{record.book}}</td>
+                            <td>test</td>
+                        </tr>
+                    </tbody>
+                </table> 
             </div>
         </div>
     </div>
@@ -59,7 +78,10 @@
     var BookLogger = new Vue({
                         el: "#Main",
                         data: {
-                            active: 'Home'
+                            active: 'Home',
+                            addentry: false,
+                            message: "",
+                            booklist: []
                         },
                         methods: {
                             DoProcessing : function(item) {
@@ -68,9 +90,22 @@
 
                             AddLogEntry : function() {
                                 var inputArrived = this.bookname + " " + this.author;
-                                localStorage.AddLogEntry(inputArrived);
-                                alert(inputArrived);
+                                localStorage.setItem(this.bookname,this.author);
+                                this.addentry = true;
+                                this.message = "Entry added successfully";
+                                this.bookname = "";
+                                this.author = "";
+                                this.booklist.push({ book: this.bookname, author: this.author});
+                            },
+
+                            InitializeField : function() {
+                                if(this.addentry) {
+                                    this.addentry = false;
+                                    this.message = "";
+                                }
                             }
+
+                            
                         }
     })
 </script>
