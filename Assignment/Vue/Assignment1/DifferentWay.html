@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Different Way to Transfer Text</title>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body class=".container">
+        <div>
+            <label>Please Enter the Text : </label>
+            <input type="text" @click="CleanupInput" v-model="UserText" placeholder="Any Text">
+        </div>
+        <div>
+            <input type="radio" id="bold" value="bold" v-model="Mode">
+            <label>Bold</label>
+            <input type="radio" id="italic" value="italic" v-model="Mode">
+            <label>Italic</label>
+            <input type="radio" id="underline" value="underline" v-model="Mode">
+            <label>Underline</label>
+            <input type="radio" id="strike" value="strike" v-model="Mode">
+            <label>Strike Through</label>
+        </div>
+        <div>
+            <button type="button" @click="TransferResult" class="btn btn-primary">Display Result</button>
+        </div>
+        <div v-show="ShowResult" :style="finalstyle">
+            {{finalString}}
+        </div>
+    </body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.js"></script>
+    <script type="text/javascript">
+        new Vue({
+            el : 'body',
+            data: {
+                Mode: 'Bold',
+                UserText: '',
+                ShowResult: false,
+                finalstyle : {
+                    fontWeight: 'normal',
+
+                },
+                finalString: ''
+            },
+            methods: {
+                CleanupInput : function() {
+                    this.UserText = "";
+                    this.Mode = "bold"; 
+                    this.ShowResult = false;
+                },
+                TransferResult : function() {
+                    console.log("Test");
+                    this.finalString = this.UserText;
+                    if(this.Mode == "bold") {
+                        this.finalstyle.fontWeight = "bolder";
+                    }
+                    else if(this.Mode == "italic") {
+                        this.finalstyle.fontWeight = "italic";
+                    }
+                    else if(this.Mode == "underline") {
+                        this.finalString = "<u>" + this.UserText + "</u>";
+                        this.finalstyle.fontWeight = "normal";
+                    }
+                    else if(this.Mode == "strike") {
+                        this.finalString = "<strike>" + this.UserText + "</strike>"; 
+                    }
+                    this.ShowResult = true;
+                    console.log(this.finalstyle);
+                }
+            }
+
+        });
+    </script>
+
+</html>
