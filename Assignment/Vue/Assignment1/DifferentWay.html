@@ -37,7 +37,8 @@
                 ShowResult: false,
                 finalstyle : {
                     fontWeight: 'normal',
-
+                    fontStyle: 'normal',
+                    textDecoration : 'none'
                 },
                 finalString: ''
             },
@@ -46,22 +47,29 @@
                     this.UserText = "";
                     this.Mode = "bold"; 
                     this.ShowResult = false;
+                    this.finalstyle.fontWeight = "normal";
+                    this.finalstyle.fontStyle = "normal";
+                    this.finalstyle.textDecoration = "none";
                 },
                 TransferResult : function() {
                     console.log("Test");
                     this.finalString = this.UserText;
                     if(this.Mode == "bold") {
                         this.finalstyle.fontWeight = "bolder";
+                        this.finalstyle.fontStyle = "normal";
+                        this.finalstyle.textDecoration = 'none'
                     }
                     else if(this.Mode == "italic") {
-                        this.finalstyle.fontWeight = "italic";
+                        this.finalstyle.fontStyle = "italic";
+                        this.finalstyle.textDecoration = 'none';
                     }
                     else if(this.Mode == "underline") {
-                        this.finalString = "<u>" + this.UserText + "</u>";
                         this.finalstyle.fontWeight = "normal";
+                        this.finalstyle.textDecoration = "underline";
                     }
                     else if(this.Mode == "strike") {
-                        this.finalString = "<strike>" + this.UserText + "</strike>"; 
+                        this.finalstyle.fontWeight = "normal";
+                        this.finalstyle.textDecoration = "line-through";
                     }
                     this.ShowResult = true;
                     console.log(this.finalstyle);

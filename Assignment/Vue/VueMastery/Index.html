@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Vue Mastery</title>
+    <link rel="stylesheet" type="text/css" href="product_style.css" />
+</head>
+<body>
+    <div class="nav-bar"></div>
+    <div id="App">
+        <div class="product">
+            <div class="product-image">
+                <img :src="image" />
+            </div>
+            <div class="product-info">
+                <h1>{{product}}</h1>
+                <h2>{{description}}</h2>
+                <div v-if="showproductlink">
+                    <a :href="ProductLink" _target="_blank">More Product like this</a>
+                </div>
+                <div>
+                    <span v-show="onSale">On Sale!</span>
+                </div>
+                <ul>
+                    <li v-for="record in Details">{{record}}</li>
+                </ul>
+                <div v-for="variant in variants" :key="variant.variantId">
+                    <p v-on:mouseover="updateProduct(variant.variantImage)">{{variant.variantColor}}</p>
+                </div>
+                <div>
+                    <h4>Size Available</h4>
+                    <ul>
+                        <li v-for="record in Sizes">{{record}}</li>
+                    </ul>
+                </div>
+            </div>
+            <button v-on:click="addToCart">Add to Cart</button>
+            <br>
+            <div class="cart">
+                <p>Cart{{ cart }}</p>
+            </div>
+            <span>
+                <button v-on:click="removeFromCart">Remove From Cart</button>
+            </span>
+        </div>
+    </div>
+</body>
+<script src="https://unpkg.com/vue"></script>
+<script src="Main.js"></script>
+
+</html>
