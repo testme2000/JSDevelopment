@@ -18,14 +18,16 @@
                 <div v-if="showproductlink">
                     <a :href="ProductLink" _target="_blank">More Product like this</a>
                 </div>
-                <div>
-                    <span v-show="onSale">On Sale!</span>
-                </div>
+                <p v-if="inStock">On Sale</p>
+                <p v-else :class="{outOfStock: !inStock}">Out of Stock</p>
                 <ul>
                     <li v-for="record in Details">{{record}}</li>
                 </ul>
-                <div v-for="variant in variants" :key="variant.variantId">
-                    <p v-on:mouseover="updateProduct(variant.variantImage)">{{variant.variantColor}}</p>
+                <div v-for="variant in variants" 
+                     :key="variant.variantId"
+                     class="color-box"
+                     :style="{ backgroundColor: variant.variantColor}"
+                     @mouseover="updateProduct(variant.variantImage)">
                 </div>
                 <div>
                     <h4>Size Available</h4>
@@ -34,7 +36,9 @@
                     </ul>
                 </div>
             </div>
-            <button v-on:click="addToCart">Add to Cart</button>
+            <button v-on:click="addToCart"
+                    :disabled="!inStock"
+                    :class="{ disabledButton: !inStock}">Add to Cart</button>
             <br>
             <div class="cart">
                 <p>Cart{{ cart }}</p>

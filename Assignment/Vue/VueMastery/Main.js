@@ -25,7 +25,8 @@ var app = new Vue({
                 variantImage: "./vmSocks-blue-onWhite.jpg"
             }
         ],
-        cart: 0
+        cart: 0,
+        inStock: true
     },
     methods : {
         addToCart : function() {
