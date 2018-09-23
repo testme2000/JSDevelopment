@@ -25,10 +25,13 @@
             </div>
         </div>
         <div id="app1">
-            {{message}}
+            <p>Basic Message : {{message}}</p>
             <p>
                 <input v-model="message">
             </p>
+            <p>Reverse Message : {{reversestring}}</p>
+            <p v-if="seen">Now you can see me</p>
+            <a v-bind:href="url">See where can go</a>
         </div>
     </body>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>

@@ -39,6 +39,15 @@ new Vue({
 new Vue({
     el : '#app1',
     data: {
-        message : 'Hello Again'
+        message : 'Hello Again',
+        seen: false,
+        url: "http://www.esakal.com",
+        otherstring: ''
+    },
+    computed : {
+        reversestring : function() {
+            this.otherstring = this.message.split('').reverse().join('');
+            return this.otherstring;
+        }
     }
 });
