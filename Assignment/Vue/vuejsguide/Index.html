@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Vue.js Guide</title>
+    </head>
+    <body>
+        <div id="app">
+            <h4 v-once>{{title}}</h4>
+            <p>{{message1}}</p>
+            <ul>
+                <li v-for="record in skillset">{{record}}</li>
+            </ul>
+            <button v-on:click="reverseMessage">Reverse the Message</button>
+            <div>
+                <todo-item
+                    v-for="record in todoList"
+                    v-bind:todo="record"
+                    v-bind:key="record.Id"></todo-item>
+            </div>
+            <div>
+                {{rawHTML}}
+                <h4 v-html="rawHTML"></h4>
+                <button v-bind:disabled="isButtonDisabled">Button</button>
+            </div>
+        </div>
+        <div id="app1">
+            {{message}}
+            <p>
+                <input v-model="message">
+            </p>
+        </div>
+    </body>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="main.js"></script>
+</html>

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>First Example</title>
+</head>
+<body>
+    <div id="example">
+        <p>{{example}}</p>
+        <user-name name="Meku"></user-name>
+        <user-name name="Teku"></user-name>
+        <user-name name="Ieku"></user-name>
+        <user-name name="Hemaku"></user-name>
+        <Sidebar></Sidebar>
+        <h4>{{ Math.sqrt(81)}}</h4>
+        <p :style="{textDecoration: decoration}">Line</p>
+        <p :style="styling">Hi Hiku Hi Hike Hihi</p>
+        <p :class="{goForUnder: verifyBold, gainWeight: verifyBold}">Meku Teku and Hemaku</p>
+    </div>
+</body>
+<style>
+    .underline { text-decoration: underline}
+    .weight { font-weight: bolder}
+</style>
+<script src="https://unpkg.com/vue"></script>
+<script>
+    const Sidebar = {
+        template: '<aside>Another Article</aside>'
+    }
+
+
+    Vue.component('user-name',{
+        props: ['name'],
+        template: '<h2>{{name}}</h2>'
+    })
+
+
+    new Vue({
+        el : '#example',
+        data: {
+            example : 'Hello World',
+            decoration: 'underline',
+            weight: 'Bold',
+            goForUnder: 'underline',
+            gainWeight: 'weight',
+            verifyBold: true
+        },
+        components : {
+            Sidebar
+        },
+        computed : {
+            styling : {
+                textDecoration: this.decoration,
+                textWeight: this.weight
+            }
+        }
+    });
+
+</script>
+</html>
