@@ -8,46 +8,12 @@
 <body>
     <div class="nav-bar"></div>
     <div id="App">
-        <div class="product">
-            <div class="product-image">
-                <img :src="image" />
-            </div>
-            <div class="product-info">
-                <h1>{{caption}}</h1>
-                <h2>{{description}}</h2>
-                <div v-if="showproductlink">
-                    <a :href="ProductLink" _target="_blank">More Product like this</a>
-                </div>
-                <p v-if="inStock">On Sale</p>
-                <p v-else :class="{outOfStock: !inStock}">Out of Stock</p>
-                <p>{{Sale}}</p>
-                <ul>
-                    <li v-for="record in Details">{{record}}</li>
-                </ul>
-                <div v-for="(variant, index) in variants" 
-                     :key="variant.variantId"
-                     class="color-box"
-                     :style="{ backgroundColor: variant.variantColor}"
-                     @mouseover="updateProduct(index)">
-                </div>
-                <div>
-                    <h4>Size Available</h4>
-                    <ul>
-                        <li v-for="record in Sizes">{{record}}</li>
-                    </ul>
-                </div>
-            </div>
-            <button v-on:click="addToCart"
-                    :disabled="!inStock"
-                    :class="{ disabledButton: !inStock}">Add to Cart</button>
-            <br>
-            <div class="cart">
-                <p>Cart{{ cart }}</p>
-            </div>
-            <span>
-                <button v-on:click="removeFromCart">Remove From Cart</button>
-            </span>
-        </div>
+        <product :premium="premium"></product>
+        <product-details :details="details"></product-details>
+        <product :premium="premium"></product>
+        <product-details :details="details"></product-details>
+        <product :premium="premium"></product>
+        <product-details :details="details"></product-details>
     </div>
 </body>
 <script src="https://unpkg.com/vue"></script>
