@@ -43,9 +43,6 @@ Vue.component('product', {
                 :disabled="!inStock"
                 :class="{ disabledButton: !inStock}">Add to Cart</button>
         <br>
-        <div class="cart">
-            <p>Cart{{ cart }}</p>
-        </div>
         <span>
             <button v-on:click="removeFromCart">Remove From Cart</button>
         </span>
@@ -85,7 +82,7 @@ Vue.component('product', {
     methods: {
         // Product related methods goes here
         addToCart : function() {
-            this.cart++;
+            this.$emit('add-to-cart', this.variants[this.selectedVariant.variantId]);
         },
     
         updateProduct : function(index) {
@@ -94,7 +91,7 @@ Vue.component('product', {
         },
     
         removeFromCart : function() {
-            this.cart--;
+            this.$emit('remove-from-cart', this.variants[this.selectedVariant.variantId]);
         }
     },
 
@@ -149,7 +146,22 @@ var app = new Vue({
     el: '#App',
     data: {
         premium : false,
-        details : "Mr Incredible Socks"
+        details : "Mr Incredible Socks",
+        cart : []
+    },
+    methods : {
+        updateCart : function(Id) {
+            this.cart.push(Id);
+        },
+
+        removeItem : function(Id) {
+            for(var i = this.cart.length - 1; i >= 0; i--) {
+                if (this.cart[i] === Id) {
+                   this.cart.splice(i, 1);
+                   break;
+                }
+            }
+        }
     }
 });
 
