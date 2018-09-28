@@ -42,12 +42,28 @@ new Vue({
         message : 'Hello Again',
         seen: false,
         url: "http://www.esakal.com",
-        otherstring: ''
+        otherstring: '',
+        firstName : 'Meku',
+        lastName : 'Patel'
     },
     computed : {
         reversestring : function() {
             this.otherstring = this.message.split('').reverse().join('');
             return this.otherstring;
+        },
+
+        fullName : {
+            get : function() {
+                return  this.firstName + " " + this.lastName;
+            },
+
+            set : function(newValue) {
+                var names = newValue.split(' ');
+                this.firstName = names[0];    
+                this.lastName = names[1];
+            }
+
+
         }
     }
 });
