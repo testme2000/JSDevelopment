@@ -49,12 +49,14 @@ Vue.component('product', {
         <div>
             <h2>Reviews</h2>
             <p v-if="!reviews.length">There are no review yet</p>
-            <ul>
-                <li v-for="record in reviews">
-                    {{ record.name}} {{record.review}}
-                    {{ record.rating}}
-                </li>
-            </ul>
+            <p v-else>
+                <ul>
+                    <li v-for="record in reviews">
+                        {{ record.name}} {{record.review}}
+                        {{ record.rating}}
+                    </li>
+                </ul>
+            </p>    
         </div>
         <br>
         <product-review @review-submitted="addReview"></product-review>
@@ -189,7 +191,13 @@ Vue.component('product-review', {
                 <option>1</option>
             </select>
         </p>
-
+        <p>
+            <label>Would you recommend this product?</label>
+            <label>Yes<input type="radio" value="Yes" v-model="recommand">
+            </label>
+            <label>No<input type="radio" value="No" v-model="recommand">
+            </label>
+        </p>
         <p>
             <input type="submit" value="Submit">
         </p>
@@ -199,27 +207,31 @@ Vue.component('product-review', {
             name: null,
             review: null,
             rating: null,
-            errors: []
+            errors: [],
+            recommand: null
         }
     },
     methods : {
         onSubmit : function() {
             this.errors.splice(0,this.errors.length);
-            if(!this.name && this.review && this.rating) {
+            if(this.name && this.review && this.rating) {
                 let productReview = {
                     name : this.name,
                     review :  this.review,
-                    rating : this.rating 
+                    rating : this.rating,
+                    recommand: this.recommand 
                 }
                 this.$emit('review-submitted',productReview);
                 this.name = null;
                 this.review = null;
                 this.rating = null;
+                this.recommand = null;
             }
             else {
                 if(!this.name) this.errors.push("Name is required");
                 if(!this.review) this.errors.push("Review is required");
                 if(!this.rating) this.errors.push("Rating is required");
+                if(!this.recommand) this.errors.push("Recommand product is required");
             }
         }
     }
