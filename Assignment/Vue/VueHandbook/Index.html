@@ -16,6 +16,33 @@
         <p :style="{textDecoration: decoration}">Line</p>
         <p :style="styling">Hi Hiku Hi Hike Hihi</p>
         <p :class="{goForUnder: verifyBold, gainWeight: verifyBold}">Meku Teku and Hemaku</p>
+        <ul>
+            <li v-for="item in items">{{item}}</li>
+        </ul>
+        <div>
+            <ul>
+                <li v-for="todo in todos">{{todo.title}}</li>
+            </ul>
+        </div>
+        <div>
+            <ul>
+                <li v-for="todo in todos" v-text="todo.title"></li>
+            </ul>
+        </div>
+        <div>
+            <ul>
+                <li v-for="(todo, index) in todos" v-text="index"></li>
+            </ul>
+        </div>
+        <div>
+            <a v-on:click="handleSomething">Click and Trick!</a>
+        </div>
+        <div>
+            <a @click="handleParameter('iku')">Click and Trick! with parameter</a>
+        </div>
+        <div v-show="keepvisible">
+            <h1>Show me the money</h1>
+        </div>
     </div>
 </body>
 <style>
@@ -43,7 +70,21 @@
             weight: 'Bold',
             goForUnder: 'underline',
             gainWeight: 'weight',
-            verifyBold: true
+            verifyBold: true,
+            items: ['car','bike','dog'],
+            todos : [
+                { id: 1, title: 'Keep on marching'},
+                { id: 2, title: 'another marching'}
+            ],
+            keepvisible: false
+        },
+        methods: {
+            handleSomething : function() {
+                alert("Test");
+            },
+            handleParameter : function(parameter) {
+                alert(parameter);
+            }
         },
         components : {
             Sidebar
