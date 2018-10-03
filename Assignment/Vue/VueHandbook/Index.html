@@ -43,6 +43,10 @@
         <div v-show="keepvisible">
             <h1>Show me the money</h1>
         </div>
+        <div>
+            <a @click="withEvent($event)">Touch by Event</a>
+            <a @click="withEventWithParameter('something',$event)">Touch by Event with Param</a>
+        </div>
     </div>
 </body>
 <style>
@@ -84,7 +88,15 @@
             },
             handleParameter : function(parameter) {
                 alert(parameter);
+            },
+            withEvent : function($event) {
+                console.log($event);
+            },
+            withEventWithParameter : function(param,$event) {
+                console.log(param);
+                console.log($event);
             }
+
         },
         components : {
             Sidebar
