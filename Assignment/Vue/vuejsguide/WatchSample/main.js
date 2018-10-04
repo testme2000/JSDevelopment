@@ -1,6 +1,6 @@
 "use strict";
 
-var watchSample = new IDBCursorWithValue({
+var watchSample = new Vue({
     el : '#watch-sample',
     data : {
         question : '',
@@ -22,6 +22,14 @@ var watchSample = new IDBCursorWithValue({
                 return;
             }
             this.answer = "Let me think";
+            var vm = this;
+            axios.get('https://yesno.wtf/api')
+                .then(function(response) {
+                    vm.answer = _.capitalize(response.data.answer);
+                })
+                .catch(function(error) {
+                    vm.answer = 'Error. Api not available ' + error; 
+                })
         }
     }
 })
