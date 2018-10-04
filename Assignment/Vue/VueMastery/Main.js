@@ -46,20 +46,8 @@ Vue.component('product', {
         <span>
             <button v-on:click="removeFromCart">Remove From Cart</button>
         </span>
-        <div>
-            <h2>Reviews</h2>
-            <p v-if="!reviews.length">There are no review yet</p>
-            <p v-else>
-                <ul>
-                    <li v-for="record in reviews">
-                        {{ record.name}} {{record.review}}
-                        {{ record.rating}}
-                    </li>
-                </ul>
-            </p>    
-        </div>
-        <br>
-        <product-review @review-submitted="addReview"></product-review>
+        <product-tabs :reviews="reviews"></product-tabs>
+        
     </div>`,
 
     data() {
@@ -236,6 +224,48 @@ Vue.component('product-review', {
         }
     }
 })
+
+Vue.component('product-tabs', {
+    props: {
+        reviews: {
+            type: Array,
+            required: true
+        }
+    },
+    template: `
+        <div>
+            <span class="tab"
+                :class="{ activeTab : selectedTab === tab}"
+                v-for="(tab, index) in tabs" :key="index"
+                @click="selectedTab = tab">
+                    {{ tab }}
+                </span>
+            <div v-show="selectedTab === 'Reviews'">
+                <h2>Reviews</h2>
+                <p v-if="!reviews.length">There are no review yet</p>
+                <p v-else>
+                    <ul>
+                        <li v-for="record in reviews">
+                            {{ record.name}} {{record.review}}
+                            {{ record.rating}}
+                        </li>
+                    </ul>
+                </p>    
+            </div>
+            <br>
+            <product-review v-show="selectedTab === 'Make a Review'"> 
+                @review-submitted="addReview"></product-review>
+        </div>
+    `,
+
+    data()  {
+        return {
+            tabs: ['Reviews','Make a Review'],
+            selectedTab: 'Reviews'
+        }
+    }
+})
+
 
 var app = new Vue({
     el: '#App',
