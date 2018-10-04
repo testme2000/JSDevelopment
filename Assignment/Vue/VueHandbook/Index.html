@@ -16,6 +16,31 @@
         <p :style="{textDecoration: decoration}">Line</p>
         <p :style="styling">Hi Hiku Hi Hike Hihi</p>
         <p :class="{goForUnder: verifyBold, gainWeight: verifyBold}">Meku Teku and Hemaku</p>
+        <a :href="website" target="_blank">{{content}}</a>
+        <p>
+            <input v-model="masiga" placeholder="Type your message">
+            <h2>{{masiga}}</h2>
+        </p>
+        <p>
+            <select v-model="fruit">
+                <option disabled value="">Choose your fruit</option>
+                <option>Mango</option>
+                <option>Banana</option>
+                <option>Orange</option>
+            </select>
+            <span v-show="fruit">{{fruit}}</span>
+            <p v-if="fruit">
+                <span v-text="'Hi! I am glad that you selected fruit ' + fruit"></span>
+            </p>
+            <p v-else>
+                <span>Not found</span>
+            </p>
+        </p>
+        <p>
+            <ul  v-for="anim in marvel">
+                <li>{{anim}}</li>
+            </ul>
+        </p>
     </div>
 </body>
 <style>
@@ -39,19 +64,26 @@
         el : '#example',
         data: {
             example : 'Hello World',
-            decoration: 'underline',
-            weight: 'Bold',
+            decoration: 'underline line-through',
+            weight: 'bold',
             goForUnder: 'underline',
             gainWeight: 'weight',
-            verifyBold: true
+            verifyBold: true,
+            website: 'http://www.esakal.com',
+            content: "Maay Mauli",
+            masiga: "",
+            fruit:'',
+            marvel:['IronMan','Thor','Captain America','Black Panther']
         },
         components : {
             Sidebar
         },
         computed : {
-            styling : {
-                textDecoration: this.decoration,
-                textWeight: this.weight
+            styling : function() {
+                return {
+                    textDecoration: this.decoration,
+                    textWeight: this.weight
+                }
             }
         }
     });
