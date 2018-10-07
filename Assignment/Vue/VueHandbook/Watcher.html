@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Watcher Sample</title>
+    </head>
+    <body>
+        <div id="app">
+            <watchit :param="name"></watchit>
+        </div>
+    </body>
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+        Vue.component('watchit',{
+            props: ['param'],
+            template: `<div>
+                            <h1>My name is {{param}}</h1>
+                            <button @click="ChangeIt">Change my name to something nice</button>
+                        </div>`,
+            methods: {
+                ChangeIt : function() {
+                    this.$parent.name = "MekuTeku";
+                    alert(this.$parent.name);
+                }
+            }
+        })
+        new Vue({
+            el : '#app',
+            data: {
+                name : "Test"
+            },
+            methods :{
+                ChangeIt : function() {
+                    name = "MekuTeku"
+                }
+            },
+            watch : {
+                name : function(oldvalue,newvalue) {
+                    console.log("Name changed by external component. Be careful");
+                    console.log("new value is " +  oldvalue);
+                    console.log("Old value was " + newvalue);
+                }
+            }
+        })
+    
+    
+    </script>
+</html>

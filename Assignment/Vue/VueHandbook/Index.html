@@ -42,7 +42,7 @@
             </ul>
         </p>
         <p>
-            <a @click="handleClick">Click Me</a>
+            <a @click="handleClick('Something')">Click Me</a>
         </p>
     </div>
 </body>
@@ -79,7 +79,9 @@
             marvel:['IronMan','Thor','Captain America','Black Panther']
         },
         methods : {
-            
+            handleClick : function(param) {
+                alert(param + " " + this.example);
+            }
         },
         components : {
             Sidebar
