@@ -23,6 +23,9 @@
                 <h4 v-html="rawHTML"></h4>
                 <button v-bind:disabled="isButtonDisabled">Button</button>
             </div>
+            <div v-bind:style="{ color: ActiveSpray, fontSize: activeFont }">
+                Test it all - Also Make sure everything is working.....
+            </div>    
         </div>
         <div id="app1">
             <p>Basic Message : {{message}}</p>

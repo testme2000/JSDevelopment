@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Demo : Computed Property</title>
+    </head>
+    <body>
+        <div id="comapp">
+            <p>
+                <h1>Here is the result of total count : {{count}}</h1>
+            </p>
+        </div>
+    </body>
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+        new Vue({
+            el : "#comapp",
+            data : {
+                compVal : [2,4,6,8]
+            },
+            computed :  {
+                count : function() {
+                    return this.compVal.length;
+                }
+            },
+
+            watch : {
+                count : function() {
+                    console.log("Item change, please review it again");
+                }
+            }
+        });
+
+    </script>
+</html>
