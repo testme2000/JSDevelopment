@@ -23,6 +23,9 @@
                 <h4 v-html="rawHTML"></h4>
                 <button v-bind:disabled="isButtonDisabled">Button</button>
             </div>
+            <div v-bind:style="{ color: ActiveSpray, fontSize: activeFont }">
+                Test it all - Also Make sure everything is working.....
+            </div>    
         </div>
         <div id="app1">
             <p>Basic Message : {{message}}</p>
@@ -33,6 +36,22 @@
             <p v-if="seen">Now you can see me</p>
             <a v-bind:href="url">See where can go</a>
             <h1>{{fullName}}</h1>
+            <div v-if="Math.random() > 0.5">
+                <h1>YES</h1>
+            </div>
+            <div v-else>
+                <h2>No</h2>
+            </div>
+            <h1>Testing v-if-else-if ladder for the first time</h1>
+            <div v-if="type === 'A'">
+                A
+            </div>
+            <div v-else-if="type === 'B'">
+                B
+            </div>
+            <div v-else>
+                This is something else
+            </div>
         </div>
     </body>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>

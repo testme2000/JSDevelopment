@@ -26,7 +26,10 @@ new Vue({
         }
         ],
         rawHTML: "<span style=\"color:green\">This should be green</span>",
-        isButtonDisabled : undefined
+        isButtonDisabled : undefined,
+        ActiveSpray: 'red',
+        activeFont: 30,
+        errorFound : true
     },
     methods:{
         reverseMessage : function() {
