@@ -7,7 +7,14 @@
     <body>
         <div id="slotdemo">
             {{content}}
-            <slot-test :slotparam="content"></slot-test>
+            <slot-test :slotparam="content">
+                <h2>This is just tesing</h2>
+                <ul slot="another">
+                    <li>Test1</li>
+                    <li>Test2</li>
+                    <li>Test3</li>
+                </ul>
+            </slot-test>
         </div>
     </body>
     <script src="https://unpkg.com/vue"></script>
@@ -17,6 +24,10 @@
             template : `
                 <div>
                     <h1>Here is the slot : {{slotparam}}</h1>
+                    <slot></slot> 
+                    <another>
+                        <slot name="another"></slot>
+                    </another>    
                 </div>`
         })
 
