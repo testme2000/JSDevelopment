@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Child To Parent Communication</title>
+    </head>
+    <body>
+        <div id="ChildToPar">
+            <header><h1>{{title}}</h1></header>
+            <basicskill></basicskill>
+            <childcomm @doneride="finishRiding"></childcomm> 
+        </div>
+    </body>
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+        Vue.component('basicskill',{
+            template : `<div>
+                            <h1>He can walk</h1>
+                            <button @click="confirmBasicSkill">Confirm Basik</button>
+                        </div>`,
+            methods : {
+                confirmBasicSkill : function() {
+                    this.$root.$emit('BasicConfirm');
+                }
+            }
+        })
+        Vue.component('childcomm',{
+            template : `
+                <div>
+                    <h2>Child is riding the bike</h2>
+                    <button @click="ridingComplete">Ride Complete</button>
+                </div>`,
+            methods : {
+                ridingComplete : function() {
+                    this.$emit('doneride','Pappu');
+                }
+            }
+
+        })
+        new Vue({
+            el : '#ChildToPar',
+            mounted() {
+                this.$root.$on('BasicConfirm', () => {
+                    console.log('Basic Skill confirm with child');
+                })
+            },
+            data: {
+                title : "Child To Parent Communication Testing"
+            },
+            methods : {
+                finishRiding : function(param1) {
+                    alert("Child learn to ride " + param1);
+                }
+            }
+
+        })
+    
+    
+    
+    
+    
+    </script>
+</html>
