@@ -2,7 +2,15 @@
 
 Vue.component('todo-item',{
     props: ['todo'],
-    template: '<li>{{todo.item}}</li>'
+    template: `<li>{{todo.item}}
+                <button @click="todoRemove(todo.Id)">Remove</button>
+              </li>`,
+    methods : {
+        todoRemove : function(todoid) {
+            alert(todoid);
+            this.$emit('remove',todoid)
+        }
+    }              
 })
 
 
@@ -35,6 +43,12 @@ new Vue({
         reverseMessage : function() {
             this.message1 = this.message1.split('').reverse().join('');
             this.title = "Let's try to modify it";
+        },
+
+        removeTodo : function(id) {
+            alert(id);
+            var foundit = this.todoList.map(function(fnd) { return fnd.Id; }).indexOf(id);
+            this.todoList.splice(foundit,1);
         }
     }
 });

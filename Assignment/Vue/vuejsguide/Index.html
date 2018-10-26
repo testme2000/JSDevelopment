@@ -14,9 +14,10 @@
             <button v-on:click="reverseMessage">Reverse the Message</button>
             <div>
                 <todo-item
-                    v-for="record in todoList"
+                    v-for="(record, index) in todoList"
                     v-bind:todo="record"
-                    v-bind:key="record.Id"></todo-item>
+                    v-bind:index="index"
+                    v-bind:key="record.Id" v-on:remove="removeTodo"></todo-item>
             </div>
             <div>
                 {{rawHTML}}
@@ -26,6 +27,21 @@
             <div v-bind:style="{ color: ActiveSpray, fontSize: activeFont }">
                 Test it all - Also Make sure everything is working.....
             </div>    
+            <ul>
+                <template v-for="record in todoList">
+                    <li>Item - {{record.Id}}
+                        Item Detail - {{record.item}}
+                    </li>
+                </template>
+            </ul>
+            <h1>Conditional Iteration</h1>
+            <ul>
+                <template v-for="record in todoList">
+                    <li v-if="record.Id === 3">Item - {{record.Id}}
+                        Item Detail - {{record.item}}
+                    </li>
+                </template>
+            </ul>
         </div>
         <div id="app1">
             <p>Basic Message : {{message}}</p>
@@ -51,6 +67,9 @@
             </div>
             <div v-else>
                 This is something else
+            </div>
+            <div>
+                <span v-for="n in 10">Number {{n}} </span>
             </div>
         </div>
     </body>
