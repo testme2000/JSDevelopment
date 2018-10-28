@@ -6,14 +6,39 @@
     </head>
     <body>
             <div id="rootApp">
+                <h1 v-show=display_status>
                     {{message}}
+                </h1>
+                <h2 v-if="display_status === false">
+                    {{backup_msg}}
+                </h2>
+                <div>
+                    <h3 v-for="i in 10">
+                        {{i}} X 4 = {{i * 4}}
+                    </h3>
+                    <h4 v-for="record,id in slangs">{{id}}. {{record}}</h4>
+                </div>
+                <form v-on:submit.prevent="handleSubmit">
+                    <button>Submit</button>
+                </form>
+                <img v-bin:src="imageLoc">
+                <img src=url("imageLoc")>
             </div>
         <script src="https://unpkg.com/vue"></script>
         <script>
             new Vue({
                 el :'#rootApp',
                 data : {
-                    message : 'Hello'
+                    message : 'Hello',
+                    backup_msg : 'GoodBye',
+                    display_status : true,
+                    slangs : [ "Meku", "Teku","Iku","Yeku", "Hemaku"],
+                    imageLoc : 'C:\Users\nitin\OneDrive\Pictures\paper.jpg'
+                },
+                methods : {
+                    handleSubmit : function() {
+                        alert("User click");
+                    }
                 }
             })
         
