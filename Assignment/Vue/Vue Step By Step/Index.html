@@ -6,14 +6,34 @@
     </head>
     <body>
             <div id="rootApp">
-                    {{message}}
+                <input v-model="message" />
+                {{message}}
+                <span v-bind:class="testclass">Test</span>
+                <Greeting></Greeting>
+                <Goodbye></Goodbye>
+                <mekuteku></mekuteku>
             </div>
+            <template id="seeya-template">
+                <div>
+                    <h1>See Ya soon</h1>
+                </div>
+            </template>
         <script src="https://unpkg.com/vue"></script>
         <script>
+            Vue.component("Greeting",{
+                template:"<div><h4>Have Great day</h4></div>"
+            });
+            Vue.component("Goodbye",{
+                template:"<div><h4>Have Nice Day Day</h4></div>"
+            });
+            Vue.component('mekuteku', {
+                template: '#seeya-template'
+            });
             new Vue({
                 el :'#rootApp',
                 data : {
-                    message : 'Hello'
+                    message : 'Hello',
+                    testclass : 'span-class'
                 }
             })
         
