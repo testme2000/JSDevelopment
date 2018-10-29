@@ -61,7 +61,8 @@ new Vue({
         url: "http://www.esakal.com",
         otherstring: '',
         firstName : 'Meku',
-        lastName : 'Patel'
+        lastName : 'Patel',
+        multiln : ''
     },
     computed : {
         reversestring : function() {

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Condtional Rendering</title>
+    </head>
+    <body>
+        <div id="rendapp">
+            <h1>Conditional Rendering</h1>
+            <template v-if="logintype === 'emailtype'">
+                <label>Email</label>
+                <input placeholder="Enter your email" key="user_email">
+            </template>
+            <template v-else="logintype === 'usertype'" >
+                <label>Username</label>
+                <input placeholder="Enter your username" key="user_user">
+            </template>
+            <button type="button" @click="changeType">Change Login</button>
+            <div v-show="logintype === 'emailtype'">Email is great</div>
+        </div>
+    </body>
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+        new Vue({
+            el : '#rendapp',
+            data : {
+                logintype : "emailtype"
+            },
+            methods : {
+                changeType : function() {
+                    this.logintype = (this.logintype === "emailtype") ? "usertype" : "emailtype";  
+                
+                }
+            }
+        })
+    </script>
+</html>
