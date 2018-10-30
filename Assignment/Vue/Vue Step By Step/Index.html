@@ -9,8 +9,8 @@
                 <input v-model="message" />
                 {{message}}
                 <span v-bind:class="testclass">Test</span>
-                <Greeting></Greeting>
-                <Goodbye></Goodbye>
+                <Greeting :message="content"></Greeting>
+                <Goodbye partingmsg="Keep smiling, don't worry" :funpass="warnsomething"></Goodbye>
                 <mekuteku></mekuteku>
             </div>
             <template id="seeya-template">
@@ -21,10 +21,29 @@
         <script src="https://unpkg.com/vue"></script>
         <script>
             Vue.component("Greeting",{
-                template:"<div><h4>Have Great day</h4></div>"
+                template:
+                `<div><h4>{{message}}</h4>
+                <button @click="testclick">Click it</button>
+                </div>`,
+                props: ["message"],
+                methods : {
+                    testclick : function() {
+                        this.count += 1;
+                        alert(this.count);
+                    }
+                },
+                data : function() {
+                    return {
+                        count : 0
+                    };
+                }
             });
             Vue.component("Goodbye",{
-                template:"<div><h4>Have Nice Day Day</h4></div>"
+                template:
+                    `<div><h4>{{partingmsg}}</h4>
+                    <button @click="funpass">click it</button>
+                    </div>`,
+                props : ["partingmsg","funpass"]
             });
             Vue.component('mekuteku', {
                 template: '#seeya-template'
@@ -33,7 +52,14 @@
                 el :'#rootApp',
                 data : {
                     message : 'Hello',
-                    testclass : 'span-class'
+                    testclass : 'span-class',
+                    content : 'Here you go but be very very careful'
+
+                },
+                methods : {
+                    warnsomething : function() {
+                        alert("Warn : you are passed from component");
+                    }
                 }
             })
         
