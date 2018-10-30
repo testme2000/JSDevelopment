@@ -62,7 +62,10 @@ new Vue({
         otherstring: '',
         firstName : 'Meku',
         lastName : 'Patel',
-        multiln : ''
+        multiln : '',
+        checkState : true,
+        checkgroup : [],
+        radioval : ''
     },
     computed : {
         reversestring : function() {

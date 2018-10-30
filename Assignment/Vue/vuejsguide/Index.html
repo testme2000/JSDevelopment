@@ -75,6 +75,26 @@
                 <h4>{{multiln}}</h4>
                 <textarea v-model="multiln" placeholder="Add something"></textarea>
             </div>
+            <div>
+                <input type="checkbox" id="checkid" v-model="checkState">
+                {{checkState}}
+            </div>
+            <div>
+                <input type="checkbox" id="teku" value="teku" v-model="checkgroup">
+                <label for="teku">Teku</label>
+                <input type="checkbox" id="meku" value="meku" v-model="checkgroup">
+                <label for="meku">Meku</label>
+                <input type="checkbox" id="iku" value="iku" v-model="checkgroup">
+                <label for="iku">Iku</label>
+                {{checkgroup}}
+            </div>
+            <div>
+                <input type="radio" id="one" value="onemeku" v-model="radioval">
+                <label for="one">One</label>
+                <input type="radio" id="two" value="twomeku" v-model="radioval">
+                <label for="one">two</label>
+                {{radioval}}
+            </div>
         </div>
     </body>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
