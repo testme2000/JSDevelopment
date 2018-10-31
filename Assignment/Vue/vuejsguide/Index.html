@@ -95,6 +95,25 @@
                 <label for="one">two</label>
                 {{radioval}}
             </div>
+            <div>
+                <select v-model="sellist" multiple>
+                    <option disabled value="">Please select following value</option>
+                    <option value="Kiku">A</option>
+                    <option value="Meku">B</option>
+                    <option value="Teku">C</option>
+                </select>
+                <span>Selected {{sellist}}</span>
+            </div>
+            <span>
+                <select v-model="boqual">
+                    <option v-for="record in dylist" v-bind:value="record.value">
+                        {{ record.head}}
+                    </option>
+                </select>
+                <span>
+                    So far selected bo {{boqual}}
+                </span>
+            </span>
         </div>
     </body>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>

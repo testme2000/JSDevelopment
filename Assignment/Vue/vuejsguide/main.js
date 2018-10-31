@@ -65,7 +65,14 @@ new Vue({
         multiln : '',
         checkState : true,
         checkgroup : [],
-        radioval : ''
+        radioval : '',
+        sellist : [],
+        dylist : [
+            { head: 'Thatya', value : 'worst'},
+            { head: 'Stephi', value : 'egocen'},
+            { head: 'VS', value : 'Sandhi'}
+        ],
+        boqual : 'Sandhi'
     },
     computed : {
         reversestring : function() {
