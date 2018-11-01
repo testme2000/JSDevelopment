@@ -81,6 +81,20 @@ var app = new Vue({
                 this.resultArrived = false;
                 this.fetchStatus = true;
              });
+        },
+        LoadSetup : function() {
+            // Load all symbol details for future search
+            var basicUrl = "https://api.iextrading.com/1.0/ref-data/symbols";
+            axios.get(basicUrl).then(result => {
+                var filterData = result.data.map(function(item) {
+                    if(item.type === "cs") {
+                        return { "Symbol" : item.symbol, "Name" : item.name};
+                    }
+                })
+                console.log(filterData);
+            }, error => {
+                console.log("Error occur");
+            });
         }
     }
 
