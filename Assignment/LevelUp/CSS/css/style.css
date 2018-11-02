@@ -1,11 +1,21 @@
 
 /* started testing */
 
+body {
+    background: blue url('./paper.jpg')  no-repeat;
+}
+
 h1 {
-    color: blueviolet;
+    color: white;
     font-size: 12px;
+    background: red;
 }
 
 p.Devaclass {
-    color: coral;
+    color: white;
+    background: red;
+}
+
+.testwrap {
+    background-color: black;
 }
