@@ -51,13 +51,25 @@ var app = new Vue({
             Low : '',
             DividendAmount : 0.0
         },
+        companyInfo : [],
         testme : "Check it out"
     },
-
+    computed : {
+        ticker : function() {
+            // Start searching ticker symbol based upon company name enter so far
+            if(this.stockname.length !== 0)
+            {
+                var filterString = this.stockname.split();
+                filterString.reduce
+            }
+        }
+    },
     methods: {
         GetStockDetails : function() {
+            // Get the ticker symbol
+            this.ticker = SearchTickerSymbol();
             var basicUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=";
-            basicUrl += this.stockname;
+            basicUrl += this.ticker;
             basicUrl += "&apikey=MOMNOAE88JPG3RGL";
             axios.get(basicUrl).then(result => {
                 // Get basic stock information
@@ -86,12 +98,13 @@ var app = new Vue({
             // Load all symbol details for future search
             var basicUrl = "https://api.iextrading.com/1.0/ref-data/symbols";
             axios.get(basicUrl).then(result => {
-                var filterData = result.data.map(function(item) {
+                this.companyInfo = result.data.reduce(function(filterData,item) {
                     if(item.type === "cs") {
-                        return { "Symbol" : item.symbol, "Name" : item.name};
+                        filterData.push({ "Symbol" : item.symbol, "Name" : item.name});
                     }
-                })
-                console.log(filterData);
+                    return filterData;
+                },[]);
+                console.log(this.companyInfo);
             }, error => {
                 console.log("Error occur");
             });
