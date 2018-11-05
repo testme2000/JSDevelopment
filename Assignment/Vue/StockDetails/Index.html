@@ -19,7 +19,7 @@
             <tr>
                 <td>
                     <span>Please Enter Company Name :</span>
-                    <input v-model="stockname" placeholder="e.g. Coca Cola Inc." />
+                    <input v-model.trim="stockname" @mouseup="cleanupResultArea()" placeholder="e.g. Facebook Inc." />
                     <button v-on:click="GetStockDetails()">Get Details</button>
                 </td>
             </tr>
@@ -32,7 +32,7 @@
                             We found the details
                             <stock-details :stock-object="resultDetails"></stock-details>
                         </div>
-                        <div v-else>Something wrong, we didn't get the result</div>
+                        <div v-else>{{resultError}}</div>
                     </div>    
                 </td>
             </tr>
