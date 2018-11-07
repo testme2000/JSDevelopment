@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Property Passing to Component</title>
+    </head>
+    <body>
+        <div id="propApp">
+          <blog v-for="record in bloglist"
+                  v-bind:key="record.id"
+                  v-bind:postrecord="record"></blog>
+
+        <ul>
+            <li v-for="record in bloglist">
+                {{record.title}}
+            </li>
+        </ul>
+        </div>
+    </body>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="js/proptest.js"></script>
+</html>
