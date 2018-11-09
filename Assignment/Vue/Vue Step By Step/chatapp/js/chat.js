@@ -32,11 +32,35 @@ var removemessage = Vue.component("removemessage", {
 var messageItem = Vue.component("messageitem", {
     template: "#message-item",
     props: ["message"]
-})
+});
+
+var chatForm = Vue.component("chatform", {
+    template : "#chat-form",
+    props: ["save", "totalmessages"],
+    data : function() {
+        return {
+            message: "",
+            hasErrors: false
+        }
+    },
+    methods : {
+        empty: function() {
+            if(this.message)
+            {
+                this.message = "";
+                this.hasErrors = false;
+            }
+            else {
+                this.hasErrors = true;
+            }
+        }
+    }
+});
+
 
 
 new Vue({
-    el : '#chatApp',
+    el : '#root',
     data : {
         appName : 'Welcome to chat App',
         messages : [
@@ -44,7 +68,9 @@ new Vue({
             { text: "Doing good", time: new Date()},
             { text: "Nice to here", time: new Date()}
         ],
-        methods : {
+    },
+    
+    methods : {
             save : function(message) {
                 if(message) {
                     messgaes.push({text: message, time: new Date()});
@@ -53,6 +79,5 @@ new Vue({
             removemessage : function(index) {
                 this.message.splice(index,1);
             }
-        }
     }
 })

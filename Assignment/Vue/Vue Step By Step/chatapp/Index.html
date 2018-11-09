@@ -3,13 +3,48 @@
 <head>
     <meta charset="utf-8">
     <title>Chat App (Using Vue.js)</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <style type="text/css">
+        body { margin: 20px; }
+    </style>
 </head>
 <body>
-    <div id="chatApp">
-
-
+    <div id="root">
+        <div>
+            <h1>{{appName}}</h1>
+            <messages :removemessage="removemessage" :chat="messages"></messages>
+            <chatform :totalmessages="messages.length" :save="save"></chatform>
+        </div>
     </div>
 </body>
+<template id="messages-list">
+    <div>
+        <ul class="list-group">
+            <li class="list-group-item"
+                v-for="m,index in chat">
+                <messageitem :message="m"></messageitem>
+                <removemessage :removemessagefunction="removemessage"></removemessage>
+                <span style="position: relative;left: -50px;" class="pull-right">Date: {{getRelativeTime(m.time)}}</span>
+            </li>
+        </ul>
+    </div>
+</template>
+<template id="message-item"><span>{{message.text}}</span></template>
+<template id="remove_message"><span><a v-on:click="removemessagefunction()" class="close">X</a></span></template>
+<template id="chat-form">
+    <div>
+        <form v-on:submit.prevent="save(message),empty()">
+            <label>Your Message</label>
+            <input v-model="message" type="text" class="form-control" />
+            <div v-if="hasErrors" class="alert alert-danger">
+                <p>Please enter a message</p>
+                <button class="btn btn-info">Send</button>
+                <span class="pull-right badge badge-info">{{totalmessages</span>
+            </div>
+        </form>
+    </div>
+</template>
+
 <script src="https://unpkg.com/vue"></script>
 <script src="js/chat.js"></script>
 </html>
