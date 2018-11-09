@@ -6,15 +6,18 @@
     </head>
     <body>
         <div id="propApp">
-          <blog v-for="record in bloglist"
+            <div :style="{fontSize: fontsizeupdate + 'em' }">
+                <blog v-for="record in bloglist"
                   v-bind:key="record.id"
-                  v-bind:postrecord="record"></blog>
-
-        <ul>
-            <li v-for="record in bloglist">
-                {{record.title}}
-            </li>
-        </ul>
+                  v-bind:postrecord="record"
+                  v-on:increzefont="updatefontsize">
+                </blog>
+            </div>
+            <ul v-for="record in bloglist">
+                    <li>
+                        {{record.title}}
+                    </li>
+            </ul>
         </div>
     </body>
     <script src="https://unpkg.com/vue"></script>
