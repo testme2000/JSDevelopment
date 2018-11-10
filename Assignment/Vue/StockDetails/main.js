@@ -91,6 +91,31 @@ var app = new Vue({
                 this.resultArrived = false;
                 this.fetchStatus = true;
              });
+        },
+
+        WatchKeyup : function(event)
+        {
+            // Check whether user pressed backspace and textbox is cleared
+            if(event.key == "Backspace" || event.key == "Delete")
+            {
+                // Check whether stock name is blank
+                if(this.stockname.length === 0)
+                {
+                    // Disable result arrived
+                    this.resultArrived = false;
+                    // Clear the error message
+                    if(this.errorMessage.length !== 0) 
+                    {
+                        this.errorMessage = "";
+                    }
+
+                }
+
+            }
+            else if(event.key == "Enter")
+            {
+                this.GetStockDetails();
+            }
         }
     }
 

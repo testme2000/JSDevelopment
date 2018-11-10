@@ -14,7 +14,7 @@
             <tr>
                 <td>
                     <span>Please Enter Company Ticker Symbol :</span>
-                    <input v-model="stockname" placeholder="KO for Coca Cola Inc." />
+                    <input v-model="stockname" v-on:keyup="WatchKeyup" placeholder="KO for Coca Cola Inc." />
                     <button v-on:click="GetStockDetails()">Get Details</button>
                 </td>
             </tr>
