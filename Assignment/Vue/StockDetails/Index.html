@@ -27,7 +27,7 @@
                             We found the details
                             <stock-details :stock-object="resultDetails"></stock-details>
                         </div>
-                        <div v-else>Something wrong, we didn't get the result</div>
+                        <div v-else>{{errorMessage}}</div>
                     </div>    
                 </td>
             </tr>

@@ -51,7 +51,7 @@ var app = new Vue({
             Low : '',
             DividendAmount : 0.0
         },
-        testme : "Check it out"
+        errorMessage : ''
     },
 
     methods: {
@@ -60,24 +60,34 @@ var app = new Vue({
             basicUrl += this.stockname;
             basicUrl += "&apikey=MOMNOAE88JPG3RGL";
             axios.get(basicUrl).then(result => {
-                // Get basic stock information
-                var output = result.data['Meta Data'];
-                this.resultDetails.Symbol = output['2. Symbol'];
-                this.resultDetails.LastUpdated = output['3. Last Refreshed'];
-                // Stock volume information
-                var stocktrans = result.data['Time Series (Daily)'];
-                // Split the lastupdate datetime to get only date part 
-                let datedetails = this.resultDetails.LastUpdated.split(' ');
-                let datepart = datedetails[0];   
-                this.resultArrived = true;
-                this.fetchStatus = true;
-                this.resultDetails.Open = stocktrans[datepart]['1. open'];
-                this.resultDetails.Close = stocktrans[datepart]['4. close'];
-                this.resultDetails.High = stocktrans[datepart]['2. high'];
-                this.resultDetails.Low = stocktrans[datepart]['3. low'];
-                this.resultDetails.DividendAmount = stocktrans[datepart]['7. dividend amount'];
+                // Make sure that we receive proper result
+                if(result.data['Error Message'] !== undefined)
+                {
+                    this.errorMessage = "Information not found, Please verify ticker symbol";
+                    this.resultArrived = false;
+                    this.fetchStatus = true;
+                }
+                else 
+                {
+                    // Get basic stock information
+                    var output = result.data['Meta Data'];
+                    this.resultDetails.Symbol = output['2. Symbol'];
+                    this.resultDetails.LastUpdated = output['3. Last Refreshed'];
+                    // Stock volume information
+                    var stocktrans = result.data['Time Series (Daily)'];
+                    // Split the lastupdate datetime to get only date part 
+                    let datedetails = this.resultDetails.LastUpdated.split(' ');
+                    let datepart = datedetails[0];   
+                    this.resultArrived = true;
+                    this.fetchStatus = true;
+                    this.resultDetails.Open = stocktrans[datepart]['1. open'];
+                    this.resultDetails.Close = stocktrans[datepart]['4. close'];
+                    this.resultDetails.High = stocktrans[datepart]['2. high'];
+                    this.resultDetails.Low = stocktrans[datepart]['3. low'];
+                    this.resultDetails.DividendAmount = stocktrans[datepart]['7. dividend amount'];
+                }
              }, error => {
-                var error = "Information not found";
+                this.errorMessage = "Information not found";
                 this.resultArrived = false;
                 this.fetchStatus = true;
              });
