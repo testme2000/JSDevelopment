@@ -116,6 +116,19 @@ var app = new Vue({
             {
                 this.GetStockDetails();
             }
+        },
+
+        LoadStockData : function() 
+        {
+            var basicUrl = "https://api.iextrading.com/1.0/ref-data/symbols";
+            axios.get(basicUrl).then(result => {
+                // Make sure that we receive proper result
+                console.log("Test");
+            }, error => {
+                this.errorMessage = "Information not found";
+                this.resultArrived = false;
+                this.fetchStatus = true;
+             });
         }
     }
 
