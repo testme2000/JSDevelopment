@@ -73,11 +73,11 @@ new Vue({
     methods : {
             save : function(message) {
                 if(message) {
-                    messgaes.push({text: message, time: new Date()});
+                    this.messages.push({text: message, time: new Date()});
                 }
             },
             removemessage : function(index) {
-                this.message.splice(index,1);
+                this.messages.splice(index,1);
             }
     }
 })

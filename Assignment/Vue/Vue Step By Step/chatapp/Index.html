@@ -24,8 +24,13 @@
                 v-for="m,index in chat">
                 <messageitem :message="m"></messageitem>
                 <removemessage :removemessagefunction="removemessage"></removemessage>
-                <span style="position: relative;left: -50px;" class="pull-right">Date: {{getRelativeTime(m.time)}}</span>
+                <span class="pull-right">Date: {{getRelativeTime(m.time)}}</span>
             </li>
+            <div v-if="chat.length <= 0">
+                <div class="alert alert-info">
+                    <p>NO Messages</p>
+                </div>
+            </div>
         </ul>
     </div>
 </template>
