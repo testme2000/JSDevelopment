@@ -9,12 +9,13 @@
 </head>
 <body>
     <div id="stockapp">
+        <button @click="LoadStockData">Load All Stock Details</button>
         <table>
             <tr></tr>
             <tr>
                 <td>
                     <span>Please Enter Company Ticker Symbol :</span>
-                    <input v-model="stockname" placeholder="KO for Coca Cola Inc." />
+                    <input v-model="stockname" v-on:keyup="WatchKeyup" placeholder="KO for Coca Cola Inc." />
                     <button v-on:click="GetStockDetails()">Get Details</button>
                 </td>
             </tr>
@@ -27,7 +28,7 @@
                             We found the details
                             <stock-details :stock-object="resultDetails"></stock-details>
                         </div>
-                        <div v-else>Something wrong, we didn't get the result</div>
+                        <div v-else>{{errorMessage}}</div>
                     </div>    
                 </td>
             </tr>
