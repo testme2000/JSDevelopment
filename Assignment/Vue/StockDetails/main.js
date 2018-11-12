@@ -51,7 +51,8 @@ var app = new Vue({
             Low : '',
             DividendAmount : 0.0
         },
-        errorMessage : ''
+        errorMessage : '',
+        stockdetails : []
     },
 
     methods: {
@@ -123,6 +124,18 @@ var app = new Vue({
             var basicUrl = "https://api.iextrading.com/1.0/ref-data/symbols";
             axios.get(basicUrl).then(result => {
                 // Make sure that we receive proper result
+                var smallset = [];
+                result.data.filter(function(record) {
+                    if(record.type === "cs") {
+                        var updatedvalue = {
+                            Symbol : record.symbol,
+                            Name : record.name
+                        };
+                        smallset.push(updatedvalue);
+                        return updatedvalue;
+                    }
+                });
+                this.stockdetails = smallset;
                 console.log("Test");
             }, error => {
                 this.errorMessage = "Information not found";
