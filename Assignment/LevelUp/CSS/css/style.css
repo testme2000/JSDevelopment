@@ -6,16 +6,24 @@ body {
 }
 
 h1 {
+    text-align: center;
     color: white;
-    font-size: 12px;
+    font-size: 32px;
     background: red;
+    text-decoration: line-through;
+    text-transform: lowercase;
 }
 
 p.Devaclass {
+    text-align: center;
     color: white;
     background: red;
+    text-transform: capitalize;
 }
 
 .testwrap {
-    background-color: black;
+    background-color: yellow;
+    text-align: center;
+    text-decoration: underline;
+    text-transform: capitalize;
 }
