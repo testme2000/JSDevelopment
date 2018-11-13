@@ -29,7 +29,7 @@ Vue.component('stock-details',{
             </tr>
             <tr>
                 <td>Dividend Amount</td>
-                <td>{{stockObject.DividendAmount}}
+                <td>{{stockObject.DividendAmount}}</td>
             </tr>
         </table>
         </div>`
@@ -55,10 +55,24 @@ var app = new Vue({
         stockdetails : []
     },
 
+    created : function() {
+        this.LoadStockData();
+    },
+
+
     methods: {
         GetStockDetails : function() {
+            // Search ticker symbol based upon company name
+            this.ticker = this.gettickersymbol(this.stockname);
+            if(this.ticker.length === 0) 
+            {
+                this.errorMessage = "Ticker not found, please check the company name"
+                this.resultArrived = false;
+                this.fetchStatus = true;
+                return;
+            }
             var basicUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=";
-            basicUrl += this.stockname;
+            basicUrl += this.ticker;
             basicUrl += "&apikey=MOMNOAE88JPG3RGL";
             axios.get(basicUrl).then(result => {
                 // Make sure that we receive proper result
@@ -94,6 +108,19 @@ var app = new Vue({
              });
         },
 
+        gettickersymbol : function(name)
+        {
+            var foundticker = "";
+
+            this.stockdetails.find(function(record){
+                if(record.Name === name) {
+                    foundticker = record.Symbol;
+                    return foundticker;
+                }
+            })
+            return foundticker;
+        },
+
         WatchKeyup : function(event)
         {
             // Check whether user pressed backspace and textbox is cleared
@@ -124,12 +151,18 @@ var app = new Vue({
             var basicUrl = "https://api.iextrading.com/1.0/ref-data/symbols";
             axios.get(basicUrl).then(result => {
                 // Make sure that we receive proper result
-                var smallset = [];
+                let smallset = [];
                 result.data.filter(function(record) {
                     if(record.type === "cs") {
-                        var updatedvalue = {
+                        // Convert string to lower case
+                        let tempstring = record.name.toLowerCase();
+                        // Remove "inc."
+                        let properformat = tempstring.replace("inc","").replace(".","").replace("corporation","").replace("incorporation","");
+                        // Remove whitespace
+                        let finalvalue = properformat.trim();
+                        let updatedvalue = {
                             Symbol : record.symbol,
-                            Name : record.name
+                            Name : finalvalue
                         };
                         smallset.push(updatedvalue);
                         return updatedvalue;

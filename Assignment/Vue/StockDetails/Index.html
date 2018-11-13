@@ -9,13 +9,12 @@
 </head>
 <body>
     <div id="stockapp">
-        <button @click="LoadStockData">Load All Stock Details</button>
         <table>
             <tr></tr>
             <tr>
                 <td>
-                    <span>Please Enter Company Ticker Symbol :</span>
-                    <input v-model="stockname" v-on:keyup="WatchKeyup" placeholder="KO for Coca Cola Inc." />
+                    <span>Please Enter Company Name :</span>
+                    <input v-model="stockname" v-on:keyup="WatchKeyup" placeholder="e.g Apple Inc." />
                     <button v-on:click="GetStockDetails()">Get Details</button>
                 </td>
             </tr>
@@ -37,6 +36,6 @@
     </div>
 </body>
 <script src="https://unpkg.com/vue"></script>
-<script src="main.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="main.js"></script>
 </html>
