@@ -1,17 +1,7 @@
 
-/* started testing */
-
-body {
-    background: blue url('./paper.jpg')  no-repeat;
-}
 
 h1 {
-    text-align: center;
-    color: white;
     font-size: 32px;
-    background: red;
-    text-decoration: line-through;
-    text-transform: lowercase;
 }
 
 p.Devaclass {
@@ -25,21 +15,17 @@ p.Devaclass {
     font-style: italic;
     font-family: arial, sans-serif;
     text-align: center;
-    text-transform: capitalize;
     font-size: 16px;
     font-variant: small-caps;
     font-weight: bold;
 }
 
-.testwrap a:hover {
-    background: red;
-    text-decoration: underline;
+
+.nav {
+    list-style: none;
+    padding: 0;
 }
 
-.testwrap a:active {
-    background: black;
-}
-
-.testwrap a {
-    text-decoration: none;
+.nav li {
+    display: inline;
 }
