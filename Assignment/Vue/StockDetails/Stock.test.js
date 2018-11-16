@@ -4,6 +4,7 @@
 import { mount } from '@vue/test-utils'
 import { stock } from './main'
 
+
 describe('StockCheck', () => {
     // Perform mounting
     const wrapper = mount(stock)
