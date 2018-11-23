@@ -1,19 +1,26 @@
 
 // Import the mount() method from test utils
 // also add destination component
+import Vue from 'vue';
+window.Vue = Vue;
+import axios from 'axios';
 import { mount } from '@vue/test-utils'
-import { stock } from './main'
+import app  from './main'
+
+
 
 
 describe('StockCheck', () => {
     // Perform mounting
-    const wrapper = mount(stock)
+    const wrapper = mount(stock-details)
     // get vue instance
     const vueobj = wrapper.vm
-    // Verify - Stock Component Result
+    console.log("Checking content");
+    console.log(wrapper);
+    /* // Verify - Stock Component Result
     it('renders the correct markup', () => {
-        expect(wrapper.html()).toContain('<h4>Result :</h4>')
-    })    
+        expect(wrapper.contains('<h4>Result :</h4>')).toBe(true);
+    }) */    
 
 })
 

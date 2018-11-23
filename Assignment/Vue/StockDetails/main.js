@@ -1,6 +1,10 @@
 "use strict";
 // MOMNOAE88JPG3RGL API Key
 
+import Vue from 'vue';
+
+
+
 Vue.component('stock-details',{
     props : ['stockObject'],
     template : `
@@ -111,9 +115,10 @@ var app = new Vue({
         gettickersymbol : function(name)
         {
             var foundticker = "";
+            let key = name.toLowerCase();
 
             this.stockdetails.find(function(record){
-                if(record.Name === name) {
+                if(record.Name === key) {
                     foundticker = record.Symbol;
                     return foundticker;
                 }
