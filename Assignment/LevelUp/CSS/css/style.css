@@ -24,6 +24,8 @@ p.Devaclass {
 .nav {
     list-style: none;
     padding: 0;
+    width: 800%;
+    height: 400px;
 }
 
 .nav li {
