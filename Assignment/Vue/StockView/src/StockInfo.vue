@@ -24,7 +24,7 @@
                 <td>{{stockObject.Low}}</td>
             </tr>
             <tr>
-                <td>Dividend Amount</td>
+                <td>Div Amount:</td>
                 <td>{{stockObject.DividendAmount}}</td>
             </tr>
         </table>
@@ -33,7 +33,7 @@
 
 <script>
     export default {
-        name: 'stock-details',
+        name: 'stockdetails',
         props : ['stockObject'],
         data () {
             return {

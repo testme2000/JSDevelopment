@@ -17,7 +17,7 @@
               <div v-show="fetchStatus">
                   <div v-if="resultArrived">
                       We found the details
-                      <stock-details :stock-object="resultDetails"></stock-details>
+                      <stockdetails :stock-object="resultDetails"></stockdetails>
                   </div>
                   <div v-else>{{errorMessage}}</div>
               </div>    
@@ -53,7 +53,7 @@ export default {
     }
   },
   components : {
-      'stock-details' : StockInfo
+      'stockdetails' : StockInfo
   },
   created : function() {
       this.LoadStockData();
