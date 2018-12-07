@@ -1,5 +1,9 @@
 
 
+h1, h2, p {
+    color: black;
+}
+
 h1 {
     font-size: 32px;
 }
@@ -12,12 +16,8 @@ p.Devaclass {
 }
 
 .testwrap {
-    font-style: italic;
-    font-family: arial, sans-serif;
-    text-align: center;
-    font-size: 16px;
-    font-variant: small-caps;
-    font-weight: bold;
+
+    padding: 40px 20px;
 }
 
 
@@ -30,4 +30,8 @@ p.Devaclass {
 
 .nav li {
     display: inline;
+}
+
+.body {
+    margin: 0;
 }
