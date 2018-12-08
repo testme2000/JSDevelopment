@@ -30,6 +30,11 @@ describe("Stockinfo.test.js", () => {
     // Verify - Apple Inc. is passed to StockInfo component
     it('Verify Stock info "apple inc" mounted ', () => {
         // Check all setting layout of Stockinfo with related to 'Apple Inc'
+        // Verify - Tag, Tag Visibility
+        // 0. Result Tag
+        expect(vm.html().includes("h4")).toBe(true);
+        expect(vm.find("h4").text()).toBe("Result :");
+        expect(vm.find("h4").isVisible()).toBe(true);
         // 1. Ticker Symbol
         expect(vm.html().includes("AAPL")).toBe(true);
         // 2. Last Updated
@@ -68,10 +73,13 @@ describe("Stockinfo.test.js", () => {
         // Check all setting layout of Stockinfo with related to 'Apple Inc'
         // 1. Table
         expect(vm.html().includes('table')).toBe(true);
+        expect(vm.find("table").isVisible()).toBe(true);
         // 2. Table Row tr
         expect(vm.html().includes('tr')).toBe(true);
+        expect(vm.find("tr").isVisible()).toBe(true);
         // 2. Table Row td
         expect(vm.html().includes('td')).toBe(true);
+        expect(vm.find("td").isVisible()).toBe(true);
     });
 
     // Verify - Template structure to display the component value
@@ -92,41 +100,55 @@ describe("Stockinfo.test.js", () => {
     });
     // Verify - Template structure layout
     it('Verify template column layout', () => {
-        // Symbol and value
+        // Symbol, value and visiblity 
         let name = column.at(0);
         expect(name.text()).toBe("Symbol:");
+        expect(name.isVisible()).toBe(true)
         let value = column.at(1);
         expect(value.text()).toBe("AAPL");
+        expect(value.isVisible()).toBe(true);
         // Last Updated and value
         name = column.at(2);
         expect(name.text()).toBe("Last Updated:");
+        expect(name.isVisible()).toBe(true);
         value = column.at(3);
         expect(value.text()).toBe("2018-12-06 14:04:16");
+        expect(value.isVisible()).toBe(true);
         // Open and value
         name = column.at(4);
         expect(name.text()).toBe("Open:");
+        expect(name.isVisible()).toBe(true);
         value = column.at(5);
         expect(value.text()).toBe("171.7600");
+        expect(value.isVisible()).toBe(true);
         // Close and value
         name = column.at(6);
         expect(name.text()).toBe("Close:");
+        expect(name.isVisible()).toBe(true);
         value = column.at(7);
         expect(value.text()).toBe("173.7600");
+        expect(value.isVisible()).toBe(true);
         // High and value
         name = column.at(8);
         expect(name.text()).toBe("High:");
+        expect(name.isVisible()).toBe(true);
         value = column.at(9);
         expect(value.text()).toBe("174.3400");
+        expect(value.isVisible()).toBe(true);
         // Low and value
         name = column.at(10);
         expect(name.text()).toBe("Low:");
+        expect(name.isVisible()).toBe(true);
         value = column.at(11);
         expect(value.text()).toBe("170.4262");
+        expect(value.isVisible()).toBe(true);
         // Last Dividend
         name = column.at(12);
         expect(name.text()).toBe("Div Amount:");
+        expect(name.isVisible()).toBe(true);
         value = column.at(13);
         expect(value.text()).toBe("0.0000");
+        expect(value.isVisible()).toBe(true);
    });
     // Verify - Template structure layout
     it('Verify template row layout', () => {
@@ -141,7 +163,17 @@ describe("Stockinfo.test.js", () => {
         // Open Close  and value
         name = row.at(2).html();
         finalstring = name.replace(/[\r\n]+/g,'');
-        //expect(finalstring).toBe("<tr><td>Last Updated:</td> <td>2018-12-06 14:04:16</td></tr>");
-        //<tr><td>Open:</td><td>{{stockObject.Open}}</td><td>Close:</td><td>{{stockObject.Close}}</td></tr>
+        expect(finalstring).toBe("<tr><td>Open:</td> <td>171.7600</td> <td>Close:</td> <td>173.7600</td></tr>");
+        // High Low  and value
+        name = row.at(3).html();
+        finalstring = name.replace(/[\r\n]+/g,'');
+        expect(finalstring).toBe("<tr><td>High:</td> <td>174.3400</td> <td>Low:</td> <td>170.4262</td></tr>");
+        // Last Dividend
+        name = row.at(4).html();
+        finalstring = name.replace(/[\r\n]+/g,'');
+        expect(finalstring).toBe("<tr><td>Div Amount:</td> <td>0.0000</td></tr>");
     });
 });
+
+
+

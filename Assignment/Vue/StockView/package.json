@@ -33,7 +33,7 @@
     "vue-template-compiler": "^2.4.4"
   },
   "jest": {
-    "moduleFileExtension": [
+    "moduleFileExtensions": [
       "js",
       "json",
       "vue"
