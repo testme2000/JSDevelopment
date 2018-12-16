@@ -52,17 +52,29 @@ describe("Basic App.vue Layout Verification", () => {
 });
 
 describe('User input Scenario', () => {
-    let appwrapper = mount(app);
+    const appwrapper = mount(app);
     // Verify Trigger layout
-    let stockinput = appwrapper.find('input');
-    let stocksubmit = appwrapper.find('button');
+    const stockinput = appwrapper.find('input');
+    const stocksubmit = appwrapper.find('button');
     // Set Unknown stock and submit it
-    stockinput.setValue('UNKNOWN');
+    stockinput.setValue("MEKUTEKU");
+    console.log(stockinput.text());
     stocksubmit.trigger('click');
-
-    it('Invalid Stock', () => {
-        console.log(appwrapper.html());
-        expect(appwrapper.contains('Information not found')).toBe(true);
+    console.log(stockinput);
+    console.log(stockinput.html());
+    console.log(stockinput.element.value);
+    console.log(stockinput.text());
+    console.log(appwrapper.props().stockname);
+    console.log(appwrapper.html());
+    it('Invalid Stock Verification', () => {
+        // Validate input and text
+        expect(stockinput.is('input')).toBe(true);
+        expect(stockinput.isVisible()).toBe(true);
+        expect(stockinput.text()).toBe("UNKNOWN");
+        // Validate Button
+        expect(stocksubmit.is('button')).toBe(true);
+        expect(stocksubmit.isVisible()).toBe(true);
+        //expect(appwrapper.contains('Ticker not found, please check the company name')).toBe(true);
 
     });
 });
