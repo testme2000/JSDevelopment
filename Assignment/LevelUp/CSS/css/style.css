@@ -6,6 +6,7 @@ h1, h2, p {
 
 h1 {
     font-size: 32px;
+    float: right;
 }
 
 p.Devaclass {
@@ -15,12 +16,18 @@ p.Devaclass {
     text-transform: capitalize;
 }
 
+p::first-letter {
+    font-weight: bold;
+}
+
 .testwrap {
 
     padding: 40px 20px;
 }
 
-
+.testwrap:hover {
+    background: yellow;
+}
 .nav {
     list-style: none;
     padding: 0;
@@ -34,4 +41,11 @@ p.Devaclass {
 
 .body {
     margin: 0;
+}
+
+.red {
+    width: 5%;
+    background: red;
+    height: 100px;
+    display: inline-block;
 }
