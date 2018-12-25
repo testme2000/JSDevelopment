@@ -1,7 +1,9 @@
 import { shallowMount, mount } from '@vue/test-utils'
+import axios from 'axios'
 import Vue from "vue"
 import stockdetails from "./src/StockInfo.vue"
 import app from "./src/App.vue"
+
 
 describe("Basic App.vue Layout Verification", () => {
     let appwrapper;
@@ -52,29 +54,21 @@ describe("Basic App.vue Layout Verification", () => {
 });
 
 describe('User input Scenario', () => {
-    const appwrapper = mount(app);
-    // Verify Trigger layout
-    const stockinput = appwrapper.find('input');
-    const stocksubmit = appwrapper.find('button');
-    // Set Unknown stock and submit it
-    stockinput.setValue("MEKUTEKU");
-    console.log(stockinput.text());
-    stocksubmit.trigger('click');
-    console.log(stockinput);
-    console.log(stockinput.html());
-    console.log(stockinput.element.value);
-    console.log(stockinput.text());
-    console.log(appwrapper.props().stockname);
-    console.log(appwrapper.html());
-    it('Invalid Stock Verification', () => {
-        // Validate input and text
-        expect(stockinput.is('input')).toBe(true);
-        expect(stockinput.isVisible()).toBe(true);
-        expect(stockinput.text()).toBe("UNKNOWN");
-        // Validate Button
-        expect(stocksubmit.is('button')).toBe(true);
-        expect(stocksubmit.isVisible()).toBe(true);
-        //expect(appwrapper.contains('Ticker not found, please check the company name')).toBe(true);
+    jest.mock('axios');
+    //beforeEach( () => {
+    //    axios.get.mockClear();
+    //    axios.get.mockReturnValue(Promise.resolve({}));
+    //});
 
+    it('App should be mounted',async () => {
+        const appwrapper = mount(app);
+        await appwrapper.vm.$nextTick();
+
+        console.log("MEKU");
+        expect(axios.get).toHaveBeenCalledWith('https://api.iextrading.com/1.0/ref-data/symbols');
+        expect(appwrapper.vm.stockdetails.length).toBeGreaterThan(5000);
+        console.log(appwrapper.vm.stockdetails.length);
+        console.log("Test");
     });
+
 });
