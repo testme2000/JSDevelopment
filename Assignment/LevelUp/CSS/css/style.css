@@ -16,8 +16,16 @@ p.Devaclass {
 }
 
 .testwrap {
-
+    border-bottom: 20px solid #333;
+    margin: 50px auto;
+    background: white;
+    width: 70%;
+    max-width: 800px;
+    min-width: 400px;
+    height: 150px;
     padding: 40px 20px;
+    top: 10px;
+    position: fix;
 }
 
 
