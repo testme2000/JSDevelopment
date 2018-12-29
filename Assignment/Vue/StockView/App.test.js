@@ -4,9 +4,53 @@ import Vue from "vue"
 import stockdetails from "./src/StockInfo.vue"
 import app from "./src/App.vue"
 
+jest.mock('axios', () => ({
+    get: jest.fn()
+}));
+
 
 describe("Basic App.vue Layout Verification", () => {
     let appwrapper;
+    beforeEach(() => {
+        axios.get.mockClear();
+        axios.get.mockReturnValue(Promise.resolve({}));
+    });
+    const result = { 
+        data :  [{
+               symbol: "A",
+               name: "Agilent Technologies Inc.",
+               date: "2018-12-28",
+               isEnabled: true,
+               type: "cs",
+               iexId: "2"
+           },
+           {
+               symbol: "A",
+               name: "Agilent Technologies Inc.",
+               date: "2018-12-28",
+               isEnabled: true,
+               type: "cs",
+               iexId: "2"
+           },
+           {
+               symbol: "A",
+               name: "Agilent Technologies Inc.",
+               date: "2018-12-28",
+               isEnabled: true,
+               type: "cs",
+               iexId: "2"
+           },
+           {
+               symbol: "A",
+               name: "Agilent Technologies Inc.",
+               date: "2018-12-28",
+               isEnabled: true,
+               type: "cs",
+               iexId: "2"
+           }
+       ]};
+    axios.get.mockReturnValue(Promise.resolve(result));
+
 
     // Mount app
     appwrapper = mount(app);
@@ -53,22 +97,55 @@ describe("Basic App.vue Layout Verification", () => {
     });
 });
 
-describe('User input Scenario', () => {
-    jest.mock('axios');
-    //beforeEach( () => {
-    //    axios.get.mockClear();
-    //    axios.get.mockReturnValue(Promise.resolve({}));
-    //});
 
+describe('User input Scenario', () => {
     it('App should be mounted',async () => {
+        // Given
+        const result = { 
+             data :  [{
+                    symbol: "A",
+                    name: "Agilent Technologies Inc.",
+                    date: "2018-12-28",
+                    isEnabled: true,
+                    type: "cs",
+                    iexId: "2"
+                },
+                {
+                    symbol: "A",
+                    name: "Agilent Technologies Inc.",
+                    date: "2018-12-28",
+                    isEnabled: true,
+                    type: "cs",
+                    iexId: "2"
+                },
+                {
+                    symbol: "A",
+                    name: "Agilent Technologies Inc.",
+                    date: "2018-12-28",
+                    isEnabled: true,
+                    type: "cs",
+                    iexId: "2"
+                },
+                {
+                    symbol: "A",
+                    name: "Agilent Technologies Inc.",
+                    date: "2018-12-28",
+                    isEnabled: true,
+                    type: "cs",
+                    iexId: "2"
+                }
+            ]};
+        axios.get.mockReturnValue(Promise.resolve(result));
         const appwrapper = mount(app);
         await appwrapper.vm.$nextTick();
 
-        console.log("MEKU");
         expect(axios.get).toHaveBeenCalledWith('https://api.iextrading.com/1.0/ref-data/symbols');
-        expect(appwrapper.vm.stockdetails.length).toBeGreaterThan(5000);
-        console.log(appwrapper.vm.stockdetails.length);
-        console.log("Test");
+        expect(appwrapper.vm.stockdetails.length).toBeGreaterThan(0);
+        expect(typeof appwrapper.vm.stockdetails).toEqual("object");
+        expect(Object.keys(appwrapper.vm.stockdetails[0]).sort()).toEqual(["Name","Symbol"]);    
+        // Now validate actual result parsed by webservice return value
+        expect(appwrapper.vm.stockdetails[0].Symbol).toEqual("A");
+        expect(appwrapper.vm.stockdetails[0].Name).toEqual("agilent technologies");
     });
 
 });
