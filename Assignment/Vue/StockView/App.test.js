@@ -99,7 +99,7 @@ describe("Basic App.vue Layout Verification", () => {
 
 
 describe('User input Scenario', () => {
-    it('App should be mounted',async () => {
+    it('App Mounting verfication',async () => {
         // Given
         const result = { 
              data :  [{
@@ -138,6 +138,8 @@ describe('User input Scenario', () => {
         axios.get.mockReturnValue(Promise.resolve(result));
         const appwrapper = mount(app);
         await appwrapper.vm.$nextTick();
+        console.log("Test");
+        console.log(appwrapper.html());
 
         expect(axios.get).toHaveBeenCalledWith('https://api.iextrading.com/1.0/ref-data/symbols');
         expect(appwrapper.vm.stockdetails.length).toBeGreaterThan(0);
@@ -148,4 +150,126 @@ describe('User input Scenario', () => {
         expect(appwrapper.vm.stockdetails[0].Name).toEqual("agilent technologies");
     });
 
+    describe('User input Scenario part 2', () => {
+        beforeEach(() => {
+            axios.get.mockClear();
+            axios.get.mockReturnValue(Promise.resolve({}));
+        });
+        it('Valid Value verfication',async () => {
+            // Given
+            const result = { 
+                data :  [{
+                    symbol: "A",
+                    name: "Agilent Technologies Inc.",
+                    date: "2018-12-28",
+                    isEnabled: true,
+                    type: "cs",
+                    iexId: "2"
+                },
+                {
+                    symbol: "AAPL",
+                    name: "Apple Inc.",
+                    date: "2018-12-28",
+                    isEnabled: true,
+                    type: "cs",
+                    iexId: "2"
+                },
+                {
+                    symbol: "A",
+                    name: "Agilent Technologies Inc.",
+                    date: "2018-12-28",
+                    isEnabled: true,
+                    type: "cs",
+                    iexId: "2"
+                },
+                {
+                    symbol: "A",
+                    name: "Agilent Technologies Inc.",
+                    date: "2018-12-28",
+                    isEnabled: true,
+                    type: "cs",
+                    iexId: "2"
+                }
+            ]};
+            axios.get.mockReturnValue(Promise.resolve(result));
+            const appwrapper = mount(app);
+            await appwrapper.vm.$nextTick();
+
+
+            // Now mock the call with ticker symbol 'AAPL'
+            const shareresult = {
+                data : {
+                    "Meta Data": {
+                            "1. Information": "Daily Time Series with Splits and Dividend Events",
+                            "2. Symbol": "AAPL",
+                            "3. Last Refreshed": "2018-12-28",
+                            "4. Output Size": "Compact",
+                            "5. Time Zone": "US/Eastern"
+                        },
+                    "Time Series (Daily)" : 
+                        {
+                            "2018-12-28": {
+                                "1. open": "157.5000",
+                                "2. high": "158.5200",
+                                "3. low": "154.5500",
+                                "4. close": "156.2300",
+                                "5. adjusted close": "156.2300",
+                                "6. volume": "42291424",
+                                "7. dividend amount": "0.0000",
+                                "8. split coefficient": "1.0000"
+                            },
+                            "2018-12-27": {
+                                "1. open": "157.5000",
+                                "2. high": "158.5200",
+                                "3. low": "154.5500",
+                                "4. close": "156.2300",
+                                "5. adjusted close": "156.2300",
+                                "6. volume": "42291424",
+                                "7. dividend amount": "0.0000",
+                                "8. split coefficient": "1.0000"
+                            },
+                            "2018-12-26": {
+                                "1. open": "157.5000",
+                                "2. high": "158.5200",
+                                "3. low": "154.5500",
+                                "4. close": "156.2300",
+                                "5. adjusted close": "156.2300",
+                                "6. volume": "42291424",
+                                "7. dividend amount": "0.0000",
+                                "8. split coefficient": "1.0000"
+                            }
+                        }
+                    }
+                };
+            // Find stock symbol input button and set the symbol value
+            let stockinput = appwrapper.find("input");
+            stockinput.setValue("Apple Inc.");
+            stockinput.trigger('input');
+            // Submit stock symbol value
+            let stocksubmit = appwrapper.find("button");
+            axios.get.mockReturnValue(Promise.resolve(shareresult));
+            stocksubmit.trigger('click');
+            await appwrapper.vm.$nextTick();
+            // Opeation must be successful
+            // Check the internal state
+            expect(appwrapper.vm.stockname).toBe("Apple Inc.");
+            expect(appwrapper.vm.resultDetails.Symbol).toEqual("AAPL");
+            expect(appwrapper.vm.resultDetails.LastUpdated).toEqual("2018-12-28");
+            expect(appwrapper.vm.resultDetails.Open).toEqual("157.5000");
+            expect(appwrapper.vm.resultDetails.Close).toEqual("156.2300");
+            expect(appwrapper.vm.resultDetails.High).toEqual("158.5200");
+            expect(appwrapper.vm.resultDetails.Low).toEqual("154.5500");
+            expect(appwrapper.vm.resultDetails.DividendAmount).toEqual("0.0000");
+            expect(appwrapper.vm.fetchStatus).toBe(true);
+            expect(appwrapper.vm.resultArrived).toBe(true);
+            // Now check the external state
+            // Validate the result area
+            // 1. Confirmation of result
+            expect(appwrapper.findAll('We found the details').length).toEqual(1);
+            expect(appwrapper.html().includes('We found the details')).toBe(true);
+            expect(appwrapper.find("We found the details").isVisible()).toBe(true);
+        
+
+        });
+  });
 });
