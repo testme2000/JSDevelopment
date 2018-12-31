@@ -138,8 +138,6 @@ describe('User input Scenario', () => {
         axios.get.mockReturnValue(Promise.resolve(result));
         const appwrapper = mount(app);
         await appwrapper.vm.$nextTick();
-        console.log("Test");
-        console.log(appwrapper.html());
 
         expect(axios.get).toHaveBeenCalledWith('https://api.iextrading.com/1.0/ref-data/symbols');
         expect(appwrapper.vm.stockdetails.length).toBeGreaterThan(0);
@@ -263,13 +261,82 @@ describe('User input Scenario', () => {
             expect(appwrapper.vm.fetchStatus).toBe(true);
             expect(appwrapper.vm.resultArrived).toBe(true);
             // Now check the external state
+            console.log(appwrapper.html());
             // Validate the result area
             // 1. Confirmation of result
-            expect(appwrapper.findAll('We found the details').length).toEqual(1);
-            expect(appwrapper.html().includes('We found the details')).toBe(true);
-            expect(appwrapper.find("We found the details").isVisible()).toBe(true);
-        
-
+            let alldiv = appwrapper.findAll('div');
+            let resultDiv = alldiv.at(2);
+            expect(alldiv.length).toEqual(4);
+            expect(resultDiv.isVisible()).toBe(true);
+            expect(resultDiv.is('Div')).toBe(true);
+            expect(resultDiv.text().includes('We found the details')).toBe(true);
+            resultDiv = alldiv.at(3);
+            expect(resultDiv.isVisible()).toBe(true);
+            expect(resultDiv.is('Div')).toBe(true);
+            expect(resultDiv.text().includes('Result :')).toBe(true);
+            // 2. Validate actual result 
+            const table = appwrapper.findAll('table');
+            const row = appwrapper.findAll('tr');
+            const column = appwrapper.findAll('td');
+            // Check all setting layout of component template
+            // 1. Table
+            expect(table.length).toEqual(2);
+            expect(table.is('table')).toBe(true);
+            // 2. Table Row tr
+            expect(row.length).toEqual(11);
+            expect(row.is('tr')).toBe(true);
+            // 3. Table Column td
+            expect(column.length).toEqual(16);
+            expect(column.is('td')).toBe(true);
+            // Symbol, value and visiblity 
+            let name = column.at(2);
+            expect(name.text()).toBe("Symbol:");
+            expect(name.isVisible()).toBe(true)
+            let value = column.at(3);
+            expect(value.text()).toBe("AAPL");
+            expect(value.isVisible()).toBe(true);
+            // Last Updated and value
+            name = column.at(4);
+            expect(name.text()).toBe("Last Updated:");
+            expect(name.isVisible()).toBe(true);
+            value = column.at(5);
+            expect(value.text()).toBe("2018-12-28");
+            expect(value.isVisible()).toBe(true);
+            // Open and value
+            name = column.at(6);
+            expect(name.text()).toBe("Open:");
+            expect(name.isVisible()).toBe(true);
+            value = column.at(7);
+            expect(value.text()).toBe("171.7600");
+            expect(value.isVisible()).toBe(true);
+            // Close and value
+            name = column.at(8);
+            expect(name.text()).toBe("Close:");
+            expect(name.isVisible()).toBe(true);
+            value = column.at(9);
+            expect(value.text()).toBe("173.7600");
+            expect(value.isVisible()).toBe(true);
+            // High and value
+            name = column.at(10);
+            expect(name.text()).toBe("High:");
+            expect(name.isVisible()).toBe(true);
+            value = column.at(11);
+            expect(value.text()).toBe("174.3400");
+            expect(value.isVisible()).toBe(true);
+            // Low and value
+            name = column.at(12);
+            expect(name.text()).toBe("Low:");
+            expect(name.isVisible()).toBe(true);
+            value = column.at(13);
+            expect(value.text()).toBe("170.4262");
+            expect(value.isVisible()).toBe(true);
+            // Last Dividend
+            name = column.at(14);
+            expect(name.text()).toBe("Div Amount:");
+            expect(name.isVisible()).toBe(true);
+            value = column.at(15);
+            expect(value.text()).toBe("0.0000");
+            expect(value.isVisible()).toBe(true);
         });
   });
 });
