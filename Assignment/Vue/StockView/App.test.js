@@ -14,6 +14,7 @@ describe("Basic App.vue Layout Verification", () => {
     beforeEach(() => {
         axios.get.mockClear();
         axios.get.mockReturnValue(Promise.resolve({}));
+       // stockSpyOn = jest.spyOn(app,'LoadStockData');
     });
     const result = { 
         data :  [{
@@ -56,6 +57,8 @@ describe("Basic App.vue Layout Verification", () => {
     appwrapper = mount(app);
     // Verify Main Layout
     it("App layout verification", () => {
+        // During Mounting, we loaded all stock data
+       // expect(stockSpyOn).toHaveBeenCalled();
         // 0. Division Tag, its attribute
         expect(appwrapper.html().includes("div")).toBe(true);
         expect(appwrapper.attributes().id).toBe("stockapp");
@@ -450,6 +453,13 @@ describe('User input Scenario part 3', () => {
         expect(appwrapper.vm.fetchStatus).toBe(true);
         expect(appwrapper.vm.errorMessage).toEqual("Ticker not found, please check the company name");
         expect(appwrapper.vm.ticker.length).toEqual(0);
+        expect(appwrapper.vm.resultDetails.Symbol).toBeFalsy();
+        expect(appwrapper.vm.resultDetails.LastUpdated).toBeFalsy();
+        expect(appwrapper.vm.resultDetails.Open).toEqual();
+        expect(appwrapper.vm.resultDetails.Close).toBeFalsy();
+        expect(appwrapper.vm.resultDetails.High).toBeFalsy();
+        expect(appwrapper.vm.resultDetails.Low).toBeFalsy();
+        expect(appwrapper.vm.resultDetails.DividendAmount).toBeFalsy();
         // Validate the result area
         // 1. Confirmation of result
         let alldiv = appwrapper.findAll('div');
