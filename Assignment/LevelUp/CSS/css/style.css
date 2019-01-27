@@ -57,3 +57,9 @@ p::first-letter {
     height: 100px;
     display: inline-block;
 }
+
+.tutshado {
+    font-size: 80px;
+    color: #333;
+    text-shadow: 3px 3px 0 #000;
+}
