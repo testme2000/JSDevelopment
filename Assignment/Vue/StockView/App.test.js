@@ -455,7 +455,7 @@ describe('User input Scenario part 3', () => {
         expect(appwrapper.vm.ticker.length).toEqual(0);
         expect(appwrapper.vm.resultDetails.Symbol).toBeFalsy();
         expect(appwrapper.vm.resultDetails.LastUpdated).toBeFalsy();
-        expect(appwrapper.vm.resultDetails.Open).toEqual();
+        expect(appwrapper.vm.resultDetails.Open).toBeFalsy();
         expect(appwrapper.vm.resultDetails.Close).toBeFalsy();
         expect(appwrapper.vm.resultDetails.High).toBeFalsy();
         expect(appwrapper.vm.resultDetails.Low).toBeFalsy();
