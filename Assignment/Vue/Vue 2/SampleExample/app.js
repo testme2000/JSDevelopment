@@ -23,7 +23,7 @@ const app = new Vue({
                     "balance": 3249.12,
                     "name": "Herring Snyder",
                     "email": "herringsnyder@comstar.com",
-                    "registered": "201502-28T03:32:51"
+                    "registered": "2015-02-28T03:32:51"
                     },
                     {
                     "index": 1,
@@ -32,7 +32,7 @@ const app = new Vue({
                     "balance": 3694.41,
                     "name": "Mercedes Cook",
                     "email": "mercedescook@comstar.com",
-                    "registered": "201802-27T02:25:35"
+                    "registered": "2018-02-27T02:25:35"
                     },
                     {
                     "index": 2,
@@ -41,7 +41,7 @@ const app = new Vue({
                     "balance": 1053.99,
                     "name": "Wolf Mcdonald",
                     "email": "wolfmcdonald@comstar.com",
-                    "registered": "201605-02T11:23:32"
+                    "registered": "2016-05-02T11:23:32"
                     },
                     {
                     "index": 3,
@@ -50,7 +50,7 @@ const app = new Vue({
                     "balance": 2964.63,
                     "name": "Sherry Boyer",
                     "email": "sherryboyer@comstar.com",
-                    "registered": "201612-02T03:44:28"
+                    "registered": "2016-12-02T03:44:28"
                     },
                     {
                     "index": 4,
@@ -59,7 +59,7 @@ const app = new Vue({
                     "balance": 1690.53,
                     "name": "Vasquez Combs",
                     "email": "vasquezcombs@comstar.com",
-                    "registered": "201409-07T12:03:22"
+                    "registered": "2014-09-07T12:03:22"
                     }
                 ]
     },
@@ -94,6 +94,10 @@ const app = new Vue({
         },
         formatBalance(amount) {
             return this.currency + amount.toFixed(2);
+        },
+        formatDate(date) {
+            let registeredDate = new Date(date);
+            return registeredDate.toLocaleDateString();
         }
     }
 });
