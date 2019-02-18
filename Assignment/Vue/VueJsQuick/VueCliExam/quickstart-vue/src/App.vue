@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <HelloWorld msg="Welcome to Vue Quickstart!"/>
-    <hello-again />
+    <button v-on:click="addTen">Add 10</button>
+    <hello-again v-bind:counterFromParent="countUp" v-on:counterHasBeenReset="countUp = $event"/>
   </div>
 </template>
 
@@ -13,6 +14,16 @@ export default {
   name: 'app',
   components: {
     HelloWorld, HelloAgain
+  },
+  methods: {
+    addTen() {
+      this.countUp += 10;
+    }
+  },
+  data: function() {
+    return {
+      countUp: 0
+    };
   }
 }
 </script>

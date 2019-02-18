@@ -2,14 +2,16 @@
     <p class="hello-again">
         This is another component.
         <button v-on:click="incrementUp">Add One</button>
+        <button v-on:click="resetTheCounter">Reset parent-added values</button>
         <br>
-        <span>Current value of the counter: {{counter}}</span>
+        <span>Current value of the counter: {{counter + counterFromParent}}</span>
     </p>
 </template>
 
 <script>
 export default {
     name : 'HelloAgain',
+    props: ['counterFromParent'],
     data() {
         return {
             counter: 0
@@ -18,6 +20,10 @@ export default {
     methods: {
         incrementUp : function() {
             this.counter++;
+        },
+        resetTheCounter() {
+            this.countUp = 0;
+            this.$emit('counterHasBeenReset', this.countUp);
         }
     }
 }
