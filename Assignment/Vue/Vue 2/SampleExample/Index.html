@@ -29,6 +29,33 @@
                         {{buttonText}}
                       </button>
                     </transition>
+                    <div v-html="messagehtml"></div>
+                    <img v-bind:src="imgSource" />
+                    <div v-if="isVisible">
+                        Now you see me
+                    </div>
+                    <div v-else-if="otherVisible">
+                        Other See
+                    </div>
+                    <div v-else="">
+                        Yippy ye, you can see
+                    </div>
+                    <table>
+                        <tr v-for="record in people">
+                            <td>{{record.name}}</td>
+                            <td>
+                                <a v-bind:href="'mailto:' + record.email">{{record.email}}</a>
+                            </td>
+                            <td>
+                                {{ formatBalance(record.balance)}}
+                            </td>
+                            <td>{{record.registered}}</td>
+                            <td>
+                                <span class="positive" v-if="record.isActive">Active</span>    
+                                <span class="negative" v-else>Inactive</span>    
+                            </td>
+                        </tr>
+                    </table>
             </div>
             </p>
         </div>
