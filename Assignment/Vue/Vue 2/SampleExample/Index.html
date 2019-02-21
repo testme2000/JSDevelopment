@@ -41,7 +41,7 @@
                         Yippy ye, you can see
                     </div>
                     <table>
-                        <tr v-for="record in people">
+                        <tr v-for="record in people" v-show="filterRow(record)">
                             <td>{{record.name}}</td>
                             <td>
                                 <a v-bind:href="'mailto:' + record.email">{{record.email}}</a>
@@ -70,18 +70,21 @@
                         </label>
                         <label for="filterQuery">
                             Query:
-                            <input type="text" id="filterQuery">
+                            <input type="text" id="filterQuery" v-model="filterQuery">
+                            {{filterQuery}}
                         </label>
                         <span>
                             Active:
                             <label for="userStateActive">
                                 Yes
-                                <input type="radio" value="true" id="userStateActive" selected>
+                                <input type="radio" v-bind:value="true" id="userStateActive" v-model="filterUserState" selected>
                             </label>
                             <label for="userStateInactive">
                                 No:
-                                <input type="radio" value="false" id="userStateInactive">
+                                <input type="radio" v-bind:value="false" id="userStateInactive" v-model="filterUserState" >
                             </label>
+                            {{filterUserState}}
+                            {{typeof filterUserState}}
                         </span>
                     </form>
             </div>

@@ -61,7 +61,10 @@ const app = new Vue({
                     "email": "vasquezcombs@comstar.com",
                     "registered": "2014-09-07T12:03:22"
                     }
-                ]
+                ],
+        filterField : '',
+        filterQuery : '',
+        filterUserState: ''                
     },
     computed: {
         messageToLower() {
@@ -98,6 +101,9 @@ const app = new Vue({
         formatDate(date) {
             let registeredDate = new Date(date);
             return registeredDate.toLocaleDateString();
+        },
+        filterRow(person) {
+            return person.isActive;
         }
     }
 });
