@@ -59,7 +59,7 @@
                     <form>
                         <label for="filterField">
                             Field: 
-                            <select id="filterField">
+                            <select id="filterField" v-model="filterField">
                                 <option value="">Disabled Filters</option>
                                 <option value="isActive">Active user</option>
                                 <option value="name">Name</option>
@@ -71,7 +71,6 @@
                         <label for="filterQuery">
                             Query:
                             <input type="text" id="filterQuery" v-model="filterQuery">
-                            {{filterQuery}}
                         </label>
                         <span>
                             Active:
@@ -83,8 +82,6 @@
                                 No:
                                 <input type="radio" v-bind:value="false" id="userStateInactive" v-model="filterUserState" >
                             </label>
-                            {{filterUserState}}
-                            {{typeof filterUserState}}
                         </span>
                     </form>
             </div>

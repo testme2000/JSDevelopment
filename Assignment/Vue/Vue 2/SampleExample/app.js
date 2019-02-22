@@ -103,7 +103,32 @@ const app = new Vue({
             return registeredDate.toLocaleDateString();
         },
         filterRow(person) {
-            return person.isActive;
+            let result = true;
+            if(this.filterField === 'isActive')
+            {
+                result = (person.isActive === this.filterUserState);
+            }
+            else 
+            {
+                let query = this.filterQuery.toLowerCase();
+                if(this.filterField === "name")
+                {
+                    let field = person[this.filterField].toLowerCase();
+                    result = field.includes(query);
+                }
+                else if(this.filterField === "email")
+                {
+                    let field = person[this.filterField].toLowerCase();
+                    result = field.includes(query);
+                }
+                else if(this.filterField === "balance")
+                {
+                    let field = person[this.filterField];
+                    result = eval(field + query);
+                }
+                let test = "test";
+            }
+            return result;
         }
     }
 });
