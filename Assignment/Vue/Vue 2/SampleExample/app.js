@@ -3,14 +3,10 @@ const app = new Vue({
     data: {
         displayText : "On",
         status : true,
-        message : 'Hello Vue! TEst IT',
-        price: 18 + 6,
-        details: ['one','two','three','chacha'],
         shirtprice : 25,
         hatprice : 10,
         currency: '$',
         salestax : 16,
-        messagehtml: '<h1>Hello!, how are you</h1>',
         imgSource: 'http://via.placeholder.com/350x150',
         isVisible: false,
         otherVisible: true,
@@ -155,7 +151,12 @@ const app = new Vue({
             {
                 balanceLevel = 'warning';
             }
-            return balanceLevel;
+            let increasing = false, balance = person.balance / 1000;
+            if(Math.round(balance) == Math.ceil(balance))
+            {
+                increasing = 'increasing';
+            }
+            return [balanceLevel, increasing];
         }
     }
 });

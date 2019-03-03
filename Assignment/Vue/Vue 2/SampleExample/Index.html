@@ -6,40 +6,7 @@
     </head>
     <body>
         <div id="app">
-            {{message}}<br>
-            {{price}}<br>
-            {{details}}
-            <p>
-                {{messageToLower}}
-            </p>
-            <p>
-                Shirt cost : {{shirtcost}}
-            </p>
-            <p>
-                Hat Cost : {{hatcost}}
-            </p>
-            <p>
-        
             <div id="with-mode-demo" class="demo">
-                    <transition name="with-mode-fade" mode="in-out">
-                      <button v-if="status" key="true" @click="status = false">
-                        {{buttonText}}
-                      </button>
-                      <button v-else="" key="false" @click="status = true">
-                        {{buttonText}}
-                      </button>
-                    </transition>
-                    <div v-html="messagehtml"></div>
-                    <img v-bind:src="imgSource" />
-                    <div v-if="isVisible">
-                        Now you see me
-                    </div>
-                    <div v-else-if="otherVisible">
-                        Other See
-                    </div>
-                    <div v-else="">
-                        Yippy ye, you can see
-                    </div>
                     <table>
                         <tr v-for="record in people" v-show="filterRow(record)">
                             <td v-bind:class="activeClass(record)">
