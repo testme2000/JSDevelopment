@@ -42,18 +42,17 @@
                     </div>
                     <table>
                         <tr v-for="record in people" v-show="filterRow(record)">
+                            <td v-bind:class="activeClass(record)">
+                                {{activeStatus(record)}}
+                            </td>
                             <td>{{record.name}}</td>
                             <td>
                                 <a v-bind:href="'mailto:' + record.email">{{record.email}}</a>
                             </td>
-                            <td>
+                            <td v-bind:class="balanceClass(record)">
                                 {{ formatBalance(record.balance)}}
                             </td>
                             <td>{{formatDate(record.registered)}}</td>
-                            <td>
-                                <span class="positive" v-if="record.isActive">Active</span>    
-                                <span class="negative" v-else>Inactive</span>    
-                            </td>
                         </tr>
                     </table>
                     <form>
@@ -68,11 +67,11 @@
                                 <option value="registered">Date registered</option>
                             </select>
                         </label>
-                        <label for="filterQuery">
+                        <label for="filterQuery" v-show="this.filterField && !isActiveFilterSelected()">
                             Query:
                             <input type="text" id="filterQuery" v-model="filterQuery">
                         </label>
-                        <span>
+                        <span v-show="isActiveFilterSelected()">
                             Active:
                             <label for="userStateActive">
                                 Yes

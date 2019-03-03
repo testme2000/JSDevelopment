@@ -106,7 +106,8 @@ const app = new Vue({
             let result = true;
             if(this.filterField === 'isActive')
             {
-                result = (person.isActive === this.filterUserState);
+                result = (typeof this.filterUserState === 'boolean') ?
+                         (person.isActive === this.filterUserState) : true;
             }
             else 
             {
@@ -124,11 +125,37 @@ const app = new Vue({
                 else if(this.filterField === "balance")
                 {
                     let field = person[this.filterField];
-                    result = eval(field + query);
+                    query = query.replace(this.currency,'');
+                    try
+                    {
+                        result = eval(field + query);
+                    }
+                    catch(e){}
                 }
                 let test = "test";
             }
             return result;
+        },
+        isActiveFilterSelected()
+        {
+            return (this.filterField === 'isActive');
+        },
+        activeClass(person)
+        {
+            return person.isActive ? 'active' : 'inactive';
+        },
+        balanceClass(person)
+        {
+            let balanceLevel = 'success';
+            if(person.balance < 2000)
+            {
+                balanceLevel = 'error';
+            }
+            else if(person.balance < 3000)
+            {
+                balanceLevel = 'warning';
+            }
+            return balanceLevel;
         }
     }
 });
