@@ -17,15 +17,15 @@
                                 <a v-bind:href="'mailto:' + record.email">{{record.email}}</a>
                             </td>
                             <td v-bind:class="balanceClass(record)">
-                                {{ formatBalance(record.balance)}}
+                                {{ format(record, "balance")}}
                             </td>
-                            <td>{{formatDate(record.registered)}}</td>
+                            <td>{{format(record, "registered")}}</td>
                         </tr>
                     </table>
                     <form>
                         <label for="filterField">
                             Field: 
-                            <select id="filterField" v-model="filterField">
+                            <select id="filterField" v-on:change="changeFilter($event)">
                                 <option value="">Disabled Filters</option>
                                 <option value="isActive">Active user</option>
                                 <option value="name">Name</option>
@@ -34,19 +34,19 @@
                                 <option value="registered">Date registered</option>
                             </select>
                         </label>
-                        <label for="filterQuery" v-show="this.filterField && !isActiveFilterSelected()">
+                        <label for="filterQuery" v-show="this.filter.field && !isActiveFilterSelected()">
                             Query:
-                            <input type="text" id="filterQuery" v-model="filterQuery">
+                            <input type="text" id="filterQuery" v-model="filter.query">
                         </label>
                         <span v-show="isActiveFilterSelected()">
                             Active:
                             <label for="userStateActive">
                                 Yes
-                                <input type="radio" v-bind:value="true" id="userStateActive" v-model="filterUserState" selected>
+                                <input type="radio" v-bind:value="true" id="userStateActive" v-model="filter.query" selected>
                             </label>
                             <label for="userStateInactive">
                                 No:
-                                <input type="radio" v-bind:value="false" id="userStateInactive" v-model="filterUserState" >
+                                <input type="radio" v-bind:value="false" id="userStateInactive" v-model="filter.query" >
                             </label>
                         </span>
                     </form>

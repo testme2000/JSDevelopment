@@ -58,9 +58,10 @@ const app = new Vue({
                     "registered": "2014-09-07T12:03:22"
                     }
                 ],
-        filterField : '',
-        filterQuery : '',
-        filterUserState: ''                
+        filter : { 
+            field : '',
+            query : ''              
+        }
     },
     computed: {
         messageToLower() {
@@ -91,50 +92,55 @@ const app = new Vue({
         activeStatus(person) {
             return (person.isActive) ? 'Active' : 'Inactive';
         },
-        formatBalance(amount) {
-            return this.currency + amount.toFixed(2);
+        format(person, key) {
+            let field = person[key];
+            output = field.toString().trim();
+            switch(key)
+            {
+                case 'balance':
+                    output = this.currency + field.toFixed(2);
+                    break;
+                case 'registered':
+                    let registered = new Date(field);
+                    output = registered.toLocaleDateString('en-US');
+                    break;
+            }
+            return output;
         },
-        formatDate(date) {
-            let registeredDate = new Date(date);
-            return registeredDate.toLocaleDateString();
-        },
+        //formatDate(date) {
+        //    let registeredDate = new Date(date);
+        //    return registeredDate.toLocaleDateString();
+        //},
         filterRow(person) {
             let result = true;
-            if(this.filterField === 'isActive')
+            if(this.filter.field === 'isActive')
             {
-                result = (typeof this.filterUserState === 'boolean') ?
-                         (person.isActive === this.filterUserState) : true;
+                result = (typeof this.filter.query === 'boolean') ?
+                         (person.isActive === this.filter.query) : true;
             }
             else 
             {
-                let query = this.filterQuery.toLowerCase();
-                if(this.filterField === "name")
+                field = person[this.filter.field];
+                if(typeof field === "number")
                 {
-                    let field = person[this.filterField].toLowerCase();
-                    result = field.includes(query);
-                }
-                else if(this.filterField === "email")
-                {
-                    let field = person[this.filterField].toLowerCase();
-                    result = field.includes(query);
-                }
-                else if(this.filterField === "balance")
-                {
-                    let field = person[this.filterField];
-                    query = query.replace(this.currency,'');
-                    try
-                    {
+                    let query = String(this.filter.query);
+                    query.replace(this.currency, '');
+                    try {
                         result = eval(field + query);
                     }
-                    catch(e){}
+                    catch(e) {}
                 }
-                let test = "test";
+                else {
+                    let query = String(this.filter.query);
+                    field = String(field).toLowerCase();
+                    result = field.includes(query.toLowerCase());
+                }
             }
             return result;
         },
         isActiveFilterSelected()
         {
-            return (this.filterField === 'isActive');
+            return (this.filter.field === 'isActive');
         },
         activeClass(person)
         {
@@ -157,6 +163,11 @@ const app = new Vue({
                 increasing = 'increasing';
             }
             return [balanceLevel, increasing];
+        },
+        changeFilter(event)
+        {
+            this.filter.query = '',
+            this.filter.field = event.target.value;
         }
     }
 });
