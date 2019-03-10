@@ -1,3 +1,11 @@
+Vue.component('my-component', {
+    template : '<div>hello Vue</div>'
+});
+
+let Child = {
+    template : '<h3>This is child of vue</h3>'
+}
+
 const app = new Vue({
     el : '#app',
     data: {
@@ -61,6 +69,9 @@ const app = new Vue({
         filter : { 
             field : '',
             query : ''              
+        },
+        components : {
+            'second-component' : Child
         }
     },
     computed: {
@@ -89,9 +100,6 @@ const app = new Vue({
             this.Status = !this.Status;
             this.displayText = (this.Status) ? "On" : "Off";
         },
-        activeStatus(person) {
-            return (person.isActive) ? 'Active' : 'Inactive';
-        },
         format(person, key) {
             let field = person[key];
             output = field.toString().trim();
@@ -104,39 +112,42 @@ const app = new Vue({
                     let registered = new Date(field);
                     output = registered.toLocaleDateString('en-US');
                     break;
+                case 'isActive':
+                    output = (person.isActive) ? 'Active' : 'InActive';
+                    break;
             }
             return output;
         },
-        //formatDate(date) {
-        //    let registeredDate = new Date(date);
-        //    return registeredDate.toLocaleDateString();
-        //},
         filterRow(person) {
-            let result = true;
-            if(this.filter.field === 'isActive')
-            {
-                result = (typeof this.filter.query === 'boolean') ?
-                         (person.isActive === this.filter.query) : true;
-            }
-            else 
-            {
-                field = person[this.filter.field];
-                if(typeof field === "number")
+            let visible = true,
+            field = this.filter.field,
+            query = this.filter.query;
+            if(field) {
+                if(this.isActiveFilterSelected())
                 {
-                    let query = String(this.filter.query);
-                    query.replace(this.currency, '');
-                    try {
-                        result = eval(field + query);
-                    }
-                    catch(e) {}
+                    visible = (typeof query === 'boolean') ?
+                            (person.isActive === this.filter.query) : true;
                 }
-                else {
-                    let query = String(this.filter.query);
-                    field = String(field).toLowerCase();
-                    result = field.includes(query.toLowerCase());
+                else 
+                {
+                    field = person[field];
+                    if(typeof field === "number")
+                    {
+                        query = String(query);
+                        query.replace(this.currency, '');
+                        try {
+                            visible = eval(field + query);
+                        }
+                        catch(e) {}
+                    }
+                    else {
+                        query = String(query);
+                        field = String(field).toLowerCase();
+                        visible = field.includes(query.toLowerCase());
+                    }
                 }
             }
-            return result;
+            return visible;
         },
         isActiveFilterSelected()
         {
@@ -168,6 +179,10 @@ const app = new Vue({
         {
             this.filter.query = '',
             this.filter.field = event.target.value;
+        },
+        isActiveFilterSelected()
+        {
+            return (this.filter.field === 'isActive') ? true : false;
         }
     }
 });

@@ -6,11 +6,13 @@
     </head>
     <body>
         <div id="app">
+            <my-component></my-component>
+            <second-component></second-component>
             <div id="with-mode-demo" class="demo">
                     <table>
                         <tr v-for="record in people" v-show="filterRow(record)">
                             <td v-bind:class="activeClass(record)">
-                                {{activeStatus(record)}}
+                                {{format(record,"isActive")}}
                             </td>
                             <td>{{record.name}}</td>
                             <td>
