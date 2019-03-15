@@ -8,6 +8,9 @@
         <div id="app">
             <my-component></my-component>
             <second-component></second-component>
+            <balance cost="234.56"></balance>
+
+            <my-heading text="Cool Vue"></my-heading>
             <div id="with-mode-demo" class="demo">
                     <table>
                         <tr v-for="record in people" v-show="filterRow(record)">
@@ -53,7 +56,9 @@
                         </span>
                     </form>
             </div>
-
+           <!-- <ol>
+                <li is="second-component"></li>
+            </ol> -->
             </p>
         </div>
     </body>
