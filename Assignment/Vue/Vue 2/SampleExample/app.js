@@ -1,10 +1,30 @@
 Vue.component('my-component', {
-    template : '<div>hello Vue</div>'
+    template : '<div><h1>hello Vue</h1></div>'
+});
+
+Vue.component('my-heading',{
+    template: '<h1>{{text}}</h1>',
+    props : ['text']
 });
 
 let Child = {
     template : '<h3>This is child of vue</h3>'
 }
+
+Vue.component('balance', {
+    template : '<div><h4>{{formattedCost}}</h4></div>',
+    props : ['cost'],
+    data() {
+        return {
+            currency: '$'
+        }
+    },
+    computed: {
+        formattedCost() {
+            return this.currency + this.cost.toFixed(2);
+        }
+    }
+});
 
 const app = new Vue({
     el : '#app',
