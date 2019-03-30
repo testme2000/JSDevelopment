@@ -26,6 +26,45 @@ Vue.component('balance', {
     }
 });
 
+Vue.component('modal-window', {
+    template: `<div class="modal fade">
+                <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <slot name="header"></slot>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <slot></slot>
+                    </div>
+                    <div class="modal-footer">
+                        <slot name="footer"></slot>
+                        <slot name="buttons">
+                            <button type="button" class="btn btnprimary">Save changes</button>
+                            <button type="button" class="btn btnsecondary" data-dismiss="modal">Close</button>
+                        </slot>    
+                    </div>
+                </div>
+                </div>
+                </div>`,
+
+    props: {
+        visible: {
+        type: Boolean,
+        default: false
+        }
+       }
+    });
+
+    Vue.component('team-member', {
+        template: '#team-member-template',
+        props: {
+            person : Object
+        }
+    });
+
 const app = new Vue({
     el : '#app',
     data: {

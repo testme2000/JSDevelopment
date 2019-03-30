@@ -9,23 +9,21 @@
             <my-component></my-component>
             <second-component></second-component>
             <balance cost="234.56"></balance>
+            <modal-window :visible="true">
+                <h1>Modal title</h1>
+                <p>Meku is great</p>
+                <p>Teku is also</p>
+                <div slot="buttons">
+                    <button type="button" class="btn btn-primary">OK</button>
+                </div>
+            </modal-window>
 
             <my-heading text="Cool Vue"></my-heading>
             <div id="with-mode-demo" class="demo">
                     <table>
-                        <tr v-for="record in people" v-show="filterRow(record)">
-                            <td v-bind:class="activeClass(record)">
-                                {{format(record,"isActive")}}
-                            </td>
-                            <td>{{record.name}}</td>
-                            <td>
-                                <a v-bind:href="'mailto:' + record.email">{{record.email}}</a>
-                            </td>
-                            <td v-bind:class="balanceClass(record)">
-                                {{ format(record, "balance")}}
-                            </td>
-                            <td>{{format(record, "registered")}}</td>
-                        </tr>
+                        <template v-for="individual in people">
+                            <team-member v-bind:person="individual"></team-member>
+                        </template>
                     </table>
                     <form>
                         <label for="filterField">
@@ -85,4 +83,19 @@
         transform: translateX(-31px);
         }    
 </style>
+    <script type="text/x-template" id="team-member-template">
+        <tr v-show="filterRow(record)">
+            <td>{{record.name}}</td>
+            <td>
+                <a v-bind:href="'mailto:' + record.email">{{record.email}}</a>
+            </td>
+            <td v-bind:class="balanceClass(record)">
+                {{ format(record, "balance")}}
+            </td>
+            <td>{{format(record, "registered")}}</td>
+            <td v-bind:class="activeClass(record)">
+                {{format(record,"isActive")}}
+            </td>
+        </tr>
+    </script>
 </html>
