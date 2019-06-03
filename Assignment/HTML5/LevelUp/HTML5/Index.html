@@ -29,5 +29,36 @@
             <li>Test</li>
         </ul>
     </footer>
+    <h1>Did the promise finish?</h1>
+    <div class="completion">Not yet</div>
 </body>
+<script>
+    new Promise(function(resolve) {
+        console.log('first');
+        resolve("Teku");
+        console.log('second');
+    }).then(function(param) {
+        console.log('third');
+        console.log(param);
+    });
+    function wait(ms) {
+        return new Promise(function(resolve) {
+            console.log(this);
+            window.setTimeout(function() {
+                resolve("meku");
+            }, ms);
+        })
+    };
+
+    var seconds = 2000;
+    wait(2000).then(finish);
+
+    function finish(param1) {
+        alert("completed " + param1);
+    }
+
+</script>
 </html>
+<ul>
+    <li><span class="hello$"></span></li>
+</ul>

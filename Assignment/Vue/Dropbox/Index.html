@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Dropbox App</title>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+    </head>
+    <body>
+        <div id="app">
+            <dropbox-viewer></dropbox-viewer>
+        </div>
+        <script type="text/x-template" id="dropbox-viewer-template">
+            <div>
+                <h1>Dropbox</h1>
+                <transition name="fade">
+                    <div v-if="isLoading">Loading....</div>
+                </transition>
+                <transition name="fade">
+                    <ul v-if="!isLoading">
+                        <template v-for="item in holder.folder">
+                            <directory  :content="item" @userclickfolder="refreshnewdirectory"></directory>
+                        </template>
+                        <template v-for="item in holder.files">
+                            <file :content="item"></file>
+                        </template>    
+                    </ul>
+                </transition>                    
+            </div>    
+        </script>
+    </body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropbox.js/4.0.17/Dropbox-sdk.min.js"></script>
+    <script src="app.js"></script>
+</html>

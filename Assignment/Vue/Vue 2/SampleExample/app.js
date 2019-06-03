@@ -1,83 +1,175 @@
-Vue.component('my-component', {
-    template : '<div><h1>hello Vue</h1></div>'
-});
 
-Vue.component('my-heading',{
-    template: '<h1>{{text}}</h1>',
-    props : ['text']
-});
 
-let Child = {
-    template : '<h3>This is child of vue</h3>'
-}
-
-Vue.component('balance', {
-    template : '<div><h4>{{formattedCost}}</h4></div>',
-    props : ['cost'],
-    data() {
-        return {
-            currency: '$'
-        }
-    },
-    computed: {
-        formattedCost() {
-            return this.currency + this.cost.toFixed(2);
-        }
-    }
-});
-
-Vue.component('modal-window', {
-    template: `<div class="modal fade">
-                <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <slot name="header"></slot>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <slot></slot>
-                    </div>
-                    <div class="modal-footer">
-                        <slot name="footer"></slot>
-                        <slot name="buttons">
-                            <button type="button" class="btn btnprimary">Save changes</button>
-                            <button type="button" class="btn btnsecondary" data-dismiss="modal">Close</button>
-                        </slot>    
-                    </div>
-                </div>
-                </div>
-                </div>`,
-
-    props: {
-        visible: {
-        type: Boolean,
-        default: false
-        }
-       }
-    });
-
-    Vue.component('team-member', {
+Vue.component('team-member', {
         template: '#team-member-template',
         props: {
-            person : Object
+            person : Object,
+            filter : Object
+        },
+        data() {
+            return {
+                currency : '$'
+            }
+        },
+        computed: {
+            activeClass() {
+                    return this.person.isActive ? 'active' : 'inactive';
+            },
+            balanceClass() {
+                    let balanceLevel = 'success';
+                    if(this.person.balance < 2000) {
+                        balanceLevel = 'error';
+                    } 
+                    else if (this.person.balance < 3000) {
+                        balanceLevel = 'warning';
+                    }
+                    let increasing = false,
+                    balance = this.person.balance / 1000;
+                    if(Math.round(balance) == Math.ceil(balance)) {
+                        increasing = 'increasing';
+                    }
+                    return [balanceLevel, increasing];
+            },
+                /**
+                * Fields
+                */
+            balance() {
+                   return this.currency + this.person.balance.toFixed(2);
+            },
+            dateRegistered() {
+                   let registered = new Date(this.registered);
+                   return registered.toLocaleString('en-US');
+            },
+            status() {
+                   return output = (this.person.isActive) ? 'Active' : 'Inactive';
+            }
+        },
+        methods : {
+                filterRow() {
+                    let visible = true,
+                    field = this.filter.field,
+                    query = this.filter.query;
+                    if(field) {
+                        if(this.filter.field === 'isActive') {
+                            visible = (typeof query === 'boolean') ?
+                            (query === this.person.isActive) : true;
+                        } 
+                        else {
+                            query = String(query),
+                            field = this.person[field];
+                            if(typeof field === 'number') {
+                                query.replace(this.currency, '');
+                                try {
+                                    visible = eval(field + query);
+                                } 
+                                catch(e) {}
+                            } 
+                            else {
+                                field = field.toLowerCase();
+                                visible = field.includes(query.toLowerCase());
+                            }
+                        }
+                    }
+                    return visible;
+                    }
+                }
+    });
+
+    Vue.component('filtering', {
+        template: '#filtering-template',
+        props: {
+            filter: Object
+        },
+        methods: {
+            isActiveFilterSelected() {
+                return (this.filter.field === 'isActive');
+            },
+            changeFilterField(event) {
+                this.filedField = '';
+                this.$emit('change-filter-field',event.target.value);
+            },
+        },
+        watch: {
+            'filter.query': function() {
+                    this.$emit('change-filter-query', this.filter.query)
+            }
         }
+    });
+
+    Vue.component('breadcrumb', {
+        template: '<div></div>'
+    })
+
+    Vue.component('dropbox-viewer', {
+        template: '#dropbox-viewer-template',
+        data() {
+            return {
+                accessToken: 'bfhgwnai1h68j9g',
+                structure : [],
+                byteSizes: ['Bytes','KB','MB','GB','TB'],
+                isLoading: true
+            }
+        },
+        methods: {
+            dropbox() {
+                return new Dropbox.Dropbox({
+                    accessToken : this.accessToken
+                });
+            },
+            getFolderStructure(path) {
+                fetch("https://jsonplaceholder.typicode.com/photos")
+                .then(response => response.json())
+                .then(json => {
+                    this.structure = json;
+                    this.isLoading = false;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+                console.log(this.structure);
+            },
+            bytesToSize(bytes) {
+                let output = '0 Byte';
+
+                if(bytes > 0) {
+                    // Divide by 1024 and make an int
+                    let i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+                    output = Math.round(bytes / Math.pow(1024, i), 2) + ' ' + this.byteSizes[i];
+                }
+                return output;
+            },
+            waitforsometime() {
+                setTimeout(function() {;},155000);
+
+            },
+            createdFolder() {
+                return new Promise((resolve,reject) => {
+                    setTimeout(function() {}, 6000);
+                    resolve();
+                });
+            },
+            navigate(url) {
+                window.open(url,'_blank');
+            }
+        },
+        created() {
+            this.getFolderStructure();
+        }
+    });
+
+    Vue.component('google-viewer', {
+        template: '#googledrive-viewer-template',
+        data() {
+            return {
+
+            }
+        }
+
     });
 
 const app = new Vue({
     el : '#app',
     data: {
-        displayText : "On",
-        status : true,
-        shirtprice : 25,
-        hatprice : 10,
-        currency: '$',
-        salestax : 16,
-        imgSource: 'http://via.placeholder.com/350x150',
-        isVisible: false,
-        otherVisible: true,
-        currency: '$',
         people : [
                     {
                     "index": 0,
@@ -129,9 +221,6 @@ const app = new Vue({
             field : '',
             query : ''              
         },
-        components : {
-            'second-component' : Child
-        }
     },
     computed: {
         messageToLower() {
@@ -149,99 +238,13 @@ const app = new Vue({
         }
     },
     methods: {
-        calculateSalexTax(price) {
-            return parseFloat(Math.round((this.salestax/100) * price) + price).toFixed(2);
+        changeFilter(field) {
+            this.filter.query = '';
+            this.filter.field = field;
         },
-        addCurrency(price) {
-            return this.currency + price;
-        },
-        toggleIt() {
-            this.Status = !this.Status;
-            this.displayText = (this.Status) ? "On" : "Off";
-        },
-        format(person, key) {
-            let field = person[key];
-            output = field.toString().trim();
-            switch(key)
-            {
-                case 'balance':
-                    output = this.currency + field.toFixed(2);
-                    break;
-                case 'registered':
-                    let registered = new Date(field);
-                    output = registered.toLocaleDateString('en-US');
-                    break;
-                case 'isActive':
-                    output = (person.isActive) ? 'Active' : 'InActive';
-                    break;
-            }
-            return output;
-        },
-        filterRow(person) {
-            let visible = true,
-            field = this.filter.field,
-            query = this.filter.query;
-            if(field) {
-                if(this.isActiveFilterSelected())
-                {
-                    visible = (typeof query === 'boolean') ?
-                            (person.isActive === this.filter.query) : true;
-                }
-                else 
-                {
-                    field = person[field];
-                    if(typeof field === "number")
-                    {
-                        query = String(query);
-                        query.replace(this.currency, '');
-                        try {
-                            visible = eval(field + query);
-                        }
-                        catch(e) {}
-                    }
-                    else {
-                        query = String(query);
-                        field = String(field).toLowerCase();
-                        visible = field.includes(query.toLowerCase());
-                    }
-                }
-            }
-            return visible;
-        },
-        isActiveFilterSelected()
-        {
-            return (this.filter.field === 'isActive');
-        },
-        activeClass(person)
-        {
-            return person.isActive ? 'active' : 'inactive';
-        },
-        balanceClass(person)
-        {
-            let balanceLevel = 'success';
-            if(person.balance < 2000)
-            {
-                balanceLevel = 'error';
-            }
-            else if(person.balance < 3000)
-            {
-                balanceLevel = 'warning';
-            }
-            let increasing = false, balance = person.balance / 1000;
-            if(Math.round(balance) == Math.ceil(balance))
-            {
-                increasing = 'increasing';
-            }
-            return [balanceLevel, increasing];
-        },
-        changeFilter(event)
-        {
-            this.filter.query = '',
-            this.filter.field = event.target.value;
-        },
-        isActiveFilterSelected()
-        {
-            return (this.filter.field === 'isActive') ? true : false;
+        changeQuery(query) {
+            this.filter.query = query;
         }
+
     }
 });
