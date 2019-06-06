@@ -15,14 +15,17 @@
                     <div v-if="isLoading">Loading....</div>
                 </transition>
                 <transition name="fade">
-                    <ul v-if="!isLoading">
-                        <template v-for="item in holder.folder">
-                            <directory  :content="item" @userclickfolder="refreshnewdirectory"></directory>
-                        </template>
-                        <template v-for="item in holder.files">
-                            <file :content="item"></file>
-                        </template>    
-                    </ul>
+                    <div v-if="!isLoading">
+                        <breadcrumb :activefolder="path" @userclickfolder="refreshnewdirectory"></breadcrumb>
+                        <ul>
+                            <template v-for="item in holder.folder">
+                                <directory  :content="item" @userclickfolder="refreshnewdirectory"></directory>
+                            </template>
+                            <template v-for="item in holder.files">
+                                <file :dbox="dropbox()" :content="item"></file>
+                            </template>    
+                        </ul>
+                    </div>
                 </transition>                    
             </div>    
         </script>
