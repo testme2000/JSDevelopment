@@ -49,7 +49,7 @@ Vue.component('directory', {
 })
 
 Vue.component('file', {
-    template: `<li><strong>{{content.name}}</strong><span v-if="content.size"> - {{ performSizeUnit(content.size) }}</span></li>`,
+    template: `<li><strong>{{content.name}}</strong><span v-if="content.size"> - {{ performSizeUnit(content.size) }}</span><span v-if="urllink"> - <a :href="urllink">Download</a></span></li>`,
     props: {
         content: Object,
         dbox : Object
@@ -96,6 +96,8 @@ Vue.component('dropbox-viewer', {
             });
         },
         getFolderStructure(path) {
+            window.location.hash = path;
+
             this.dropbox().filesListFolder({
                     path: path,
                     include_media_info: true
@@ -123,6 +125,7 @@ Vue.component('dropbox-viewer', {
                     console.log("test" + this.path);
                 })
                 .catch(error => {
+                    this.isLoading = 'error';
                     console.log(error);
                 })
         },
@@ -139,7 +142,8 @@ Vue.component('dropbox-viewer', {
         }
     },
     created() {
-        this.getFolderStructure('');
+        let basicpath = window.location.hash.substring(1);
+        this.getFolderStructure(basicpath || '');
     }
 });    
 

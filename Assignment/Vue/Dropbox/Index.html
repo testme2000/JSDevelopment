@@ -12,7 +12,15 @@
             <div>
                 <h1>Dropbox</h1>
                 <transition name="fade">
-                    <div v-if="isLoading">Loading....</div>
+                    <div v-if="isLoading">
+                        <div v-if="isLoading === 'error'">
+                            <p>Issue with URL entered. Please review the url</p>
+                            <p><a href="">Home</a></p>
+                        </div>
+                        <div v-else>    
+                            Loading....
+                        </div>    
+                    </div>
                 </transition>
                 <transition name="fade">
                     <div v-if="!isLoading">
