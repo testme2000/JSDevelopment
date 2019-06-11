@@ -1,7 +1,7 @@
 Vue.component('breadcrumb', {
     template : `<div>` +
                     `<span v-for="(subfolder, index) in directories">` + 
-                        `<a @click.prevent="navigate(subfolder)" :href="subfolder.path">{{ subfolder.name || 'Home' }} </a>` +
+                        `<a :href="subfolder.path">{{ subfolder.name || 'Home' }} </a>` +
                         `<span v-if="index !== (directories.length - 1)"> >> </span>` + 
                     `</span>` +
                 `</div>`,
@@ -18,18 +18,13 @@ Vue.component('breadcrumb', {
             for(let subfolder of dirpart) {
                 slug += subfolder;
                 output.push({
-                    'name' : subfolder, 
-                    'path' : slug
+                    'name' : subfolder || 'home',   
+                    'path' : '#' + slug
                 });
                 slug += '/';
             }     
             console.log(output);          
             return output; 
-        }
-    },
-    methods: {
-        navigate(folder) {
-            this.$emit('userclickfolder', folder.path);
         }
     }
 })
@@ -37,14 +32,9 @@ Vue.component('breadcrumb', {
 
 
 Vue.component('directory', {
-    template: `<li><strong><a @click.prevent="navigate()" :href="content.path_lower">{{content.name}}</a></strong></li>`,
+    template: `<li><strong><a :href="\'#\' + content.path_lower">{{content.name}}</a></strong></li>`,
     props: {
         content: Object
-    },
-    methods: {
-        navigate() {
-            this.$emit('userclickfolder', this.content.path_lower)
-        }
     }
 })
 
@@ -81,6 +71,9 @@ Vue.component('file', {
 
 Vue.component('dropbox-viewer', {
     template: '#dropbox-viewer-template',
+    props : {
+        solidpath : String
+    },
     data() {
         return {
             dropboxToken : 'whehBL42rpAAAAAAAAAAWr435257PB3ZHIwuAdR-xL17Ee5QyRAGiCDfoXSiNOcT',
@@ -144,9 +137,30 @@ Vue.component('dropbox-viewer', {
     created() {
         let basicpath = window.location.hash.substring(1);
         this.getFolderStructure(basicpath || '');
+    },
+    watch : {
+        solidpath() {
+            this.getFolderStructure(this.solidpath);
+        }
     }
 });    
 
-new Vue({
-    el : '#app'
+const app = new Vue({
+    el : '#app',
+    data : {
+        path: ''
+    },
+    methods: {
+        updateHash() {
+            let basicpath = window.location.hash.substring(1);
+            this.path = (basicpath || '');
+        }
+    },
+    created() {
+        this.updateHash();
+    }
 })
+
+window.onhashchange = () => {
+    app.updateHash();
+}

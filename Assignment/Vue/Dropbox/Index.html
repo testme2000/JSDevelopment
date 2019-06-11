@@ -6,7 +6,7 @@
     </head>
     <body>
         <div id="app">
-            <dropbox-viewer></dropbox-viewer>
+            <dropbox-viewer :solidpath="path"></dropbox-viewer>
         </div>
         <script type="text/x-template" id="dropbox-viewer-template">
             <div>
@@ -24,10 +24,10 @@
                 </transition>
                 <transition name="fade">
                     <div v-if="!isLoading">
-                        <breadcrumb :activefolder="path" @userclickfolder="refreshnewdirectory"></breadcrumb>
+                        <breadcrumb :activefolder="path"></breadcrumb>
                         <ul>
                             <template v-for="item in holder.folder">
-                                <directory  :content="item" @userclickfolder="refreshnewdirectory"></directory>
+                                <directory  :content="item"></directory>
                             </template>
                             <template v-for="item in holder.files">
                                 <file :dbox="dropbox()" :content="item"></file>
