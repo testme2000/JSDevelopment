@@ -10,7 +10,7 @@ Vue.component('breadcrumb', {
     },
     computed: {
         directories() {
-            console.log("Inside directories");
+            console.log("MEKU TEKU");
             console.log(this.activefolder);
             let output = [], 
                 slug = '',
@@ -78,8 +78,7 @@ Vue.component('dropbox-viewer', {
         return {
             dropboxToken : 'whehBL42rpAAAAAAAAAAWr435257PB3ZHIwuAdR-xL17Ee5QyRAGiCDfoXSiNOcT',
             holder : {},
-            isLoading: true,
-            path : ''
+            isLoading: true
         }
     },
     methods: {
@@ -89,7 +88,6 @@ Vue.component('dropbox-viewer', {
             });
         },
         getFolderStructure(path) {
-            window.location.hash = path;
 
             this.dropbox().filesListFolder({
                     path: path,
@@ -114,7 +112,6 @@ Vue.component('dropbox-viewer', {
                     holder.folder = folder;    
                     this.holder = holder;
                     this.isLoading = false;
-                    this.path = path;
                     console.log("test" + this.path);
                 })
                 .catch(error => {
@@ -131,12 +128,12 @@ Vue.component('dropbox-viewer', {
             return output;
         },
         refreshnewdirectory(path) {
+            this.isLoading = true;
             this.getFolderStructure(path);
         }
     },
     created() {
-        let basicpath = window.location.hash.substring(1);
-        this.getFolderStructure(basicpath || '');
+        this.getFolderStructure(this.solidpath);
     },
     watch : {
         solidpath() {

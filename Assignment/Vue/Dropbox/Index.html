@@ -24,7 +24,7 @@
                 </transition>
                 <transition name="fade">
                     <div v-if="!isLoading">
-                        <breadcrumb :activefolder="path"></breadcrumb>
+                        <breadcrumb :activefolder="solidpath"></breadcrumb>
                         <ul>
                             <template v-for="item in holder.folder">
                                 <directory  :content="item"></directory>
