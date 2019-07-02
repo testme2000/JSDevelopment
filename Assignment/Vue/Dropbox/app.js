@@ -5,16 +5,13 @@ Vue.component('breadcrumb', {
                         `<span v-if="index !== (directories.length - 1)"> >> </span>` + 
                     `</span>` +
                 `</div>`,
-    props : {
-        activefolder : String
-    },
     computed: {
         directories() {
             console.log("MEKU TEKU");
             console.log(this.activefolder);
             let output = [], 
                 slug = '',
-                dirpart = this.activefolder.split('/');
+                dirpart = this.$store.state.path.split('/');
             for(let subfolder of dirpart) {
                 slug += subfolder;
                 output.push({
@@ -71,14 +68,24 @@ Vue.component('file', {
 
 Vue.component('dropbox-viewer', {
     template: '#dropbox-viewer-template',
-    props : {
-        solidpath : String
-    },
     data() {
         return {
             dropboxToken : 'whehBL42rpAAAAAAAAAAWr435257PB3ZHIwuAdR-xL17Ee5QyRAGiCDfoXSiNOcT',
             holder : {},
             isLoading: true
+        }
+    },
+    computed: {
+        solidpath() {
+            return this.$store.state.path;
+        },
+        slug() {
+            return this.solidpath.toLowerCase()
+                    .replace(/^\/|\/$/g, '')
+                    .replace(/ /g,'-')
+                    .replace(/\//g,'-')
+                    .replace(/[-]+/g, '-')
+                    .replace(/[^\w-]+/g,'');        
         }
     },
     methods: {
@@ -87,37 +94,51 @@ Vue.component('dropbox-viewer', {
                 accessToken: this.dropboxToken
             });
         },
-        getFolderStructure(path) {
+        createFolderStructure(response) {
+            console.log("Testing KUKU");
+            const structure = {
+                folders: [],
+                files: []
+            }
 
-            this.dropbox().filesListFolder({
-                    path: path,
+            files = response.entries.filter(entry => {
+                if(entry['.tag'] === 'file') {
+                    return entry;
+                }
+            });
+            structure.files = files;
+            folder = response.entries.filter(entry => {
+                if(entry['.tag'] === 'folder') {
+                    return entry;
+                }
+            }); 
+            structure.folder = folder;    
+            this.holder = structure;
+            this.isLoading = false;
+        },
+        createStructureAndSave(response) {
+            this.createFolderStructure(response);
+            this.$store.commit('structure', {
+                path: this.slug,
+                data : response
+            });
+        },
+        getFolderStructure() {
+            let data = this.$store.state.structure[this.slug];
+            if(data) {
+                this.createFolderStructure(data);
+            }
+            else {
+                this.dropbox().filesListFolder({
+                    path: this.solidpath,
                     include_media_info: true
                 })
-                .then(response => {
-                    const holder = {
-                        files : [],
-                        folder : []
-                    }
-                    files = response.entries.filter(entry => {
-                        if(entry['.tag'] === 'file') {
-                            return entry;
-                        }
-                    });
-                    holder.files = files;
-                    folder = response.entries.filter(entry => {
-                        if(entry['.tag'] === 'folder') {
-                            return entry;
-                        }
-                    }); 
-                    holder.folder = folder;    
-                    this.holder = holder;
-                    this.isLoading = false;
-                    console.log("test" + this.path);
-                })
+                .then(this.createStructureAndSave)
                 .catch(error => {
                     this.isLoading = 'error';
                     console.log(error);
-                })
+                });
+            }
         },
         performSizeUnit(size) {
             let output = '0 Byte';
@@ -127,37 +148,52 @@ Vue.component('dropbox-viewer', {
             }
             return output;
         },
-        refreshnewdirectory(path) {
+        refreshnewdirectory() {
             this.isLoading = true;
-            this.getFolderStructure(path);
+            this.getFolderStructure();
         }
     },
     created() {
-        this.getFolderStructure(this.solidpath);
+        this.getFolderStructure();
     },
     watch : {
         solidpath() {
-            this.getFolderStructure(this.solidpath);
+            this.getFolderStructure();
         }
     }
 });    
 
-const app = new Vue({
-    el : '#app',
-    data : {
-        path: ''
+const store = new Vuex.Store({
+    state: {
+        path : '',
+        structure: {}
     },
-    methods: {
+    mutations: {
         updateHash() {
             let basicpath = window.location.hash.substring(1);
-            this.path = (basicpath || '');
+            this.state.path = (basicpath || '');
+        },
+        structure(state, payload) {
+            state.structure[payload.path] = payload.data;
+            console.log("Updating payload");
+            console.log(state.structure);
         }
-    },
+    }
+});
+
+const app = new Vue({
+    el : '#app',
+    store,
     created() {
-        this.updateHash();
+        this.$store.commit('updateHash');
+    },
+    computed: {
+        meku() {
+            return this.$store.state.path;
+        }
     }
 })
 
 window.onhashchange = () => {
-    app.updateHash();
+    app.$store.commit('updateHash');
 }
