@@ -26,8 +26,8 @@
                     <div v-if="!isLoading">
                         <breadcrumb></breadcrumb>
                         <ul>
-                            <template v-for="item in holder.folder">
-                                <directory  :content="item"></directory>
+                            <template v-for="item in holder.folders">
+                                <directory  :content="item" :bufferfn="getFolderStructure"></directory>
                             </template>
                             <template v-for="item in holder.files">
                                 <file :dbox="dropbox()" :content="item"></file>

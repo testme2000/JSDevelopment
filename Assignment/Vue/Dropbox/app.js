@@ -7,21 +7,9 @@ Vue.component('breadcrumb', {
                 `</div>`,
     computed: {
         directories() {
-            console.log("MEKU TEKU");
-            console.log(this.activefolder);
-            let output = [], 
-                slug = '',
-                dirpart = this.$store.state.path.split('/');
-            for(let subfolder of dirpart) {
-                slug += subfolder;
-                output.push({
-                    'name' : subfolder || 'home',   
-                    'path' : '#' + slug
-                });
-                slug += '/';
-            }     
-            console.log(output);          
-            return output; 
+            console.log("MEKU TEKU inside breadcrumb");
+            console.log(this.$store.state.breadcrumb);
+            return this.$store.state.breadcrumb;
         }
     }
 })
@@ -31,7 +19,11 @@ Vue.component('breadcrumb', {
 Vue.component('directory', {
     template: `<li><strong><a :href="\'#\' + content.path_lower">{{content.name}}</a></strong></li>`,
     props: {
-        content: Object
+        content: Object,
+        bufferfn: Function
+    },
+    created() {
+        this.bufferfn(this.content.path_lower);
     }
 })
 
@@ -94,89 +86,113 @@ Vue.component('dropbox-viewer', {
                 accessToken: this.dropboxToken
             });
         },
-        createFolderStructure(response) {
-            console.log("Testing KUKU");
+        getFolderStructure(path) {
+            let finalfolder;
+            const slug = this.generateSlug(path),
+               data = this.$store.state.structure[slug];
+            console.log(`Query arrived for ${path}`)
+
+
+            if(data) {
+                finalfolder = Promise.resolve(data);
+            }
+            else {
+                finalfolder = this.dropbox().filesListFolder({
+                    path: path,
+                    include_media_info: true
+                })
+                .then(response => {
+                    let entries = response.entries;
+                    this.$store.commit('structure', {
+                        path : slug,
+                        data : entries 
+                    });
+                    console.log(`Response for query  ${entries}`)
+                    return entries;
+                })
+                .catch(error => {
+                    this.isLoading = 'error';
+                    console.log('Meku failed');
+                });
+            }
+
+            return finalfolder;
+        },
+        generateSlug(path) {
+            return path.toLowerCase()
+                .replace(/^\/|\/$/g, '')
+                .replace(/ /g,'-')
+                .replace(/\//g,'-')
+                .replace(/[-]+/g, '-')
+                .replace(/[^\w-]+/g,'');        
+        },
+        displayFolderStructure() {
+            this.isLoading = true;
+
             const structure = {
                 folders: [],
                 files: []
             }
-
-            files = response.entries.filter(entry => {
-                if(entry['.tag'] === 'file') {
-                    return entry;
-                }
-            });
-            structure.files = files;
-            folder = response.entries.filter(entry => {
-                if(entry['.tag'] === 'folder') {
-                    return entry;
-                }
-            }); 
-            structure.folder = folder;    
-            this.holder = structure;
-            this.isLoading = false;
-        },
-        createStructureAndSave(response) {
-            this.createFolderStructure(response);
-            this.$store.commit('structure', {
-                path: this.slug,
-                data : response
+            this.getFolderStructure(this.solidpath).then(data => {
+                    for ( let entry of data) {
+                        if(entry['.tag'] == 'folder') {
+                            structure.folders.push(entry);
+                            console.log('Folder added');
+                        }
+                        else {
+                            structure.files.push(entry);
+                        }
+                    }
+                    this.holder = structure;
+                    this.isLoading = false;
             });
         },
-        getFolderStructure() {
-            let data = this.$store.state.structure[this.slug];
-            if(data) {
-                this.createFolderStructure(data);
+        cacheParentFolders() {
+            let parents = this.$store.state.breadcrumb;
+            parents.reverse().shift();
+    
+            for(let grandparent of parents) {
+                console.log("Inside Dropbox");
+                console.log(grandparent.path);
+                this.getFolderStructure(grandparent.path);
             }
-            else {
-                this.dropbox().filesListFolder({
-                    path: this.solidpath,
-                    include_media_info: true
-                })
-                .then(this.createStructureAndSave)
-                .catch(error => {
-                    this.isLoading = 'error';
-                    console.log(error);
-                });
-            }
-        },
-        performSizeUnit(size) {
-            let output = '0 Byte';
-            if(size > 0) {
-                let finalsize = parseInt(Math.floor(Math.log(size) / Math.log(1024)));
-                output = Math.round(size / Math.pow(1024, finalsize), 2) + ' ' + this.sizeUnit[finalsize];
-            }
-            return output;
-        },
-        refreshnewdirectory() {
-            this.isLoading = true;
-            this.getFolderStructure();
         }
     },
     created() {
-        this.getFolderStructure();
+        this.displayFolderStructure();
+        this.cacheParentFolders();
     },
-    watch : {
+    watch: {
         solidpath() {
-            this.getFolderStructure();
+            this.displayFolderStructure();
         }
-    }
+    }    
 });    
 
 const store = new Vuex.Store({
     state: {
         path : '',
-        structure: {}
+        structure: {},
+        breadcrumb: []
     },
     mutations: {
         updateHash() {
-            let basicpath = window.location.hash.substring(1);
-            this.state.path = (basicpath || '');
+            let basicpath = (window.location.hash.substring(1) || '');
+            breadcrumb = [], 
+            slug = '',
+            dirpart = basicpath.split('/');
+            for(let subfolder of dirpart) {
+                slug += subfolder;
+                breadcrumb.push({'name' : subfolder || 'home','path' : slug});
+                slug += '/';
+            }     
+            console.log("Inside Vue Store");
+            console.log(breadcrumb);          
+            this.state.breadcrumb = breadcrumb;
+            this.state.path = basicpath; 
         },
         structure(state, payload) {
             state.structure[payload.path] = payload.data;
-            console.log("Updating payload");
-            console.log(state.structure);
         }
     }
 });
@@ -184,7 +200,7 @@ const store = new Vuex.Store({
 const app = new Vue({
     el : '#app',
     store,
-    created() {
+    mounted() {
         this.$store.commit('updateHash');
     },
     computed: {
