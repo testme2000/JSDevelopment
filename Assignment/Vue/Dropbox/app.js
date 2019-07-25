@@ -50,11 +50,16 @@ Vue.component('file', {
         },
     },
     created() {
-        this.dbox.filesGetTemporaryLink({
-            path: this.content.path_lower
-        }).then( data => {
-            this.urllink = data.link;
-        })
+        if(this.content.download_link) {
+            this.urllink = this.content.download_link;
+        }
+        else {
+            this.dbox.filesGetTemporaryLink({
+                path: this.content.path_lower
+            }).then( data => {
+                this.content.download_link = this.urllink = data.link;
+            });
+        }
     }
 })
 
