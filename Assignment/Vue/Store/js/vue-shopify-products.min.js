@@ -1,0 +1,10 @@
+/*!
+* Vue Shopify Products
+* ====================
+*
+* Format shopify CSV files into a usable object.
+* https://github.com/mikestreety/vue-shopify-products
+*
+* Copyright 2017 Mike Street
+*/
+const ShopifyProducts={install(e){let t=function(e){return e.toString().trim().toLowerCase().replace(/^\/|\/$/g,"").replace(/ /g,"-").replace(/\//g,"-").replace(/[-]+/g,"-").replace(/[^\w-]+/g,"")};e.prototype.$formatProducts=function(e){let a=[];if(e.fields){let i=e.fields;for(let r of e.records){let e={};i.forEach((a,i)=>{e[t(a)]=r[i]}),a.push(e)}}else for(let i of e){let e={};Object.keys(i).forEach(a=>{e[t(a)]=i[a]}),a.push(e)}let i={};for(let e of a){let a=e.handle,r=i[a];r||(r={title:e.title,body:e["body-html"],handle:a,vendor:{title:e.vendor,handle:t(e.vendor)},tags:e.tags.split(",").map(e=>({title:e.trim(),handle:t(e)})),images:[],variationTypes:{},variationProducts:[]}),e.type&&(r.type={title:e.type,handle:t(e.type)}),e["image-src"]&&r.images.push({source:e["image-src"],alt:e["image-alt-text"]});for(let a=1;a<4;a++)e.hasOwnProperty("option"+a+"-name")&&null!==e["option"+a+"-name"]&&(r.variationTypes[a]={id:a,title:e["option"+a+"-name"],handle:t(e["option"+a+"-name"])});let n={barcode:e["variant-barcode"],comaprePrice:e["variant-compare-at-price"],grams:e["variant-grams"],quantity:e["variant-inventory-qty"],price:e["variant-price"],shipping:e["variant-requires-shipping"],sku:e["variant-sku"],taxable:e["variant-taxable"],variant:{}};e["variant-image"]&&(n.image={source:e["variant-image"],alt:e.title});for(let a in r.variationTypes)null!==e["option"+(a=r.variationTypes[a]).id+"-value"]&&(n.variant[t(a.title)]={name:a.value||a.title,value:e["option"+a.id+"-value"],handle:t(e["option"+a.id+"-value"])});Object.keys(n).forEach(e=>null==n[e]&&delete n[e]),n.sku&&r.variationProducts.push(n),i[a]=r}return i}}};
