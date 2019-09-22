@@ -3,64 +3,78 @@
     <head>
         <meta charset="utf-8">
         <title>Vue.js 2.0 App</title>
+        <link rel="stylesheet" href="sample.css">
     </head>
     <body>
-        <div id="app">
-            <my-component></my-component>
-            <second-component></second-component>
-            <balance cost="234.56"></balance>
-            <modal-window :visible="true">
-                <h1>Modal title</h1>
-                <p>Meku is great</p>
-                <p>Teku is also</p>
-                <div slot="buttons">
-                    <button type="button" class="btn btn-primary">OK</button>
-                </div>
-            </modal-window>
+        <script type="text/x-template" id="team-member-template">
+            <tr v-show="filterRow()">
+                <td>{{ person.name }}</td>
+                <td><a v-bind:href="'mailto:' + person.email">{{person.email }}</a></td>
+                <td v-bind:class="balanceClass">{{ balance }}</td>
+                <td>{{ dateRegistered }}</td>
+                <td v-bind:class="activeClass">{{ status }}</td>
+            </tr>
+        </script>
+        <script type="text/x-template" id="filtering-template">
+            <form>
+                <label for="fiterField">
+                    Field:
+                    <select v-on:change="changeFilterField($event)" id="filterField">
+                        <option value="">Disable filters</option>
+                        <option value="isActive">Active user</option>
+                        <option value="name">Name</option>
+                        <option value="email">Email</option>
+                        <option value="balance">Balance</option>
+                        <option value="registered">Date registered</option>
+                    </select>
+                </label>
+                <label for="filterQuery" vshow="this.filter.field && !isActiveFilterSelected()">
+                    Query:
+                    <input type="text" id="filterQuery" vmodel="filter.query">
+                </label>
+                <span v-show="isActiveFilterSelected()">Active:
+                <label for="userStateActive">
+                    Yes:
+                    <input type="radio" v-bind:value="true" id="userStateActive" v-model="filter.query">
+                </label>
+                <label for="userStateInactive"> No:
+                    <input type="radio" v-bind:value="false" id="userStateInactive" v-model="filter.query">
+                </label>
+                </span>
+            </form>
+            </script>
+        <script type="text/x-template" id="dropbox-viewer-template">
+            <div>
+                <h1>Dropbox</h1>
+                <transition name="fade">
+                    <div v-if="isLoading">Loading....</div>
+                </transition>
+                <transition name="fade">    
+                    <ul v-if="!isLoading">
+                        <li v-for="entry in structure">
+                            <strong><a @click.prevent="navigate(entry.url)" :href="entry.url">{{entry.title}}</a></strong>                            
+                        </li>
+                    </ul>
+                </transition>    
+            </div>    
+        </script>
+        <script type="text/x-template" id="googledrive-viewer-template">
+            <h2>Google Drive</h2>
+        </script>
 
-            <my-heading text="Cool Vue"></my-heading>
-            <div id="with-mode-demo" class="demo">
-                    <table>
-                        <template v-for="individual in people">
-                            <team-member v-bind:person="individual"></team-member>
-                        </template>
-                    </table>
-                    <form>
-                        <label for="filterField">
-                            Field: 
-                            <select id="filterField" v-on:change="changeFilter($event)">
-                                <option value="">Disabled Filters</option>
-                                <option value="isActive">Active user</option>
-                                <option value="name">Name</option>
-                                <option value="email">Email</option>
-                                <option value="balance">Balance</option>
-                                <option value="registered">Date registered</option>
-                            </select>
-                        </label>
-                        <label for="filterQuery" v-show="this.filter.field && !isActiveFilterSelected()">
-                            Query:
-                            <input type="text" id="filterQuery" v-model="filter.query">
-                        </label>
-                        <span v-show="isActiveFilterSelected()">
-                            Active:
-                            <label for="userStateActive">
-                                Yes
-                                <input type="radio" v-bind:value="true" id="userStateActive" v-model="filter.query" selected>
-                            </label>
-                            <label for="userStateInactive">
-                                No:
-                                <input type="radio" v-bind:value="false" id="userStateInactive" v-model="filter.query" >
-                            </label>
-                        </span>
-                    </form>
-            </div>
-           <!-- <ol>
-                <li is="second-component"></li>
-            </ol> -->
-            </p>
+        <div id="app">
+            <filtering v-bind:filter="filter" v-on:change-filter-field="changeFilter" v-on:change-filter-query="changeQuery"></filtering>
+            <table>
+                <template v-for="individual in people">
+                    <team-member v-bind:person="individual" v-bind:filter="filter"></team-member>
+                </template>
+            </table>
+            <dropbox-viewer></dropbox-viewer>
+            <google-viewer></google-viewer>
         </div>
     </body>
     <script type="text/javascript" src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dropbox.js/4.0.17/Dropbox-sdk.js"></script>
     <script type="text/javascript" src="app.js"></script>
     <style>
         .in-out-translate-demo-wrapper {
@@ -83,19 +97,4 @@
         transform: translateX(-31px);
         }    
 </style>
-    <script type="text/x-template" id="team-member-template">
-        <tr v-show="filterRow(record)">
-            <td>{{record.name}}</td>
-            <td>
-                <a v-bind:href="'mailto:' + record.email">{{record.email}}</a>
-            </td>
-            <td v-bind:class="balanceClass(record)">
-                {{ format(record, "balance")}}
-            </td>
-            <td>{{format(record, "registered")}}</td>
-            <td v-bind:class="activeClass(record)">
-                {{format(record,"isActive")}}
-            </td>
-        </tr>
-    </script>
 </html>
