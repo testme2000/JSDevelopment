@@ -4,12 +4,39 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     warehouseinventory : {},
-    group: {}
+    group: {},
+
+    categoryHome: {
+      heading: 'Welcome to Store',
+      handle: 'home',
+      warehouseinventory: [
+          'adjustable-stem',
+          'fizik-saddle-pak',
+          'keda-tube',
+          'colorful-fixie-lima',
+          'oury-grip-set',
+          'pure-fix-pedals-with-cages'
+      ]
+    }
   },
 
   mutations: {
     updateinventory(state, arrivaldata) {
-      state.warehouseinventory = arrivaldata;
+      let products = {};
+
+      Object.keys(arrivaldata).forEach(key => {
+        let product = arrivaldata[key];
+        let prices = [];
+        for(let variation of product.variationProducts) {
+          if(!prices.includes[variation.price]) {
+            prices.push(variation.price);
+          }
+        }
+        product.price = Math.min(...prices);
+        product.hasManyPrices = price.length > 1;
+        products[key] = product;
+      })
+      state.warehouseinventory = products;
     },
 
     updategroup(state, arrivaldata) {
@@ -37,8 +64,6 @@ const store = new Vuex.Store({
         let grouptest = tempgroup[key];
 
         if(grouptest.warehouseinventory.length < 3) {
-            console.log("temp gropu");
-            console.log(tempgroup.notingroup);
       //    tempgroup.warehouseinventory = tempgroup.warehouseinventory.concat(group.products);
       //    delete tempgroup[key];
         }
@@ -50,13 +75,37 @@ const store = new Vuex.Store({
         finalsort[key] = tempgroup[key];
       })
       state.group = finalsort;
-      console.log("Final Sort");
-      console.log(finalsort);
     }
   },
   actions: {
     prepareBusiness({commit}, products) {
       commit('updategroup', products);
+    }
+  },
+  getters : {
+    categoryProducts: (state, getters) => (slug) => {
+      if(getters.categoriesExist) {
+        let category = false;
+        products = [];
+
+        if(this.slug) {
+            category = this.$store.state.group[this.slug];
+        }
+        else {
+            category = this.categoryHome;
+        }
+
+        if(category) {
+          for(let featured of category.warehouseinventory) {
+            products.push(state.warehouseinventory[featured]);
+          }
+          category.productDetails = products;
+        }
+        return category;
+      }
+    },
+    categoriesExist: (state) => {
+      return Object.keys(state.group).length;
     }
   }
 });
@@ -67,15 +116,25 @@ const router = new VueRouter({
               path: '/',
               name: 'Home',
               components: {
-                default: HomePage,
+                default: CategoryPage,
                 sidebar: ListCategories
+              },
+              props: {
+                default: true,
+                sidebar: true
               }
             },
             {
               path: '/category/:slug',
               name: 'Category',
-              component: CategoryPage,
-              props: true
+              components: {
+                default: CategoryPage,
+                sidebar: ProductFiltering
+              },
+              props: {
+                default: true,
+                sidebar: true
+              }
             },
             {
               path: '/product/:slug',

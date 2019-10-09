@@ -11,8 +11,6 @@ const ListCategories = {
 
     computed: {
         groupitem() {
-            console.log("In Category page");
-            console.log(this.$store.state.group);
             return this.$store.state.group;
         }
     }

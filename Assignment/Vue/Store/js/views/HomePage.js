@@ -28,7 +28,6 @@ const HomePage = {
                     finaloutput.push(totalitem[this.productsOfMonth[finalcheck]]);
                 }
             }
-            console.log(finaloutput);
             return finaloutput;
         }
     }        

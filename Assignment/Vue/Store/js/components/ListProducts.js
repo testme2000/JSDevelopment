@@ -27,9 +27,18 @@ Vue.component('list-products', {
                     </router-link>
                 </h4>
                 <p>Powered by : {{record.vendor.title}} </p>
-                <p>Price {{ itemPrice(record.variationProducts) }}</p>
+                <p>Price {{ itemPrice(record) }}</p>
             </li>
         </ol>  
+        <div class="ordering">
+            <select v-model="ordering">
+                <option value="">Order products</option>
+                <option value="title-asc">Title - ascending (A - z)</option>
+                <option value="title-desc">Title - descending (z - A)</option>
+                <option value="price-asc">Price - ascending ($1 - $999)</option>
+                <option value="price-desc">Price - descending ($999 - $1)</option>
+            </select>
+        </div>
         <nav v-if="pagelayout.totalPages > pageAccessPoint">
             <ul>
                 <li v-for="page in pageLinks">
@@ -42,7 +51,8 @@ Vue.component('list-products', {
         return {
             currentPage : 1,
             itemperPage : 10,
-            pageAccessPoint : 4
+            pageAccessPoint : 4,
+            ordering: ''
         }
     },
     props : {
@@ -97,6 +107,30 @@ Vue.component('list-products', {
                 }
                 return pages;
             }
+        },
+        orderProducts() {
+            let output;
+
+            if(this.ordering.length) {
+                let orders = this.ordering.split('-');                 
+                
+                output = this.inventory.sort(function(a,b) {
+                    if(typeof a[orders[0]] == 'string') {
+                        return a[orders[0]].localeCompage(b[orders[0]]);
+                    }
+                    else {
+                        return a[orders[0]] - b[orders[0]];
+                    }
+                });
+
+                if(orders[1] == 'desc') {
+                    output.reverse();
+                }
+            }
+            else {
+                output = this.inventory;
+            }
+            return output;
         }
     },
     methods: {
@@ -109,20 +143,16 @@ Vue.component('list-products', {
             this.currentPage = page;
         },
         finalPageSetup(list) {
-            let filterlist = list.slice(this.pagelayout.range.fromPage,this.pagelayout.range.toPage);
+            //let filterlist = list.slice(this.pagelayout.range.fromPage,this.pagelayout.range.toPage);
+            //return filterlist;
+            let filterlist = this.orderProducts.slice(this.pagelayout.range.fromPage,this.pagelayout.range.toPage);
             return filterlist;
         },
-        itemPrice(allavailable) {
-            let latestcost = [];
+        itemPrice(product) {
+            let price = '$' + product.price;
 
-            for(let record of allavailable) {
-                if(!latestcost.includes(record.price)) {
-                    latestcost.push(record.price);
-                }
-            }
-            let price = '$' + Math.min(...latestcost);
-            if(latestcost.length > 1) {
-                price = 'From: ' + price;
+            if(product.hasManyPrices) {
+                price = "From: " + price;
             }
             return price;
         }
