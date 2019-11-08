@@ -1,5 +1,5 @@
 
-var WebSockerServer = require('ws').Server, wss = WebSockerServer({port: 8181});
+var WebSockerServer = require('ws').Server, wss = new WebSockerServer({port: 8181});
 
 wss.on('connection', function(ws) {
     console.log('client connected');
