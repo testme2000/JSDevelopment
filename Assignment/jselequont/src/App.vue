@@ -15,7 +15,11 @@
     </div>
     <br>
     <div>
-      <button id="rangeid" class="btn btn-primary" @click="perfromRange()">Range Count</button>
+      <button id="rangeid" class="btn btn-primary" @click="performRangeStatus()">Range Count</button>
+      &nbsp;
+      <button id="reverseid" class="btn btn-primary" @click="performReverse()">Reverse String</button>
+      &nbsp;
+      <button id="listid" class="btn btn-primary" @click="performListOperation()">List Processing</button>
     </div>
     <table>
       <tr>
@@ -53,6 +57,16 @@
             <range v-bind:displayrange="rangestatus" />
         </td>
       </tr>
+      <tr>
+        <td>
+            <reverse v-bind:displayreverse="reversestatus" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+            <listprocess v-bind:displaylist="listprocess" />
+        </td>
+      </tr>
     </table>
   </div>
 </template>
@@ -65,6 +79,9 @@
   import evenodd from './components/evenodd'
   import beancount from './components/Beancount'
   import range from './components/Range'
+  import reverse from './components/reverse'
+  import listprocess from './components/list'
+
 
   export default {
     name: 'app',
@@ -75,7 +92,9 @@
       minval,
       evenodd,
       beancount,
-      range
+      range,
+      reverse,
+      listprocess
     },
     data() {
       return {
@@ -85,7 +104,9 @@
         minstatus : false,
         evenoddstatus : false,
         beancountstatus : false,
-        rangestatus : false
+        rangestatus : false,
+        reversestatus : false,
+        listprocess : false
       }
     },
     methods : {
@@ -99,6 +120,8 @@
             this.evenoddstatus = false;
             this.beancountstatus = false;
             this.rangestatus = false;
+            this.reversestatus = false;
+            this.listprocess = false;
           }
       },
       performFizBuzz() {
@@ -111,6 +134,8 @@
             this.evenoddstatus = false;
             this.beancountstatus = false;
             this.rangestatus = false;
+            this.reversestatus = false;
+            this.listprocess = false;
           }
       },
       performGrid() {
@@ -122,6 +147,8 @@
           this.evenoddstatus = false;
           this.beancountstatus = false;
           this.rangestatus = false;
+          this.reversestatus = false;
+          this.listprocess = false;
         }
       },
       performMinimum() {
@@ -133,10 +160,11 @@
           this.evenoddstatus = false;
           this.beancountstatus = false;
           this.rangestatus = false;
+          this.reversestatus = false;
+          this.listprocess = false;
         }
       },
       performEvenOdd() {
-        console.log("Even/odd check");
         this.evenoddstatus = !this.evenoddstatus;
         if(this.evenoddstatus) {
           this.fizbuzzstatus = false;
@@ -145,6 +173,8 @@
           this.minstatus = false;
           this.beancountstatus = false;
           this.rangestatus = false;
+          this.reversestatus = false;
+          this.listprocess = false;
         }
       },
       performBeanCount() {
@@ -156,6 +186,8 @@
           this.minstatus = false;
           this.evenoddstatus = false;
           this.rangestatus = false;
+          this.reversestatus = false;
+          this.listprocess = false;
         }
       },
       performRangeStatus() {
@@ -167,6 +199,34 @@
           this.minstatus = false;
           this.evenoddstatus = false;
           this.beancountestatus = false;
+          this.reversestatus = false;
+          this.listprocess = false;
+        }
+      },
+      performReverse() {
+        this.reversestatus = !this.reversestatus;
+        if(this.reversestatus) {
+          this.fizbuzzstatus = false;
+          this.tristatus = false;
+          this.gridstatus = false;
+          this.minstatus = false;
+          this.evenoddstatus = false;
+          this.beancountstatus = false;
+          this.rangestatus = false;
+          this.listprocess = false;
+        }
+      },
+      performListOperation() {
+        this.listprocess = !this.listprocess;
+        if(this.listprocess) {
+          this.fizbuzzstatus = false;
+          this.tristatus = false;
+          this.gridstatus = false;
+          this.minstatus = false;
+          this.evenoddstatus = false;
+          this.beancountstatus = false;
+          this.rangestatus = false;
+          this.reversestatus = false;
         }
       }
     }
