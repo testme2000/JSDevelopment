@@ -1,3 +1,0 @@
-const OrderCheckout = {
-    name: 'OrderCheckout'
-};

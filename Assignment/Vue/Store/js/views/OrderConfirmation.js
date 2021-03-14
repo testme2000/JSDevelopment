@@ -1,3 +1,0 @@
-const OrderConfirmation = {
-    name: 'OrderConfirmation'
-};

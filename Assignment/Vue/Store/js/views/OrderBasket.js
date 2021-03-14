@@ -1,3 +1,0 @@
-const OrderBasket = {
-    name: 'OrderBasket'
-};
