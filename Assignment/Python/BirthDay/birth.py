@@ -1,6 +1,7 @@
 import json
 import os
 from pathlib import Path
+import calendar
 
 
 def ReadBirthDetail(filename):
@@ -31,12 +32,35 @@ def UpdateBirthDetail(BirthDict,name,filename):
     filepath = Path(__file__).with_name(filename)
     fileobject = open(filepath,"w")
     json.dump(finaljsonobject,fileobject,indent=4)
+    print("Birth details added successfully")
+
+def ProcessBirthDateByMonth(BirthDict):
+    monthinfo = []
+    months = range(1,13,1)
+    for eachmonth in months:
+        searchfor = str(eachmonth)
+        if int(eachmonth) < 10:
+            searchfor = "0" + str(searchfor)
+        searchitem = [elem for elem in BirthDict if elem["Date"].startswith(searchfor)]
+        totalcount = len(searchitem) 
+        if  totalcount > 0:
+            monthtext = calendar.month_name[eachmonth]
+            monthobject = {
+                monthtext : totalcount
+            }
+            monthinfo.append(monthobject)
+    return monthinfo
+
 
 print("Welcome to Birthday Dictionary Program")
 print("Birth date of following person available for search")
 BirthDict = ReadBirthDetail("Birth.json")
 for record in BirthDict:
     print(record["Name"])
+print("Here is total data for each month")
+MonthInfo = ProcessBirthDateByMonth(BirthDict)
+for record in MonthInfo:
+    print(record)
 
 userinput = input("Who's birthday do you want to look up? ")
 searchfor = userinput.strip()
