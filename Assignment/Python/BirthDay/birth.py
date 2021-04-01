@@ -2,6 +2,8 @@ import json
 import os
 from pathlib import Path
 import calendar
+from bokeh.plotting import figure, show, output_file
+
 
 
 def ReadBirthDetail(filename):
@@ -51,6 +53,30 @@ def ProcessBirthDateByMonth(BirthDict):
             monthinfo.append(monthobject)
     return monthinfo
 
+def PlotBirthMonthGraph(MonthInfo):
+    filepath = Path(__file__).with_name("BirthGrapth.html")
+    output_file(filepath)
+    MonthRange = []
+    BirthMonth = []
+    BirthCount = []
+
+    # Prepare Month Name for X Axis
+    for eachmonth in range(1,13,1):
+        monthtext = calendar.month_name[eachmonth]
+        MonthRange.append(monthtext[0:3])
+        searchitem = next((elem for elem in MonthInfo if monthtext in elem), None)
+        if searchitem != None:
+            print(str(monthtext[0:3]))
+            BirthMonth.append(monthtext[0:3])
+            BirthCount.append(searchitem[monthtext])
+
+    print(BirthMonth)
+    print(BirthCount)
+    p = figure(x_range=MonthRange)
+    p.vbar(x=BirthMonth, top=BirthCount, width=0.5)
+    show(p)
+
+
 
 print("Welcome to Birthday Dictionary Program")
 print("Birth date of following person available for search")
@@ -62,6 +88,7 @@ MonthInfo = ProcessBirthDateByMonth(BirthDict)
 for record in MonthInfo:
     print(record)
 
+PlotBirthMonthGraph(MonthInfo)
 userinput = input("Who's birthday do you want to look up? ")
 searchfor = userinput.strip()
 valuefound = SearchBirthDetail(BirthDict,searchfor)
@@ -76,3 +103,5 @@ if valuefound == None:
 else:
     finalstring = searchfor + " : " + valuefound
     print(finalstring)
+
+
