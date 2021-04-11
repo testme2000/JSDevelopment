@@ -1,0 +1,1 @@
+pwsh-preview -executionPolicy bypass -file .\VMStartWithEncr.ps1
